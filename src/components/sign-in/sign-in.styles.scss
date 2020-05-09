@@ -1,0 +1,14 @@
+.sign-in {
+  background-color: #0d0c12;
+  color: white;
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
