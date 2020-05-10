@@ -5,11 +5,12 @@
   border-radius: 50px;
   display: block;
   cursor: pointer;
-  margin: 15px auto;
+  margin: 10px auto;
   box-shadow: 0 0.5rem 1rem black;
   transition: transform 0.2s ease;
   outline: none;
   font-weight: bold;
+  line-height: 20px;
 
   &:hover {
     transform: translateY(-3px);

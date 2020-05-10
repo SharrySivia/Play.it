@@ -1,7 +1,11 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 
-import { auth, createUserProfileDocument } from "../../firebase/firebase.utils";
+import {
+  auth,
+  createUserProfileDocument,
+  signInWithGoogle,
+} from "../../firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.component";
 
@@ -91,8 +95,12 @@ class SignUp extends React.Component {
           />
           <CustomButton type="submit">Signup</CustomButton>
         </form>
-        <span>
-          I already have an account. <Link to="/signin">Signin</Link>
+        <span>OR</span>
+        <CustomButton onClick={signInWithGoogle}>
+          Continue with Google
+        </CustomButton>
+        <span className="footer">
+          I already have an account? <Link to="/signin">Signin</Link>
         </span>
       </Fragment>
     );

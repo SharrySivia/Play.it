@@ -61,12 +61,13 @@ class SignIn extends React.Component {
           />
 
           <CustomButton type="submit">Sign in</CustomButton>
-          <CustomButton type="button" onClick={signInWithGoogle}>
-            Sign in with google
-          </CustomButton>
         </form>
-        <span>
-          I don't have an account. <Link to="/signup">Signup</Link>
+        <span>OR</span>
+        <CustomButton onClick={signInWithGoogle}>
+          Continue with Google
+        </CustomButton>
+        <span className="footer">
+          I don't have an account? <Link to="/signup">Signup</Link>
         </span>
       </Fragment>
     );
