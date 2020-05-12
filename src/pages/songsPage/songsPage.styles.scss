@@ -1,0 +1,11 @@
+.songs-page {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  .page-content {
+    width: 85%;
+  }
+}

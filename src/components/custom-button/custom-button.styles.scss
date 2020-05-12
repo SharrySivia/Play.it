@@ -1,14 +1,15 @@
 .custom-button {
+  width: 100%;
   border: none;
   background-color: #fff;
   padding: 12px 25px;
   border-radius: 50px;
-  display: block;
   cursor: pointer;
-  margin: 10px auto;
+  margin: 10px 0;
   box-shadow: 0 0.5rem 1rem black;
   transition: transform 0.2s ease;
   outline: none;
+  font-size: 1rem;
   font-weight: bold;
   line-height: 20px;
 

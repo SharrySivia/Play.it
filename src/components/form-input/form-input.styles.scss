@@ -1,14 +1,24 @@
 .form-input {
+  width: 100%;
   background: none;
   background-color: white;
   color: #333;
   border: none;
   padding: 12px 15px;
   outline: none;
-  border-radius: 10px;
-  display: block;
-  width: 100%;
+  border-radius: 5px;
   margin: 15px 0;
   font-size: 14px;
   font-weight: bold;
+}
+
+.search-input {
+  width: 27%;
+  padding: 10px 15px;
+  background-color: rgb(185, 185, 185);
+  border-radius: 50px;
+  transition: width 0.7s ease;
+  &:focus {
+    width: 33%;
+  }
 }

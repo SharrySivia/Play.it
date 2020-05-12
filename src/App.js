@@ -1,19 +1,24 @@
 import React from "react";
-import { Route, Switch, withRouter, Redirect } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
+import HomePage from "./pages/homePage/homePage.component";
+import SongsPage from "./pages/songsPage/songsPage.component";
+import PlaylistsPage from "./pages/playlistsPage/playlistsPage.component";
+import ArtistsPage from "./pages/artistsPage/artistsPage.componenet";
+import AlbumsPage from "./pages/albumsPage/albumsPage.scomponent";
 import SignInAndSignUpPage from "./pages/sign-in-sign-up/sign-in-sign-up.cmponent";
 
 import "./App.css";
 
-const HomePage = () => (
-  <div>
-    <h2>Home Page</h2>
-    <div style={{ cursor: "pointer" }} onClick={() => auth.signOut()}>
-      Log out
-    </div>
-  </div>
-);
+// const HomePage = () => (
+//   <div>
+//     <h2>Home Page</h2>
+//     <div style={{ cursor: "pointer" }} onClick={() => auth.signOut()}>
+//       Log out
+//     </div>
+//   </div>
+// );
 
 class App extends React.Component {
   constructor(props) {
@@ -47,7 +52,11 @@ class App extends React.Component {
       <div className="App">
         <Switch>
           <Route exact path="/home" component={HomePage} />
-          <Route path="/:type" component={SignInAndSignUpPage} />
+          <Route exact path="/songs" component={SongsPage} />
+          <Route exact path="/playlists" component={PlaylistsPage} />
+          <Route exact path="/artists" component={ArtistsPage} />
+          <Route exact path="/albums" component={AlbumsPage} />
+          <Route path="/:authType" component={SignInAndSignUpPage} />
         </Switch>
         <Redirect to={this.state.currentUser ? "/home" : "/signin"} />
       </div>
@@ -55,4 +64,4 @@ class App extends React.Component {
   }
 }
 
-export default withRouter(App);
+export default App;

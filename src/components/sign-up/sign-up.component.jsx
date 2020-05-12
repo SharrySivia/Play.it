@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 import {
@@ -8,8 +8,7 @@ import {
 } from "../../firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.component";
-
-// import "./sign-up.styles.scss";
+import Spinner from "../loading-spinner/loading-spinner.component";
 
 class SignUp extends React.Component {
   constructor(props) {
@@ -19,17 +18,13 @@ class SignUp extends React.Component {
       email: "",
       password: "",
       confirmPassword: "",
+      isSigningUp: false,
+      signupErr: "",
     };
   }
 
-  handleSubmit = async (evt) => {
-    evt.preventDefault();
-
-    const { displayName, email, password, confirmPassword } = this.state;
-    if (password !== confirmPassword) {
-      alert("Passwords don't match");
-      return;
-    }
+  signup = async () => {
+    const { displayName, email, password } = this.state;
 
     try {
       const { user } = await auth.createUserWithEmailAndPassword(
@@ -44,10 +39,37 @@ class SignUp extends React.Component {
         email: "",
         password: "",
         confirmPassword: "",
+        isSigningUp: false,
       });
     } catch (err) {
-      console.log(err);
+      const errCode = err.code;
+      if (errCode === "auth/email-already-in-use") {
+        this.setState({
+          signupErr: "User already exists. Go to signin",
+          isSigningUp: false,
+        });
+      } else {
+        this.setState({
+          signupErr: err.message,
+          isSigningUp: false,
+        });
+      }
     }
+  };
+
+  handleSubmit = async (evt) => {
+    evt.preventDefault();
+
+    const { password, confirmPassword } = this.state;
+
+    if (password !== confirmPassword) {
+      alert("Passwords don't match");
+      return;
+    } else if (password.length < 8) {
+      alert("Password length must be equal to or greater than 8");
+      return;
+    }
+    this.setState({ isSigningUp: true }, this.signup);
   };
 
   handleChange = (evt) => {
@@ -56,15 +78,23 @@ class SignUp extends React.Component {
   };
 
   render() {
+    const {
+      displayName,
+      email,
+      password,
+      confirmPassword,
+      signupErr,
+      isSigningUp,
+    } = this.state;
     return (
-      <Fragment>
+      <div className="sign-up">
         <h2 className="title">Signup</h2>
         <span>Create a new account with email and password</span>
         <form onSubmit={this.handleSubmit}>
           <FormInput
             type="text"
             name="displayName"
-            value={this.state.displayName}
+            value={displayName}
             placeholder="Display Name"
             onChange={this.handleChange}
             required
@@ -72,7 +102,7 @@ class SignUp extends React.Component {
           <FormInput
             type="email"
             name="email"
-            value={this.state.email}
+            value={email}
             placeholder="Email"
             onChange={this.handleChange}
             required
@@ -80,7 +110,7 @@ class SignUp extends React.Component {
           <FormInput
             type="password"
             name="password"
-            value={this.state.password}
+            value={password}
             placeholder="Password"
             onChange={this.handleChange}
             required
@@ -88,21 +118,25 @@ class SignUp extends React.Component {
           <FormInput
             type="password"
             name="confirmPassword"
-            value={this.state.confirmPassword}
+            value={confirmPassword}
             placeholder="Confirm Password"
             onChange={this.handleChange}
             required
           />
-          <CustomButton type="submit">Signup</CustomButton>
+          <span className="error">{signupErr}</span>
+
+          <CustomButton type="submit" disabled={isSigningUp}>
+            {isSigningUp ? <Spinner /> : "Signup"}
+          </CustomButton>
         </form>
         <span>OR</span>
-        <CustomButton onClick={signInWithGoogle}>
+        <CustomButton onClick={signInWithGoogle} disabled={isSigningUp}>
           Continue with Google
         </CustomButton>
         <span className="footer">
           I already have an account? <Link to="/signin">Signin</Link>
         </span>
-      </Fragment>
+      </div>
     );
   }
 }

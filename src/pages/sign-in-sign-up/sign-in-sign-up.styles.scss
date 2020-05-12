@@ -1,17 +1,18 @@
 .sign-in-sign-up-page {
-  width: 95vw;
+  width: 100vw;
   height: 100vh;
-  margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
 
-  .wrapper {
+  .sign-in,
+  .sign-up {
+    width: 450px;
+    position: absolute;
+    transform: translate(-50%, -50%);
     background-color: #0d0c12;
     color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    text-align: center;
     padding: 35px;
     border-radius: 10px;
 
@@ -21,12 +22,20 @@
       margin-bottom: 20px;
     }
 
+    span {
+      display: block;
+    }
+
     form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 90%;
       margin-top: 10px;
+
+      button {
+        margin-top: 20px;
+      }
+    }
+    .error {
+      color: red;
+      font-size: 14px;
     }
 
     .footer {
@@ -45,15 +54,14 @@
 .card-enter {
   opacity: 0;
 }
-
 .card-enter-active {
   opacity: 1;
-  transition: opacity 200ms;
+  transition: opacity 400ms 100ms;
 }
 .card-exit {
   opacity: 1;
 }
 .card-exit-active {
   opacity: 0;
-  transition: opacity 200ms;
+  transition: opacity 400ms;
 }
