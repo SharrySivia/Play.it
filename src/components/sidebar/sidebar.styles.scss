@@ -1,11 +1,9 @@
 .sidebar {
+  display: inline-block;
   width: 15%;
-  //   position: absolute;
+  text-align: center;
   background-color: #0d0c12;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  height: 100vh;
 
   .logo {
     color: #fff;
@@ -30,17 +28,19 @@
     .list-item {
       padding: 10px 0;
       text-decoration: none;
-      color: #fff;
+      color: rgb(155, 155, 155);
       font-weight: bold;
       border-bottom: 2px solid transparent;
-      transition: border 500ms ease;
+      transition: border 500ms ease, color 500ms ease;
 
       &:hover {
+        color: #fff;
         border-color: #fff;
       }
     }
 
     .link-active {
+      color: #fff;
       border-bottom: 2px solid #fff;
     }
   }

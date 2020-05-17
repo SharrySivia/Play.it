@@ -7,27 +7,35 @@ const Sidebar = () => (
   <div className="sidebar">
     <h1 className="logo">Play.it</h1>
     <ul className="links-list">
-      <NavLink to="/home" className="list-item" activeClassName="link-active">
+      <NavLink exact to="/" className="list-item" activeClassName="link-active">
         <li>Home</li>
       </NavLink>
-      <NavLink to="/songs" className="list-item" activeClassName="link-active">
+      <NavLink
+        to="/collections/songs"
+        className="list-item"
+        activeClassName="link-active"
+      >
         <li>Songs</li>
       </NavLink>
       <NavLink
-        to="/playlists"
+        to="/collections/playlists"
         className="list-item"
         activeClassName="link-active"
       >
         <li>Playlits</li>
       </NavLink>
       <NavLink
-        to="/artists"
+        to="/collections/artists"
         className="list-item"
         activeClassName="link-active"
       >
         <li>Artists</li>
       </NavLink>
-      <NavLink to="/albums" className="list-item" activeClassName="link-active">
+      <NavLink
+        to="/collections/albums"
+        className="list-item"
+        activeClassName="link-active"
+      >
         <li>Albums</li>
       </NavLink>
     </ul>

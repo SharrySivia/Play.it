@@ -10,7 +10,7 @@ const SignInSignUpPage = ({ match: { params } }) => (
   <div className="sign-in-sign-up-page">
     <TransitionGroup>
       <CSSTransition key={params.authType} timeout={500} classNames="card">
-        {params.authType === "signin" ? <SignIn /> : <SignUp />}
+        {params[0] === "signin" ? <SignIn /> : <SignUp />}
       </CSSTransition>
     </TransitionGroup>
   </div>

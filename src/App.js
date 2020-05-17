@@ -1,24 +1,11 @@
 import React from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 
-import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
+import { auth } from "./firebase/firebase.utils";
 import HomePage from "./pages/homePage/homePage.component";
-import SongsPage from "./pages/songsPage/songsPage.component";
-import PlaylistsPage from "./pages/playlistsPage/playlistsPage.component";
-import ArtistsPage from "./pages/artistsPage/artistsPage.componenet";
-import AlbumsPage from "./pages/albumsPage/albumsPage.scomponent";
-import SignInAndSignUpPage from "./pages/sign-in-sign-up/sign-in-sign-up.cmponent";
+import SignInAndSignUpPage from "./pages/sign-in-sign-up/sign-in-sign-up.component";
 
 import "./App.css";
-
-// const HomePage = () => (
-//   <div>
-//     <h2>Home Page</h2>
-//     <div style={{ cursor: "pointer" }} onClick={() => auth.signOut()}>
-//       Log out
-//     </div>
-//   </div>
-// );
 
 class App extends React.Component {
   constructor(props) {
@@ -29,20 +16,13 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    const { history } = this.props;
     auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
-        const userRef = await createUserProfileDocument(userAuth);
-
-        userRef.onSnapshot((snapShot) => {
-          this.setState({
-            currentUser: {
-              id: snapShot.id,
-              ...snapShot.data(),
-            },
-          });
-        });
-      } else {
+        history.push("/");
         this.setState({ currentUser: userAuth });
+      } else {
+        history.replace("/signin");
       }
     });
   }
@@ -51,17 +31,12 @@ class App extends React.Component {
     return (
       <div className="App">
         <Switch>
-          <Route exact path="/home" component={HomePage} />
-          <Route exact path="/songs" component={SongsPage} />
-          <Route exact path="/playlists" component={PlaylistsPage} />
-          <Route exact path="/artists" component={ArtistsPage} />
-          <Route exact path="/albums" component={AlbumsPage} />
-          <Route path="/:authType" component={SignInAndSignUpPage} />
+          <Route path="/(signin|signup)" component={SignInAndSignUpPage} />
+          <Route path="/*" component={HomePage} />
         </Switch>
-        <Redirect to={this.state.currentUser ? "/home" : "/signin"} />
       </div>
     );
   }
 }
 
-export default App;
+export default withRouter(App);
