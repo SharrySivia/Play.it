@@ -14,10 +14,10 @@
 
 .search-input {
   width: 27%;
-  padding: 10px 15px;
-  background-color: rgb(185, 185, 185);
+  padding: 9px 15px;
+  background-color: rgb(223, 223, 223);
   border-radius: 50px;
-  transition: width 0.7s ease;
+  transition: width 0.2s ease;
   &:focus {
     width: 33%;
   }

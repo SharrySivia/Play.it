@@ -1,26 +1,21 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Route, Switch, withRouter } from "react-router-dom";
 
 import { auth } from "./firebase/firebase.utils";
+import { setCurrentUser } from "./redux/user/user.actions";
 import HomePage from "./pages/homePage/homePage.component";
 import SignInAndSignUpPage from "./pages/sign-in-sign-up/sign-in-sign-up.component";
 
 import "./App.css";
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentUser: null,
-    };
-  }
-
   componentDidMount() {
-    const { history } = this.props;
+    const { history, setCurrentUser } = this.props;
     auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
         history.push("/");
-        this.setState({ currentUser: userAuth });
+        setCurrentUser(userAuth);
       } else {
         history.replace("/signin");
       }
@@ -39,4 +34,9 @@ class App extends React.Component {
   }
 }
 
-export default withRouter(App);
+const mapDispatchToProps = (dispatch) => ({
+  setCurrentUser: ({ uid, displayName, email }) =>
+    dispatch(setCurrentUser({ uid, displayName, email })),
+});
+
+export default connect(null, mapDispatchToProps)(withRouter(App));
