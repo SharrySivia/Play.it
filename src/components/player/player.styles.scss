@@ -1,0 +1,43 @@
+.player {
+  width: 85vw;
+  height: auto;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  background-color: #d9dbe9;
+  color: #0d0c12;
+  padding: 20px;
+
+  .progress {
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    span {
+      font-size: 14px;
+    }
+    .bar {
+      margin: 0 10px;
+      width: 70%;
+      height: 3px;
+      border-radius: 5px;
+      background-color: rgb(138, 138, 138);
+    }
+  }
+
+  .controles {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .currently-playing {
+      h3 {
+        margin: 0;
+        padding: 0;
+      }
+      span {
+        font-size: 14px;
+      }
+    }
+  }
+}
