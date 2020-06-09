@@ -1,3 +1,5 @@
+$primary-color: #0d0c12;
+
 .player {
   width: 85vw;
   height: auto;
@@ -5,7 +7,7 @@
   bottom: 0;
   right: 0;
   background-color: #d9dbe9;
-  color: #0d0c12;
+  color: $primary-color;
   padding: 20px;
 
   .progress {
@@ -20,9 +22,12 @@
     .bar {
       margin: 0 10px;
       width: 70%;
-      height: 3px;
-      border-radius: 5px;
-      background-color: rgb(138, 138, 138);
+      // height: 3px;
+      // border-radius: 5px;
+      // background-color: rgb(138, 138, 138);
+      input {
+        width: 100%;
+      }
     }
   }
 
