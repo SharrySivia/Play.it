@@ -29,19 +29,21 @@ class Player extends React.Component {
   playTrack = () => {
     const track = this.track;
     const { isPaused, toggleIsPaused } = this.props;
-    if (isPaused) {
-      let playPromise = track.play();
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            toggleIsPaused();
-          })
-          .catch((err) => console.log("Something went wrong.", err));
-      }
-    } else {
-      track.pause();
-      toggleIsPaused();
+    let playPromise = track.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          if (isPaused) toggleIsPaused();
+        })
+        .catch((err) => console.log("Something went wrong.", err));
     }
+  };
+
+  pauseTrack = () => {
+    const track = this.track;
+    const { toggleIsPaused } = this.props;
+    track.pause();
+    toggleIsPaused();
   };
 
   seekTrack = (evt, value) => {
@@ -97,13 +99,23 @@ class Player extends React.Component {
             <button type="button" disabled={Boolean(!currentTrack)}>
               Prev
             </button>
-            <button
-              type="button"
-              onClick={this.playTrack}
-              disabled={Boolean(!currentTrack)}
-            >
-              {isPaused ? "Play" : "Pause"}
-            </button>
+            {isPaused ? (
+              <button
+                type="button"
+                onClick={this.playTrack}
+                disabled={Boolean(!currentTrack)}
+              >
+                Play
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={this.pauseTrack}
+                disabled={Boolean(!currentTrack)}
+              >
+                Pause
+              </button>
+            )}
             <button type="button" disabled={Boolean(!currentTrack)}>
               Next
             </button>

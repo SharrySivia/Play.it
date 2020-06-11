@@ -12,9 +12,7 @@ const playerReducer = (state = INITIAL_STATE, action) => {
     case PLAYER_ACTION_TYPES.PLAY_TRACK:
       return {
         ...state,
-        currTime: 0,
         currentTrack: action.payload,
-        isPaused: true,
       };
     case PLAYER_ACTION_TYPES.SET_CURR_TIME:
       return {
