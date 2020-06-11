@@ -22,7 +22,7 @@ const Sidebar = () => (
         className="list-item"
         activeClassName="link-active"
       >
-        <li>Playlits</li>
+        <li>Playlists</li>
       </NavLink>
       <NavLink
         to="/collections/artists"

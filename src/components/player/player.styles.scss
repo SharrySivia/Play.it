@@ -16,18 +16,14 @@ $primary-color: #0d0c12;
     display: flex;
     justify-content: center;
     align-items: center;
-    span {
+    .time {
+      width: 40px;
       font-size: 14px;
+      text-align: center;
     }
     .bar {
       margin: 0 10px;
       width: 70%;
-      // height: 3px;
-      // border-radius: 5px;
-      // background-color: rgb(138, 138, 138);
-      input {
-        width: 100%;
-      }
     }
   }
 
@@ -43,6 +39,12 @@ $primary-color: #0d0c12;
       span {
         font-size: 14px;
       }
+    }
+    .buttons-secondary {
+      width: 250px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 }

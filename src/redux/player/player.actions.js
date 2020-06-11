@@ -10,6 +10,11 @@ export const setCurrTime = (time) => ({
   payload: time,
 });
 
+export const setDuration = (time) => ({
+  type: PLAYER_ACTION_TYPES.SET_DURATION,
+  payload: time,
+});
+
 export const toggleIsPaused = () => ({
   type: PLAYER_ACTION_TYPES.TOGGLE_IS_PAUSED,
 });
