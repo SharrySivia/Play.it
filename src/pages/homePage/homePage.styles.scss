@@ -2,10 +2,16 @@
   width: 100vw;
   height: 100vh;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  // justify-content: space-between;
+  // align-items: flex-start;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 
   .page-content {
     width: 85%;
+    height: 85%;
+    backdrop-filter: blur(80px);
+    overflow: auto;
   }
 }

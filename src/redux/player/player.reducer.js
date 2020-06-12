@@ -5,6 +5,8 @@ const INITIAL_STATE = {
   currTime: 0,
   duration: 0,
   isPaused: true,
+  isMuted: false,
+  isRepeated: false,
 };
 
 const playerReducer = (state = INITIAL_STATE, action) => {
@@ -28,6 +30,16 @@ const playerReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isPaused: !state.isPaused,
+      };
+    case PLAYER_ACTION_TYPES.TOGGLE_IS_MUTED:
+      return {
+        ...state,
+        isMuted: !state.isMuted,
+      };
+    case PLAYER_ACTION_TYPES.TOGGLE_IS_REPEATED:
+      return {
+        ...state,
+        isRepeated: !state.isRepeated,
       };
     default:
       return state;

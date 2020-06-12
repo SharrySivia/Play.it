@@ -6,7 +6,7 @@ $primary-color: #0d0c12;
   position: fixed;
   bottom: 0;
   right: 0;
-  background-color: #d9dbe9;
+  background-color: #d5d7e7;
   color: $primary-color;
   padding: 20px;
 
@@ -19,6 +19,7 @@ $primary-color: #0d0c12;
     .time {
       width: 40px;
       font-size: 14px;
+      font-weight: bold;
       text-align: center;
     }
     .bar {
@@ -31,7 +32,12 @@ $primary-color: #0d0c12;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    svg {
+      cursor: pointer;
+    }
     .currently-playing {
+      flex-basis: 150px;
       h3 {
         margin: 0;
         padding: 0;
@@ -40,10 +46,15 @@ $primary-color: #0d0c12;
         font-size: 14px;
       }
     }
+
+    .buttons-primary {
+      flex-basis: 200px;
+    }
+
     .buttons-secondary {
-      width: 250px;
+      flex-basis: 170px;
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
     }
   }

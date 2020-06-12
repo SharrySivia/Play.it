@@ -63,8 +63,8 @@ class RecentlyPlayed extends React.Component {
         <h1>Recently Played</h1>
         {songs.map((song) => (
           <div
+            className="song-card"
             onClick={() => playTrack(song)}
-            style={{ cursor: "pointer" }}
             key={song.id}
           >
             {song.name}

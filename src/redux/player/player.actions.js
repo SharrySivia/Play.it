@@ -18,3 +18,11 @@ export const setDuration = (time) => ({
 export const toggleIsPaused = () => ({
   type: PLAYER_ACTION_TYPES.TOGGLE_IS_PAUSED,
 });
+
+export const toggleIsMuted = () => ({
+  type: PLAYER_ACTION_TYPES.TOGGLE_IS_MUTED,
+});
+
+export const toggleIsRepeated = () => ({
+  type: PLAYER_ACTION_TYPES.TOGGLE_IS_REPEATED,
+});

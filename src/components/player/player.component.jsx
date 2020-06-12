@@ -1,12 +1,22 @@
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
-import VolumeUp from "@material-ui/icons/VolumeUp";
+import PlayArrowRoundedIcon from "@material-ui/icons/PlayArrowRounded";
+import PauseRoundedIcon from "@material-ui/icons/PauseRounded";
+import SkipPreviousRoundedIcon from "@material-ui/icons/SkipPreviousRounded";
+import SkipNextRoundedIcon from "@material-ui/icons/SkipNextRounded";
+import RepeatRoundedIcon from "@material-ui/icons/RepeatRounded";
+import RepeatOneRoundedIcon from "@material-ui/icons/RepeatOneRounded";
+import ShuffleRoundedIcon from "@material-ui/icons/ShuffleRounded";
+import VolumeUp from "@material-ui/icons/VolumeUpRounded";
+import VolumeOffRoundedIcon from "@material-ui/icons/VolumeOffRounded";
 
 import { formatTime } from "./player.utils";
 import {
   toggleIsPaused,
   setCurrTime,
   setDuration,
+  toggleIsMuted,
+  toggleIsRepeated,
 } from "../../redux/player/player.actions";
 
 import RangeSlider from "../range-slider/range-slider.component";
@@ -20,6 +30,7 @@ class Player extends React.Component {
     this.track.addEventListener("timeupdate", () =>
       setCurrTime(this.track.currentTime)
     );
+    this.track.volume = 0.2;
   }
 
   componentWillUnmount() {
@@ -59,6 +70,18 @@ class Player extends React.Component {
     this.track.currentTime = 0;
   };
 
+  toggleMuteTrack = () => {
+    const track = this.track;
+    track.muted = !track.muted;
+    this.props.toggleIsMuted();
+  };
+
+  toggleRepeatTrack = () => {
+    const track = this.track;
+    track.loop = !track.loop;
+    this.props.toggleIsRepeated();
+  };
+
   componentDidUpdate(prevProps) {
     if (prevProps.currentTrack !== this.props.currentTrack) {
       const { currentTrack, setDuration } = this.props;
@@ -73,8 +96,14 @@ class Player extends React.Component {
   }
 
   render() {
-    const { currTime, isPaused, currentTrack, duration } = this.props;
-
+    const {
+      currTime,
+      isPaused,
+      currentTrack,
+      duration,
+      isMuted,
+      isRepeated,
+    } = this.props;
     return (
       <div className="player">
         <div className="progress">
@@ -96,46 +125,68 @@ class Player extends React.Component {
             <span>{currentTrack ? currentTrack.singer : ""}</span>
           </div>
           <div className="buttons-primary">
-            <button type="button" disabled={Boolean(!currentTrack)}>
-              Prev
-            </button>
+            <SkipPreviousRoundedIcon
+              color={currentTrack ? "inherit" : "disabled"}
+              fontSize="large"
+            />
             {isPaused ? (
-              <button
-                type="button"
-                onClick={this.playTrack}
-                disabled={Boolean(!currentTrack)}
-              >
-                Play
-              </button>
+              <PlayArrowRoundedIcon
+                onClick={currentTrack ? this.playTrack : () => {}}
+                color={currentTrack ? "inherit" : "disabled"}
+                fontSize="large"
+              />
             ) : (
-              <button
-                type="button"
+              <PauseRoundedIcon
                 onClick={this.pauseTrack}
-                disabled={Boolean(!currentTrack)}
-              >
-                Pause
-              </button>
+                color={currentTrack ? "inherit" : "disabled"}
+                fontSize="large"
+              />
             )}
-            <button type="button" disabled={Boolean(!currentTrack)}>
-              Next
-            </button>
+            <SkipNextRoundedIcon
+              color={currentTrack ? "inherit" : "disabled"}
+              fontSize="large"
+            />
           </div>
           <div className="buttons-secondary">
-            <button type="button" disabled={Boolean(!currentTrack)}>
-              Repeat
-            </button>
-            <button type="button" disabled={Boolean(!currentTrack)}>
-              Shuffel
-            </button>
+            {isRepeated ? (
+              <RepeatOneRoundedIcon
+                color={currentTrack ? "inherit" : "disabled"}
+                fontSize="default"
+                onClick={currentTrack ? this.toggleRepeatTrack : () => {}}
+              />
+            ) : (
+              <RepeatRoundedIcon
+                color={currentTrack ? "inherit" : "disabled"}
+                fontSize="default"
+                onClick={currentTrack ? this.toggleRepeatTrack : () => {}}
+              />
+            )}
+
+            <ShuffleRoundedIcon
+              color={currentTrack ? "inherit" : "disabled"}
+              fontSize="default"
+            />
             <Fragment>
-              <VolumeUp />
+              {isMuted ? (
+                <VolumeOffRoundedIcon
+                  color={currentTrack ? "inherit" : "disabled"}
+                  onClick={currentTrack ? this.toggleMuteTrack : () => {}}
+                  disabled={Boolean(currentTrack)}
+                />
+              ) : (
+                <VolumeUp
+                  color={currentTrack ? "inherit" : "disabled"}
+                  onClick={currentTrack ? this.toggleMuteTrack : () => {}}
+                />
+              )}
+
               <RangeSlider
                 min={0}
                 max={1}
                 step={0.05}
-                defaultValue={1}
+                defaultValue={0.2}
                 handleChange={this.setVolume}
-                disabled={Boolean(!currentTrack)}
+                disabled={Boolean(!currentTrack) || isMuted}
               />
             </Fragment>
           </div>
@@ -146,18 +197,22 @@ class Player extends React.Component {
 }
 
 const mapStateToProps = ({
-  player: { currentTrack, isPaused, currTime, duration },
+  player: { currentTrack, isPaused, currTime, duration, isMuted, isRepeated },
 }) => ({
   currentTrack,
   isPaused,
   currTime,
   duration,
+  isMuted,
+  isRepeated,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   setCurrTime: (time) => dispatch(setCurrTime(time)),
   setDuration: (time) => dispatch(setDuration(time)),
   toggleIsPaused: () => dispatch(toggleIsPaused()),
+  toggleIsMuted: () => dispatch(toggleIsMuted()),
+  toggleIsRepeated: () => dispatch(toggleIsRepeated()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player);
