@@ -9,7 +9,16 @@ import kasootiDegree from "./assets/Kasooti_Degree_Sharry_Maan_60cd6b350f39a16e8
 import pegDiWashna from "./assets/Peg Di Waashna Ft DJ Flow - Amrit Maan (DJJOhAL.Com).mp3";
 import shukarDatya from "./assets/Shukar Dateya - Prabh Gill (DjPunjab.Com).mp3";
 
-import image from "./assets/dollarsidhu.jpg";
+import dollarImg from "./assets/dollarsidhu.jpg";
+import dontWorryImg from "./assets/dontWorry.jpg";
+import driveImg from "./assets/drive.jpg";
+import followImg from "./assets/follow.jpg";
+import gWagonImg from "./assets/gWagon.jpg";
+import jattZimidaarImg from "./assets/jattZimidaar.jpg";
+import kasootiDegreeImg from "./assets/kasootiDegree.jpg";
+import marziDeMalakImg from "./assets/marziDeMalak.jpg";
+import pegDiWashnaImg from "./assets/pegDiWashna.jpg";
+import shukarDatyaImg from "./assets/shukarDatya.jpg";
 
 export const songs = [
   {
@@ -17,69 +26,69 @@ export const songs = [
     name: "Dont Worry",
     singer: "Karan Aujla",
     src: dontWorry,
-    imgSrc: image,
+    imgSrc: dontWorryImg,
   },
   {
     id: 2,
     name: "Follow",
     singer: "Nawab",
     src: follow,
-    imgSrc: image,
+    imgSrc: followImg,
   },
   {
     id: 3,
     name: "Jatt Zimidar",
     singer: "Gurnam Bhullar",
     src: jattZimidar,
-    imgSrc: image,
+    imgSrc: jattZimidaarImg,
   },
   {
     id: 4,
     name: "Marzi de malak",
     singer: "Amrit Mann",
     src: marziDeMalak,
-    imgSrc: image,
+    imgSrc: marziDeMalakImg,
   },
   {
     id: 5,
     name: "Dollar",
     singer: "Sidhu Moose Wala",
     src: dollar,
-    imgSrc: image,
+    imgSrc: dollarImg,
   },
   {
     id: 6,
     name: "Drive",
     singer: "Diljit Dosanjh",
     src: drive,
-    imgSrc: image,
+    imgSrc: driveImg,
   },
   {
     id: 7,
     name: "G Wagon",
     singer: "Sidhu Moose Wala",
     src: gWagon,
-    imgSrc: image,
+    imgSrc: gWagonImg,
   },
   {
     id: 8,
     name: "Kasooti Degree",
     singer: "Sharry Mann",
     src: kasootiDegree,
-    imgSrc: image,
+    imgSrc: kasootiDegreeImg,
   },
   {
     id: 9,
     name: "Peg Di Washna",
     singer: "Amrit Mann",
     src: pegDiWashna,
-    imgSrc: image,
+    imgSrc: pegDiWashnaImg,
   },
   {
     id: 10,
     name: "Shukar Datya",
     singer: "Prabh Gill",
     src: shukarDatya,
-    imgSrc: image,
+    imgSrc: shukarDatyaImg,
   },
 ];

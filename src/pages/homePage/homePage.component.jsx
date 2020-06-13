@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -6,13 +6,19 @@ import Sidebar from "../../components/sidebar/sidebar.component";
 import Header from "../../components/header/header.component";
 import Player from "../../components/player/player.component";
 import RecentlyPlayed from "../../components/recentlyPlayed/recentlyPlayed.component";
-import Songs from "../../components/songs/songs.component";
-import Playlists from "../../components/playlists/playlists.component";
-import Artists from "../../components/artists/artists.component";
-import Albums from "../../components/albums/albums.component";
+
 import "./homePage.styles.scss";
 
-const HomePage = ({ currentTrack }) => (
+const Songs = lazy(() => import("../../components/songs/songs.component"));
+const Playlists = lazy(() =>
+  import("../../components/playlists/playlists.component")
+);
+const Artists = lazy(() =>
+  import("../../components/artists/artists.component")
+);
+const Albums = lazy(() => import("../../components/albums/albums.component"));
+
+const HomePage = ({ currentTrack, match }) => (
   <div
     className="home-page"
     style={{
@@ -24,13 +30,15 @@ const HomePage = ({ currentTrack }) => (
     <Sidebar />
     <div className="page-content">
       <Header />
-      <Switch>
-        <Route exact path="/" component={RecentlyPlayed} />
-        <Route exact path="/collections/songs" component={Songs} />
-        <Route exact path="/collections/playlists" component={Playlists} />
-        <Route exact path="/collections/artists" component={Artists} />
-        <Route exact path="/collections/albums" component={Albums} />
-      </Switch>
+      {match.url === "/" ? <RecentlyPlayed /> : null}
+      <Suspense fallback={<div>Loading.....</div>}>
+        <Switch>
+          <Route exact path="/collections/songs" component={Songs} />
+          <Route exact path="/collections/playlists" component={Playlists} />
+          <Route exact path="/collections/artists" component={Artists} />
+          <Route exact path="/collections/albums" component={Albums} />
+        </Switch>
+      </Suspense>
     </div>
     <Player />
   </div>

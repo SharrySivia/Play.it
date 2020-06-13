@@ -2,17 +2,18 @@ $primary-color: #0d0c12;
 
 .player {
   width: 85vw;
-  height: auto;
+  height: 17vh;
   position: fixed;
   bottom: 0;
   right: 0;
-  background-color: #d5d7e7;
+  background-color: rgba(255, 255, 255, 0.5);
   color: $primary-color;
-  padding: 20px;
+  padding: 15px 35px;
+  backdrop-filter: blur(80px);
 
   .progress {
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,8 +24,8 @@ $primary-color: #0d0c12;
       text-align: center;
     }
     .bar {
+      width: 100%;
       margin: 0 10px;
-      width: 70%;
     }
   }
 
@@ -52,10 +53,13 @@ $primary-color: #0d0c12;
     }
 
     .buttons-secondary {
-      flex-basis: 170px;
+      flex-basis: 200px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+
+      svg {
+        margin: 0 5px;
+      }
     }
   }
 }
