@@ -1,12 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
 import PlayArrowRoundedIcon from "@material-ui/icons/PlayArrowRounded";
+// import StarBorderRoundedIcon from "@material-ui/icons/StarBorderRounded";
+// import StarRoundedIcon from "@material-ui/icons/StarRounded";
+import AddToQueueRoundedIcon from "@material-ui/icons/AddToQueueRounded";
 
 import { playTrack } from "../../redux/player/player.actions";
+import { addToQueue } from "../../redux/queue/queue.actions";
 
 import "./song-card.styles.scss";
 
-const SongCard = ({ song, playTrack }) => (
+const SongCard = ({ song, playTrack, addToQueue }) => (
   <div className="song-card">
     <div
       className="art-display"
@@ -17,6 +21,7 @@ const SongCard = ({ song, playTrack }) => (
           onClick={() => playTrack(song)}
           fontSize="large"
         />
+        <AddToQueueRoundedIcon onClick={() => addToQueue(song)} />
       </div>
     </div>
     <h3 className="song-name">{song.name}</h3>
@@ -26,6 +31,7 @@ const SongCard = ({ song, playTrack }) => (
 
 const mapDispatchToProps = (dispatch) => ({
   playTrack: (track) => dispatch(playTrack(track)),
+  addToQueue: (track) => dispatch(addToQueue(track)),
 });
 
 export default connect(null, mapDispatchToProps)(SongCard);

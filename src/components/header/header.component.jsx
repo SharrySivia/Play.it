@@ -5,7 +5,15 @@ import { auth } from "../../firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
 import "./header.styles.scss";
 
-const Header = (currentUser) => {
+const Header = ({ currentUser }) => {
+  let displayName;
+  if (currentUser) {
+    displayName = currentUser.displayName
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase();
+  }
   return (
     <div className="header">
       <FormInput
@@ -14,16 +22,17 @@ const Header = (currentUser) => {
         placeholder="Search for songs, artists etc..."
         isSearchInput
       />
-      <div className="user-info" onClick={() => auth.signOut()}>
-        {currentUser.displayName}
-      </div>
+      {currentUser ? (
+        <div className="user-info" onClick={() => auth.signOut()}>
+          {displayName}
+        </div>
+      ) : null}
     </div>
   );
 };
 
-const mapStateToProps = ({ user }) => {
-  const { currentUser } = user;
-  return currentUser;
-};
+const mapStateToProps = ({ user: { currentUser } }) => ({
+  currentUser,
+});
 
 export default connect(mapStateToProps)(Header);

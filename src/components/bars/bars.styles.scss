@@ -1,0 +1,46 @@
+#bars {
+  height: 30px;
+  width: 40px;
+  margin-left: auto;
+  position: relative;
+
+  .bar {
+    background: #0d0c12;
+    bottom: 8px;
+    height: 3px;
+    width: 3px;
+    position: absolute;
+    animation: sound 0ms -800ms linear infinite alternate;
+  }
+  @keyframes sound {
+    0% {
+      opacity: 0.35;
+      height: 3px;
+    }
+    100% {
+      opacity: 1;
+      height: 20px;
+    }
+  }
+
+  .bar:nth-child(1) {
+    left: 1px;
+    animation-duration: 474ms;
+  }
+  .bar:nth-child(2) {
+    left: 5px;
+    animation-duration: 433ms;
+  }
+  .bar:nth-child(3) {
+    left: 9px;
+    animation-duration: 407ms;
+  }
+  .bar:nth-child(4) {
+    left: 13px;
+    animation-duration: 458ms;
+  }
+  .bar:nth-child(5) {
+    left: 17px;
+    animation-duration: 400ms;
+  }
+}

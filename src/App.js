@@ -11,33 +11,33 @@ const SignInAndSignUpPage = lazy(() =>
 );
 
 class App extends React.Component {
-  // componentDidMount() {
-  //   const { history, setCurrentUser } = this.props;
-  //   auth.onAuthStateChanged(async (userAuth) => {
-  //     if (userAuth) {
-  //       history.push("/");
-  //       const userLibrary = {
-  //         songs: null,
-  //         playlists: null,
-  //         artists: null,
-  //         albums: null,
-  //       };
-  //       const userRef = await createUserProfileDocument(userAuth, userLibrary);
-  //       const userSnapshot = await userRef.get();
-  //       console.log(userSnapshot);
-  //       setCurrentUser({ id: userSnapshot.id, ...userSnapshot.data() });
-  //     } else {
-  //       history.replace("/signin");
-  //     }
-  //   });
-  // }
+  componentDidMount() {
+    const { history, setCurrentUser } = this.props;
+    auth.onAuthStateChanged(async (userAuth) => {
+      if (userAuth) {
+        history.push("/");
+        const userLibrary = {
+          songs: null,
+          playlists: null,
+          artists: null,
+          albums: null,
+        };
+        const userRef = await createUserProfileDocument(userAuth, userLibrary);
+        const userSnapshot = await userRef.get();
+        console.log(userSnapshot);
+        setCurrentUser({ id: userSnapshot.id, ...userSnapshot.data() });
+      } else {
+        history.replace("/signin");
+      }
+    });
+  }
 
   render() {
     return (
       <div className="App">
         <Suspense fallback={<div>Loading.....</div>}>
           <Switch>
-            {/* <Route path="/(signin|signup)" component={SignInAndSignUpPage} /> */}
+            <Route path="/(signin|signup)" component={SignInAndSignUpPage} />
             <Route path="/*" component={HomePage} />
           </Switch>
         </Suspense>

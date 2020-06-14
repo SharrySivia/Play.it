@@ -5,10 +5,12 @@ import PauseRoundedIcon from "@material-ui/icons/PauseRounded";
 import SkipPreviousRoundedIcon from "@material-ui/icons/SkipPreviousRounded";
 import SkipNextRoundedIcon from "@material-ui/icons/SkipNextRounded";
 import RepeatRoundedIcon from "@material-ui/icons/RepeatRounded";
-import RepeatOneRoundedIcon from "@material-ui/icons/RepeatOneRounded";
 import ShuffleRoundedIcon from "@material-ui/icons/ShuffleRounded";
+import QueueMusicRoundedIcon from "@material-ui/icons/QueueMusicRounded";
 import VolumeUp from "@material-ui/icons/VolumeUpRounded";
 import VolumeOffRoundedIcon from "@material-ui/icons/VolumeOffRounded";
+
+import QueueDropup from "../queue-dropup/queue-dropup.component";
 
 import { formatTime } from "./player.utils";
 import {
@@ -18,6 +20,7 @@ import {
   toggleIsMuted,
   toggleIsRepeated,
 } from "../../redux/player/player.actions";
+import { toggleQueueHidden } from "../../redux/queue/queue.actions";
 
 import RangeSlider from "../range-slider/range-slider.component";
 
@@ -103,6 +106,8 @@ class Player extends React.Component {
       duration,
       isMuted,
       isRepeated,
+      isQueueHidden,
+      toggleQueueHidden,
     } = this.props;
     return (
       <div className="player">
@@ -148,23 +153,21 @@ class Player extends React.Component {
             />
           </div>
           <div className="buttons-secondary">
-            {isRepeated ? (
-              <RepeatOneRoundedIcon
-                color={currentTrack ? "inherit" : "disabled"}
-                fontSize="default"
-                onClick={currentTrack ? this.toggleRepeatTrack : () => {}}
-              />
-            ) : (
-              <RepeatRoundedIcon
-                color={currentTrack ? "inherit" : "disabled"}
-                fontSize="default"
-                onClick={currentTrack ? this.toggleRepeatTrack : () => {}}
-              />
-            )}
-
+            <RepeatRoundedIcon
+              color={isRepeated ? "inherit" : "disabled"}
+              fontSize="default"
+              onClick={currentTrack ? this.toggleRepeatTrack : () => {}}
+            />
             <ShuffleRoundedIcon
               color={currentTrack ? "inherit" : "disabled"}
               fontSize="default"
+            />
+            {isQueueHidden ? null : <QueueDropup />}
+
+            <QueueMusicRoundedIcon
+              color={currentTrack ? "inherit" : "disabled"}
+              fontSize="default"
+              onClick={toggleQueueHidden}
             />
             <Fragment>
               {isMuted ? (
@@ -198,6 +201,7 @@ class Player extends React.Component {
 
 const mapStateToProps = ({
   player: { currentTrack, isPaused, currTime, duration, isMuted, isRepeated },
+  queue: { isQueueHidden },
 }) => ({
   currentTrack,
   isPaused,
@@ -205,6 +209,7 @@ const mapStateToProps = ({
   duration,
   isMuted,
   isRepeated,
+  isQueueHidden,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -213,6 +218,7 @@ const mapDispatchToProps = (dispatch) => ({
   toggleIsPaused: () => dispatch(toggleIsPaused()),
   toggleIsMuted: () => dispatch(toggleIsMuted()),
   toggleIsRepeated: () => dispatch(toggleIsRepeated()),
+  toggleQueueHidden: () => dispatch(toggleQueueHidden()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player);
