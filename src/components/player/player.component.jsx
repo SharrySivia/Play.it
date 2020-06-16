@@ -9,6 +9,7 @@ import ShuffleRoundedIcon from "@material-ui/icons/ShuffleRounded";
 import QueueMusicRoundedIcon from "@material-ui/icons/QueueMusicRounded";
 import VolumeUp from "@material-ui/icons/VolumeUpRounded";
 import VolumeOffRoundedIcon from "@material-ui/icons/VolumeOffRounded";
+import ToolTip from "@material-ui/core/Tooltip";
 
 import QueueDropup from "../queue-dropup/queue-dropup.component";
 
@@ -130,52 +131,70 @@ class Player extends React.Component {
             <span>{currentTrack ? currentTrack.singer : ""}</span>
           </div>
           <div className="buttons-primary">
-            <SkipPreviousRoundedIcon
-              color={currentTrack ? "inherit" : "disabled"}
-              fontSize="large"
-            />
+            <ToolTip title="Previous" placement="top">
+              <SkipPreviousRoundedIcon
+                color={currentTrack ? "inherit" : "disabled"}
+                fontSize="large"
+              />
+            </ToolTip>
             {isPaused ? (
-              <PlayArrowRoundedIcon
-                onClick={currentTrack ? this.playTrack : () => {}}
-                color={currentTrack ? "inherit" : "disabled"}
-                fontSize="large"
-              />
+              <ToolTip title="Play" placement="top">
+                <PlayArrowRoundedIcon
+                  onClick={currentTrack ? this.playTrack : () => {}}
+                  color={currentTrack ? "inherit" : "disabled"}
+                  fontSize="large"
+                />
+              </ToolTip>
             ) : (
-              <PauseRoundedIcon
-                onClick={this.pauseTrack}
+              <ToolTip title="Pause" placement="top">
+                <PauseRoundedIcon
+                  onClick={this.pauseTrack}
+                  color={currentTrack ? "inherit" : "disabled"}
+                  fontSize="large"
+                />
+              </ToolTip>
+            )}
+            <ToolTip title="Next" placement="top">
+              <SkipNextRoundedIcon
                 color={currentTrack ? "inherit" : "disabled"}
                 fontSize="large"
               />
-            )}
-            <SkipNextRoundedIcon
-              color={currentTrack ? "inherit" : "disabled"}
-              fontSize="large"
-            />
+            </ToolTip>
           </div>
           <div className="buttons-secondary">
-            <RepeatRoundedIcon
-              color={isRepeated ? "inherit" : "disabled"}
-              fontSize="default"
-              onClick={currentTrack ? this.toggleRepeatTrack : () => {}}
-            />
-            <ShuffleRoundedIcon
-              color={currentTrack ? "inherit" : "disabled"}
-              fontSize="default"
-            />
+            <ToolTip
+              title={isRepeated ? "Repeat once" : "No repeat"}
+              placement="top"
+            >
+              <RepeatRoundedIcon
+                color={isRepeated ? "inherit" : "disabled"}
+                fontSize="default"
+                onClick={currentTrack ? this.toggleRepeatTrack : () => {}}
+              />
+            </ToolTip>
+            <ToolTip title="Shuffle" placement="top">
+              <ShuffleRoundedIcon
+                color={currentTrack ? "inherit" : "disabled"}
+                fontSize="default"
+              />
+            </ToolTip>
             {isQueueHidden ? null : <QueueDropup />}
-
-            <QueueMusicRoundedIcon
-              color={currentTrack ? "inherit" : "disabled"}
-              fontSize="default"
-              onClick={toggleQueueHidden}
-            />
+            <ToolTip title="Queue" placement="top">
+              <QueueMusicRoundedIcon
+                color={currentTrack ? "inherit" : "disabled"}
+                fontSize="default"
+                onClick={toggleQueueHidden}
+              />
+            </ToolTip>
             <Fragment>
               {isMuted ? (
-                <VolumeOffRoundedIcon
-                  color={currentTrack ? "inherit" : "disabled"}
-                  onClick={currentTrack ? this.toggleMuteTrack : () => {}}
-                  disabled={Boolean(currentTrack)}
-                />
+                <ToolTip title="Muted" placement="top">
+                  <VolumeOffRoundedIcon
+                    color={currentTrack ? "inherit" : "disabled"}
+                    onClick={currentTrack ? this.toggleMuteTrack : () => {}}
+                    disabled={Boolean(currentTrack)}
+                  />
+                </ToolTip>
               ) : (
                 <VolumeUp
                   color={currentTrack ? "inherit" : "disabled"}
