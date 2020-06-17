@@ -28,4 +28,4 @@ const RangeSlider = ({ handleChange, ...otherProps }) => {
   );
 };
 
-export default RangeSlider;
+export default React.memo(RangeSlider);

@@ -1,20 +1,25 @@
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
-import PlayArrowRoundedIcon from "@material-ui/icons/PlayArrowRounded";
-import PauseRoundedIcon from "@material-ui/icons/PauseRounded";
-import SkipPreviousRoundedIcon from "@material-ui/icons/SkipPreviousRounded";
-import SkipNextRoundedIcon from "@material-ui/icons/SkipNextRounded";
-import RepeatRoundedIcon from "@material-ui/icons/RepeatRounded";
-import ShuffleRoundedIcon from "@material-ui/icons/ShuffleRounded";
-import QueueMusicRoundedIcon from "@material-ui/icons/QueueMusicRounded";
-import VolumeUp from "@material-ui/icons/VolumeUpRounded";
-import VolumeOffRoundedIcon from "@material-ui/icons/VolumeOffRounded";
-import ToolTip from "@material-ui/core/Tooltip";
+
+import {
+  PlayButton,
+  PauseButton,
+  SkipPreviousButton,
+  SkipNextButton,
+  RepeatButton,
+  ShuffelButton,
+  QueueButton,
+  MutedButton,
+  UnMutedButton,
+} from "../player-buttons/player-buttons.component";
 
 import QueueDropup from "../queue-dropup/queue-dropup.component";
 
-import { formatTime } from "./player.utils";
+import { formatTime, getTrack } from "./player.utils";
+import { removeFromQueue } from "../../redux/queue/queue.actions";
+
 import {
+  setCurrentTrack,
   toggleIsPaused,
   setCurrTime,
   setDuration,
@@ -35,10 +40,11 @@ class Player extends React.Component {
       setCurrTime(this.track.currentTime)
     );
     this.track.volume = 0.2;
+    this.track.onended = this.getNextTrack;
   }
 
   componentWillUnmount() {
-    this.track.removeEventListener("timeupdate", () => {});
+    this.track.removeEventListener("timeupdate", null);
   }
 
   playTrack = () => {
@@ -69,9 +75,19 @@ class Player extends React.Component {
     this.track.volume = value;
   };
 
+  getNextTrack = () => {
+    const { queue, setCurrentTrack } = this.props;
+    const isNextTrack = getTrack(queue, setCurrentTrack);
+    if (!isNextTrack) this.clearPlayer();
+  };
+
   clearPlayer = () => {
-    this.props.toggleIsPaused();
-    this.track.currentTime = 0;
+    const { isPaused } = this.props;
+    if (!isPaused) {
+      this.track.pause();
+      this.props.toggleIsPaused();
+      this.track.currentTime = 0;
+    }
   };
 
   toggleMuteTrack = () => {
@@ -88,14 +104,14 @@ class Player extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.currentTrack !== this.props.currentTrack) {
-      const { currentTrack, setDuration } = this.props;
+      const { currentTrack, setDuration, queue, removeFromQueue } = this.props;
       const track = this.track;
       track.src = currentTrack.src;
+      if (queue) removeFromQueue(currentTrack);
       track.onloadedmetadata = () => {
         setDuration(track.duration);
         this.playTrack();
       };
-      track.onended = this.clearPlayer;
     }
   }
 
@@ -110,6 +126,7 @@ class Player extends React.Component {
       isQueueHidden,
       toggleQueueHidden,
     } = this.props;
+    const isDisabled = !Boolean(currentTrack);
     return (
       <div className="player">
         <div className="progress">
@@ -120,85 +137,56 @@ class Player extends React.Component {
               max={duration}
               value={currTime}
               handleChange={this.seekTrack}
-              disabled={Boolean(!currentTrack)}
+              disabled={isDisabled}
             />
           </div>
           <span className="time">{formatTime(duration)}</span>
         </div>
         <div className="controles">
           <div className="currently-playing">
-            <h3>{currentTrack ? currentTrack.name : ""}</h3>
-            <span>{currentTrack ? currentTrack.singer : ""}</span>
+            <h3>{isDisabled ? "" : currentTrack.name}</h3>
+            <span>{isDisabled ? "" : currentTrack.singer}</span>
           </div>
           <div className="buttons-primary">
-            <ToolTip title="Previous" placement="top">
-              <SkipPreviousRoundedIcon
-                color={currentTrack ? "inherit" : "disabled"}
-                fontSize="large"
-              />
-            </ToolTip>
+            <SkipPreviousButton isDisabled={isDisabled} />
             {isPaused ? (
-              <ToolTip title="Play" placement="top">
-                <PlayArrowRoundedIcon
-                  onClick={currentTrack ? this.playTrack : () => {}}
-                  color={currentTrack ? "inherit" : "disabled"}
-                  fontSize="large"
-                />
-              </ToolTip>
+              <PlayButton isDisabled={isDisabled} playTrack={this.playTrack} />
             ) : (
-              <ToolTip title="Pause" placement="top">
-                <PauseRoundedIcon
-                  onClick={this.pauseTrack}
-                  color={currentTrack ? "inherit" : "disabled"}
-                  fontSize="large"
-                />
-              </ToolTip>
-            )}
-            <ToolTip title="Next" placement="top">
-              <SkipNextRoundedIcon
-                color={currentTrack ? "inherit" : "disabled"}
-                fontSize="large"
+              <PauseButton
+                isDisabled={isDisabled}
+                pauseTrack={this.pauseTrack}
               />
-            </ToolTip>
+            )}
+
+            <SkipNextButton
+              isDisabled={isDisabled}
+              getNextTrack={this.getNextTrack}
+            />
           </div>
           <div className="buttons-secondary">
-            <ToolTip
-              title={isRepeated ? "Repeat once" : "No repeat"}
-              placement="top"
-            >
-              <RepeatRoundedIcon
-                color={isRepeated ? "inherit" : "disabled"}
-                fontSize="default"
-                onClick={currentTrack ? this.toggleRepeatTrack : () => {}}
-              />
-            </ToolTip>
-            <ToolTip title="Shuffle" placement="top">
-              <ShuffleRoundedIcon
-                color={currentTrack ? "inherit" : "disabled"}
-                fontSize="default"
-              />
-            </ToolTip>
+            <RepeatButton
+              isDisabled={isDisabled}
+              isRepeated={isRepeated}
+              toggleRepeatTrack={this.toggleRepeatTrack}
+            />
+
+            <ShuffelButton isDisabled={isDisabled} />
             {isQueueHidden ? null : <QueueDropup />}
-            <ToolTip title="Queue" placement="top">
-              <QueueMusicRoundedIcon
-                color={currentTrack ? "inherit" : "disabled"}
-                fontSize="default"
-                onClick={toggleQueueHidden}
-              />
-            </ToolTip>
+
+            <QueueButton
+              isDisabled={isDisabled}
+              toggleQueueHidden={toggleQueueHidden}
+            />
             <Fragment>
               {isMuted ? (
-                <ToolTip title="Muted" placement="top">
-                  <VolumeOffRoundedIcon
-                    color={currentTrack ? "inherit" : "disabled"}
-                    onClick={currentTrack ? this.toggleMuteTrack : () => {}}
-                    disabled={Boolean(currentTrack)}
-                  />
-                </ToolTip>
+                <MutedButton
+                  isDisabled={isDisabled}
+                  toggleMuteTrack={this.toggleMuteTrack}
+                />
               ) : (
-                <VolumeUp
-                  color={currentTrack ? "inherit" : "disabled"}
-                  onClick={currentTrack ? this.toggleMuteTrack : () => {}}
+                <UnMutedButton
+                  isDisabled={isDisabled}
+                  toggleMuteTrack={this.toggleMuteTrack}
                 />
               )}
 
@@ -208,7 +196,7 @@ class Player extends React.Component {
                 step={0.05}
                 defaultValue={0.2}
                 handleChange={this.setVolume}
-                disabled={Boolean(!currentTrack) || isMuted}
+                disabled={isDisabled || isMuted}
               />
             </Fragment>
           </div>
@@ -220,7 +208,7 @@ class Player extends React.Component {
 
 const mapStateToProps = ({
   player: { currentTrack, isPaused, currTime, duration, isMuted, isRepeated },
-  queue: { isQueueHidden },
+  queue: { queue, isQueueHidden },
 }) => ({
   currentTrack,
   isPaused,
@@ -228,16 +216,19 @@ const mapStateToProps = ({
   duration,
   isMuted,
   isRepeated,
+  queue,
   isQueueHidden,
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  setCurrentTrack: (track) => dispatch(setCurrentTrack(track)),
   setCurrTime: (time) => dispatch(setCurrTime(time)),
   setDuration: (time) => dispatch(setDuration(time)),
   toggleIsPaused: () => dispatch(toggleIsPaused()),
   toggleIsMuted: () => dispatch(toggleIsMuted()),
   toggleIsRepeated: () => dispatch(toggleIsRepeated()),
   toggleQueueHidden: () => dispatch(toggleQueueHidden()),
+  removeFromQueue: (track) => dispatch(removeFromQueue(track)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player);

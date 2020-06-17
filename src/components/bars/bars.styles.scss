@@ -1,6 +1,7 @@
 #bars {
   height: 30px;
   width: 40px;
+  padding: 0 10px;
   margin-left: auto;
   position: relative;
 
@@ -10,7 +11,7 @@
     height: 3px;
     width: 3px;
     position: absolute;
-    animation: sound 0ms -600ms linear infinite alternate;
+    animation: sound 0.5ms linear infinite alternate;
   }
   @keyframes sound {
     0% {

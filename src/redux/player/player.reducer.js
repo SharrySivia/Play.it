@@ -11,7 +11,7 @@ const INITIAL_STATE = {
 
 const playerReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case PLAYER_ACTION_TYPES.PLAY_TRACK:
+    case PLAYER_ACTION_TYPES.SET_CURRENT_TRACK:
       return {
         ...state,
         currentTrack: action.payload,

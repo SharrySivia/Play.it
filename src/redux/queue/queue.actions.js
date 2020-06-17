@@ -8,3 +8,8 @@ export const addToQueue = (track) => ({
 export const toggleQueueHidden = () => ({
   type: QUEUE_ACTION_TYPES.TOGGLE_QUEUE_HIDDEN,
 });
+
+export const removeFromQueue = (track) => ({
+  type: QUEUE_ACTION_TYPES.REMOVE_FROM_QUEUE,
+  payload: track,
+});

@@ -1,6 +1,6 @@
 import { QUEUE_ACTION_TYPES } from "./queue.types";
 
-import { addToQueue } from "./queue.utils";
+import { addToQueue, removeFromQueue } from "./queue.utils";
 
 const INITIAL_STATE = {
   isQueueHidden: true,
@@ -18,6 +18,11 @@ const queueReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isQueueHidden: !state.isQueueHidden,
+      };
+    case QUEUE_ACTION_TYPES.REMOVE_FROM_QUEUE:
+      return {
+        ...state,
+        queue: removeFromQueue(state.queue, action.payload),
       };
     default:
       return state;

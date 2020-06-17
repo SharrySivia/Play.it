@@ -1,7 +1,7 @@
 import { PLAYER_ACTION_TYPES } from "./player.types";
 
-export const playTrack = (track) => ({
-  type: PLAYER_ACTION_TYPES.PLAY_TRACK,
+export const setCurrentTrack = (track) => ({
+  type: PLAYER_ACTION_TYPES.SET_CURRENT_TRACK,
   payload: track,
 });
 

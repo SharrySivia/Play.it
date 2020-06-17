@@ -6,24 +6,43 @@
   align-items: center;
   font-weight: bold;
   position: relative;
+  color: #0d0c12;
+
+  &:hover .remove-button {
+    transform: translateX(0px);
+    opacity: 1;
+  }
 
   &:not(:last-child) {
-    border-bottom: 1px solid #bbbbbb;
+    border-bottom: 1px solid #dddddd;
   }
 
   img {
     width: 55px;
     height: 55px;
   }
-
-  .title {
-    font-size: 15px;
-    margin: 0 10px;
-    cursor: pointer;
+  .info {
+    width: 100%;
+    padding: 0 10px;
+    span {
+      display: block;
+    }
+    .title {
+      font-size: 14px;
+      padding: 0;
+      cursor: pointer;
+    }
+    .subtitle {
+      font-size: 12px;
+    }
   }
 
   .remove-button {
     cursor: pointer;
+    font-size: 18px;
     margin-left: auto;
+    transform: translateX(30px);
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.1s ease;
   }
 }

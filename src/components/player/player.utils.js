@@ -7,3 +7,11 @@ export const formatTime = (fullSeconds) => {
     .filter((a) => a)
     .join(":");
 };
+
+export const getTrack = (queue, setCurrentTrack) => {
+  if (queue) {
+    setCurrentTrack(queue[0]);
+    return true;
+  }
+  return false;
+};

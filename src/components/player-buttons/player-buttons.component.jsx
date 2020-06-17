@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import PlayArrowRoundedIcon from "@material-ui/icons/PlayArrowRounded";
 import PauseRoundedIcon from "@material-ui/icons/PauseRounded";
 import SkipPreviousRoundedIcon from "@material-ui/icons/SkipPreviousRounded";
@@ -8,71 +8,101 @@ import ShuffleRoundedIcon from "@material-ui/icons/ShuffleRounded";
 import QueueMusicRoundedIcon from "@material-ui/icons/QueueMusicRounded";
 import VolumeUp from "@material-ui/icons/VolumeUpRounded";
 import VolumeOffRoundedIcon from "@material-ui/icons/VolumeOffRounded";
+import AddToQueueRoundedIcon from "@material-ui/icons/AddToQueueRounded";
 
-export const PlayButton = ({ currentTrack }) => (
-  <PlayArrowRoundedIcon
-    onClick={currentTrack ? this.playTrack : () => {}}
-    color={currentTrack ? "inherit" : "disabled"}
-    fontSize="large"
-  />
+import ToolTip from "@material-ui/core/Tooltip";
+
+export const PlayButton = memo(({ isDisabled, playTrack }) => (
+  <ToolTip title="Play" placement="top">
+    <PlayArrowRoundedIcon
+      onClick={isDisabled ? null : playTrack}
+      color={isDisabled ? "disabled" : "inherit"}
+      fontSize="large"
+    />
+  </ToolTip>
+));
+
+export const PauseButton = memo(({ isDisabled, pauseTrack }) => (
+  <ToolTip title="Pause" placement="top">
+    <PauseRoundedIcon
+      onClick={pauseTrack}
+      color={isDisabled ? "disabled" : "inherit"}
+      fontSize="large"
+    />
+  </ToolTip>
+));
+
+export const SkipPreviousButton = memo(({ isDisabled }) => (
+  <ToolTip title="Previous" placement="top">
+    <SkipPreviousRoundedIcon
+      color={isDisabled ? "disabled" : "inherit"}
+      fontSize="large"
+    />
+  </ToolTip>
+));
+
+export const SkipNextButton = memo(({ isDisabled, getNextTrack }) => (
+  <ToolTip title="Next" placement="top">
+    <SkipNextRoundedIcon
+      color={isDisabled ? "disabled" : "inherit"}
+      fontSize="large"
+      onClick={isDisabled ? null : getNextTrack}
+    />
+  </ToolTip>
+));
+
+export const RepeatButton = memo(
+  ({ isDisabled, isRepeated, toggleRepeatTrack }) => (
+    <ToolTip title={isRepeated ? "Repeat on" : "Repeat off"} placement="top">
+      <RepeatRoundedIcon
+        color={isRepeated ? "inherit" : "disabled"}
+        fontSize="default"
+        onClick={isDisabled ? null : toggleRepeatTrack}
+      />
+    </ToolTip>
+  )
 );
 
-export const PauseButton = ({ currentTrack }) => (
-  <PauseRoundedIcon
-    onClick={this.pauseTrack}
-    color={currentTrack ? "inherit" : "disabled"}
-    fontSize="large"
-  />
-);
+export const ShuffelButton = memo(({ isDisabled }) => (
+  <ToolTip title="Shuffle" placement="top">
+    <ShuffleRoundedIcon
+      color={isDisabled ? "disabled" : "inherit"}
+      fontSize="default"
+    />
+  </ToolTip>
+));
 
-export const SkipPreviousButton = ({ currentTrack }) => (
-  <SkipPreviousRoundedIcon
-    color={currentTrack ? "inherit" : "disabled"}
-    fontSize="large"
-  />
-);
+export const QueueButton = memo(({ isDisabled, toggleQueueHidden }) => (
+  <ToolTip title="Queue" placement="top">
+    <QueueMusicRoundedIcon
+      color={isDisabled ? "disabled" : "inherit"}
+      fontSize="default"
+      onClick={isDisabled ? null : toggleQueueHidden}
+    />
+  </ToolTip>
+));
 
-export const SkipNextButton = ({ currentTrack }) => (
-  <SkipNextRoundedIcon
-    color={currentTrack ? "inherit" : "disabled"}
-    fontSize="large"
-  />
-);
+export const MutedButton = memo(({ isDisabled, toggleMuteTrack }) => (
+  <ToolTip title="Muted" placement="top">
+    <VolumeOffRoundedIcon
+      color={isDisabled ? "disabled" : "inherit"}
+      onClick={isDisabled ? null : toggleMuteTrack}
+    />
+  </ToolTip>
+));
 
-export const RepeatButton = ({ currentTrack, isRepeated }) => (
-  <RepeatRoundedIcon
-    color={isRepeated ? "inherit" : "disabled"}
-    fontSize="default"
-    onClick={currentTrack ? this.toggleRepeatTrack : () => {}}
-  />
-);
-
-export const ShuffelButton = ({ currentTrack }) => (
-  <ShuffleRoundedIcon
-    color={currentTrack ? "inherit" : "disabled"}
-    fontSize="default"
-  />
-);
-
-export const QueueButton = ({}) => (
-  <QueueMusicRoundedIcon
-    color={currentTrack ? "inherit" : "disabled"}
-    fontSize="default"
-    onClick={toggleQueueHidden}
-  />
-);
-
-export const MuteButton = ({ currentTrack }) => (
-  <VolumeOffRoundedIcon
-    color={currentTrack ? "inherit" : "disabled"}
-    onClick={currentTrack ? this.toggleMuteTrack : () => {}}
-    disabled={Boolean(currentTrack)}
-  />
-);
-
-export const UnMuteButton = ({}) => (
+export const UnMutedButton = memo(({ isDisabled, toggleMuteTrack }) => (
   <VolumeUp
-    color={currentTrack ? "inherit" : "disabled"}
-    onClick={currentTrack ? this.toggleMuteTrack : () => {}}
+    color={isDisabled ? "disabled" : "inherit"}
+    onClick={isDisabled ? null : toggleMuteTrack}
   />
-);
+));
+
+export const AddToQueueButton = memo(({ song, addToQueue, isDisabled }) => (
+  <ToolTip title="Add to queue" placement="top">
+    <AddToQueueRoundedIcon
+      color={isDisabled ? "disabled" : "inherit"}
+      onClick={isDisabled ? null : () => addToQueue(song)}
+    />
+  </ToolTip>
+));
