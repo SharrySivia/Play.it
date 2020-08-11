@@ -15,25 +15,21 @@ const QueueDropUp = ({
   removeFromQueue,
 }) => (
   <div className="queue-dropup">
-    <h4 className="title">Now Playing</h4>
-    <QueueItem
-      track={currentTrack}
-      currentlyPlaying
-      isPaused={isPaused}
-      removeFromQueue={removeFromQueue}
-    />
     {queue ? <h4 className="title">Next In Queue</h4> : null}
-    {queue
-      ? queue.map((track) => (
-          <QueueItem
-            key={track.id}
-            track={track}
-            setCurrentTrack={setCurrentTrack}
-            isPaused={isPaused}
-            removeFromQueue={removeFromQueue}
-          />
-        ))
-      : null}
+    {queue ? (
+      queue.map((track) => (
+        <QueueItem
+          key={track.id}
+          currentlyPlaying={currentTrack.id === track.id}
+          track={track}
+          setCurrentTrack={setCurrentTrack}
+          isPaused={isPaused}
+          removeFromQueue={removeFromQueue}
+        />
+      ))
+    ) : (
+      <p className="empty-msg">Nothing in queue</p>
+    )}
   </div>
 );
 

@@ -32,11 +32,12 @@ export const PauseButton = memo(({ isDisabled, pauseTrack }) => (
   </ToolTip>
 ));
 
-export const SkipPreviousButton = memo(({ isDisabled }) => (
+export const SkipPreviousButton = memo(({ isDisabled, getPreviousTrack }) => (
   <ToolTip title="Previous" placement="top">
     <SkipPreviousRoundedIcon
       color={isDisabled ? "disabled" : "inherit"}
       fontSize="large"
+      onClick={isDisabled ? null : getPreviousTrack}
     />
   </ToolTip>
 ));

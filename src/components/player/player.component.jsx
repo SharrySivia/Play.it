@@ -15,7 +15,7 @@ import {
 
 import QueueDropup from "../queue-dropup/queue-dropup.component";
 
-import { formatTime, getTrack } from "./player.utils";
+import { formatTime, getNewTrack } from "./player.utils";
 import { removeFromQueue } from "../../redux/queue/queue.actions";
 
 import {
@@ -40,7 +40,7 @@ class Player extends React.Component {
       setCurrTime(this.track.currentTime)
     );
     this.track.volume = 0.2;
-    this.track.onended = this.getNextTrack;
+    this.track.onended = () => this.getTrack("next");
   }
 
   componentWillUnmount() {
@@ -75,10 +75,11 @@ class Player extends React.Component {
     this.track.volume = value;
   };
 
-  getNextTrack = () => {
-    const { queue, setCurrentTrack } = this.props;
-    const isNextTrack = getTrack(queue, setCurrentTrack);
-    if (!isNextTrack) this.clearPlayer();
+  getTrack = (type) => {
+    const { queue, currentTrack, setCurrentTrack } = this.props;
+    const isTrack = getNewTrack(type, queue, setCurrentTrack, currentTrack);
+    if (!isTrack) this.clearPlayer();
+    return isTrack;
   };
 
   clearPlayer = () => {
@@ -104,10 +105,15 @@ class Player extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.currentTrack !== this.props.currentTrack) {
-      const { currentTrack, setDuration, queue, removeFromQueue } = this.props;
+      const {
+        currentTrack,
+        setDuration,
+        isQueueHidden,
+        toggleQueueHidden,
+      } = this.props;
       const track = this.track;
       track.src = currentTrack.src;
-      if (queue) removeFromQueue(currentTrack);
+      if (!isQueueHidden) toggleQueueHidden();
       track.onloadedmetadata = () => {
         setDuration(track.duration);
         this.playTrack();
@@ -123,6 +129,7 @@ class Player extends React.Component {
       duration,
       isMuted,
       isRepeated,
+      queue,
       isQueueHidden,
       toggleQueueHidden,
     } = this.props;
@@ -144,11 +151,14 @@ class Player extends React.Component {
         </div>
         <div className="controles">
           <div className="currently-playing">
-            <h3>{isDisabled ? "" : currentTrack.name}</h3>
-            <span>{isDisabled ? "" : currentTrack.singer}</span>
+            <h3>{isDisabled ? null : currentTrack.name}</h3>
+            <span>{isDisabled ? null : currentTrack.singer}</span>
           </div>
           <div className="buttons-primary">
-            <SkipPreviousButton isDisabled={isDisabled} />
+            <SkipPreviousButton
+              isDisabled={isDisabled}
+              getPreviousTrack={() => this.getTrack("previous")}
+            />
             {isPaused ? (
               <PlayButton isDisabled={isDisabled} playTrack={this.playTrack} />
             ) : (
@@ -159,8 +169,8 @@ class Player extends React.Component {
             )}
 
             <SkipNextButton
-              isDisabled={isDisabled}
-              getNextTrack={this.getNextTrack}
+              isDisabled={isDisabled || !queue}
+              getNextTrack={() => this.getTrack("next")}
             />
           </div>
           <div className="buttons-secondary">
@@ -174,7 +184,7 @@ class Player extends React.Component {
             {isQueueHidden ? null : <QueueDropup />}
 
             <QueueButton
-              isDisabled={isDisabled}
+              isDisabled={isDisabled || !queue}
               toggleQueueHidden={toggleQueueHidden}
             />
             <Fragment>

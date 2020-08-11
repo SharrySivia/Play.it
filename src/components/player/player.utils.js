@@ -8,10 +8,18 @@ export const formatTime = (fullSeconds) => {
     .join(":");
 };
 
-export const getTrack = (queue, setCurrentTrack) => {
+export const getNewTrack = (type, queue, setCurrentTrack, currentTrack) => {
   if (queue) {
-    setCurrentTrack(queue[0]);
-    return true;
+    const currentTrackIdx = queue.findIndex(
+      (track) => track.id === currentTrack.id
+    );
+    const newTrackIdx =
+      type === "next" ? currentTrackIdx + 1 : currentTrackIdx - 1;
+    if (newTrackIdx < queue.length && newTrackIdx >= 0) {
+      setCurrentTrack(queue[newTrackIdx]);
+      return true;
+    }
+    return false;
   }
   return false;
 };
