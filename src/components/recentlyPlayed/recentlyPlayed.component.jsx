@@ -1,17 +1,22 @@
 import React from "react";
-
-import { songs } from "../../collections";
+import { connect } from "react-redux";
 import SongCard from "../song-card/song-card.component";
 
 import "./recentlyPlayed.styles.scss";
 
-const RecentlyPlayed = () => (
+const RecentlyPlayed = ({ recentlyPlayed }) => (
   <div className="recentlyPlayed">
     <h1>Recently Played</h1>
-    {songs.map((song) => (
-      <SongCard key={song.id} song={song} />
-    ))}
+    {recentlyPlayed ? (
+      recentlyPlayed.map((song) => <SongCard key={song.id} song={song} />)
+    ) : (
+      <p>Nothing to show here please play a song.</p>
+    )}
   </div>
 );
 
-export default RecentlyPlayed;
+const mapStateToProps = ({ recents: { recentlyPlayed } }) => ({
+  recentlyPlayed,
+});
+
+export default connect(mapStateToProps)(RecentlyPlayed);

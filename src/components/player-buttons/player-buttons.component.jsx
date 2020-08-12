@@ -9,6 +9,7 @@ import QueueMusicRoundedIcon from "@material-ui/icons/QueueMusicRounded";
 import VolumeUp from "@material-ui/icons/VolumeUpRounded";
 import VolumeOffRoundedIcon from "@material-ui/icons/VolumeOffRounded";
 import AddToQueueRoundedIcon from "@material-ui/icons/AddToQueueRounded";
+import ContactlessRounded from "@material-ui/icons/ContactlessRounded";
 
 import ToolTip from "@material-ui/core/Tooltip";
 
@@ -105,5 +106,11 @@ export const AddToQueueButton = memo(({ song, addToQueue, isDisabled }) => (
       color={isDisabled ? "disabled" : "inherit"}
       onClick={isDisabled ? null : () => addToQueue(song)}
     />
+  </ToolTip>
+));
+
+export const NowPlayingButton = memo(() => (
+  <ToolTip title="Now Playing" placement="top">
+    <ContactlessRounded fontSize="default" />
   </ToolTip>
 ));

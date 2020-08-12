@@ -1,0 +1,3 @@
+export const RECENTS_ACTION_TYPES = {
+  ADD_TO_RECENTS: "ADD_TO_RECENTS",
+};

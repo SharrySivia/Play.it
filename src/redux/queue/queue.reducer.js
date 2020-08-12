@@ -1,6 +1,7 @@
 import { QUEUE_ACTION_TYPES } from "./queue.types";
 
-import { addToQueue, removeFromQueue } from "./queue.utils";
+import { removeFromQueue } from "./queue.utils";
+import { addToArray } from "../../utils/util.functions";
 
 const INITIAL_STATE = {
   isQueueHidden: true,
@@ -12,7 +13,7 @@ const queueReducer = (state = INITIAL_STATE, action) => {
     case QUEUE_ACTION_TYPES.ADD_TO_QUEUE:
       return {
         ...state,
-        queue: addToQueue(state.queue, action.payload),
+        queue: addToArray(state.queue, action.payload),
       };
     case QUEUE_ACTION_TYPES.TOGGLE_QUEUE_HIDDEN:
       return {

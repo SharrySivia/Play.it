@@ -1,12 +1,16 @@
 import React from "react";
 
+import { songs } from "../../collections";
+import SongCard from "../song-card/song-card.component";
+
 import "./songs.styles.scss";
 
 const Songs = () => {
-  alert("songs");
   return (
     <div className="songs-container">
-      <h1>User Songs</h1>
+      {songs.map((song) => (
+        <SongCard key={song.id} song={song} />
+      ))}
     </div>
   );
 };

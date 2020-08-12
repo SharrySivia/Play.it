@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { connect } from "react-redux";
 
 import QueueItem from "../queue-item/queue-item.component";
@@ -15,20 +15,24 @@ const QueueDropUp = ({
   removeFromQueue,
 }) => (
   <div className="queue-dropup">
-    {queue ? <h4 className="title">Next In Queue</h4> : null}
     {queue ? (
-      queue.map((track) => (
-        <QueueItem
-          key={track.id}
-          currentlyPlaying={currentTrack.id === track.id}
-          track={track}
-          setCurrentTrack={setCurrentTrack}
-          isPaused={isPaused}
-          removeFromQueue={removeFromQueue}
-        />
-      ))
+      <Fragment>
+        <h4 className="title">Playing Queue</h4>
+        {queue.map((track) => (
+          <QueueItem
+            key={track.id}
+            currentlyPlaying={
+              currentTrack ? currentTrack.id === track.id : false
+            }
+            track={track}
+            setCurrentTrack={setCurrentTrack}
+            isPaused={isPaused}
+            removeFromQueue={removeFromQueue}
+          />
+        ))}
+      </Fragment>
     ) : (
-      <p className="empty-msg">Nothing in queue</p>
+      <p className="empty-msg">Nothing in playing queue</p>
     )}
   </div>
 );

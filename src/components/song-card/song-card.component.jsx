@@ -1,12 +1,11 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { connect } from "react-redux";
 // import PlayArrowRoundedIcon from "@material-ui/icons/PlayArrowRounded";
-import StarBorderRoundedIcon from "@material-ui/icons/StarBorderRounded";
-// import StarRoundedIcon from "@material-ui/icons/StarRounded";
 
 import {
   PlayButton,
   AddToQueueButton,
+  NowPlayingButton,
 } from "../player-buttons/player-buttons.component";
 
 import { setCurrentTrack } from "../../redux/player/player.actions";
@@ -23,16 +22,21 @@ const SongCard = ({ song, currentTrack, setCurrentTrack, addToQueue }) => {
         style={{ backgroundImage: `url(${song.imgSrc})` }}
       >
         <div className="buttons">
-          <StarBorderRoundedIcon fontSize="default" />
-          <PlayButton
-            isDisabled={disabled}
-            playTrack={() => setCurrentTrack(song)}
-          />
-          <AddToQueueButton
-            isDisabled={disabled}
-            addToQueue={addToQueue}
-            song={song}
-          />
+          {disabled ? (
+            <NowPlayingButton />
+          ) : (
+            <Fragment>
+              <PlayButton
+                isDisabled={disabled}
+                playTrack={() => setCurrentTrack(song)}
+              />
+              <AddToQueueButton
+                isDisabled={disabled}
+                addToQueue={addToQueue}
+                song={song}
+              />
+            </Fragment>
+          )}
         </div>
       </div>
       <h3 className="song-name">{song.name}</h3>

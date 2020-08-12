@@ -7,7 +7,6 @@ import {
   SkipPreviousButton,
   SkipNextButton,
   RepeatButton,
-  ShuffelButton,
   QueueButton,
   MutedButton,
   UnMutedButton,
@@ -17,6 +16,7 @@ import QueueDropup from "../queue-dropup/queue-dropup.component";
 
 import { formatTime, getNewTrack } from "./player.utils";
 import { removeFromQueue } from "../../redux/queue/queue.actions";
+import { addToRecents } from "../../redux/recents/recents.actions";
 
 import {
   setCurrentTrack,
@@ -110,9 +110,11 @@ class Player extends React.Component {
         setDuration,
         isQueueHidden,
         toggleQueueHidden,
+        addToRecents,
       } = this.props;
       const track = this.track;
       track.src = currentTrack.src;
+      addToRecents(currentTrack);
       if (!isQueueHidden) toggleQueueHidden();
       track.onloadedmetadata = () => {
         setDuration(track.duration);
@@ -156,7 +158,7 @@ class Player extends React.Component {
           </div>
           <div className="buttons-primary">
             <SkipPreviousButton
-              isDisabled={isDisabled}
+              isDisabled={isDisabled || !queue}
               getPreviousTrack={() => this.getTrack("previous")}
             />
             {isPaused ? (
@@ -180,24 +182,14 @@ class Player extends React.Component {
               toggleRepeatTrack={this.toggleRepeatTrack}
             />
 
-            <ShuffelButton isDisabled={isDisabled} />
             {isQueueHidden ? null : <QueueDropup />}
 
-            <QueueButton
-              isDisabled={isDisabled || !queue}
-              toggleQueueHidden={toggleQueueHidden}
-            />
+            <QueueButton toggleQueueHidden={toggleQueueHidden} />
             <Fragment>
               {isMuted ? (
-                <MutedButton
-                  isDisabled={isDisabled}
-                  toggleMuteTrack={this.toggleMuteTrack}
-                />
+                <MutedButton toggleMuteTrack={this.toggleMuteTrack} />
               ) : (
-                <UnMutedButton
-                  isDisabled={isDisabled}
-                  toggleMuteTrack={this.toggleMuteTrack}
-                />
+                <UnMutedButton toggleMuteTrack={this.toggleMuteTrack} />
               )}
 
               <RangeSlider
@@ -206,7 +198,7 @@ class Player extends React.Component {
                 step={0.05}
                 defaultValue={0.2}
                 handleChange={this.setVolume}
-                disabled={isDisabled || isMuted}
+                disabled={isMuted}
               />
             </Fragment>
           </div>
@@ -239,6 +231,7 @@ const mapDispatchToProps = (dispatch) => ({
   toggleIsRepeated: () => dispatch(toggleIsRepeated()),
   toggleQueueHidden: () => dispatch(toggleQueueHidden()),
   removeFromQueue: (track) => dispatch(removeFromQueue(track)),
+  addToRecents: (track) => dispatch(addToRecents(track)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player);
