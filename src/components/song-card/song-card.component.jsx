@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
-// import PlayArrowRoundedIcon from "@material-ui/icons/PlayArrowRounded";
 
 import {
   PlayButton,
@@ -14,7 +13,7 @@ import { addToQueue } from "../../redux/queue/queue.actions";
 import "./song-card.styles.scss";
 
 const SongCard = ({ song, currentTrack, setCurrentTrack, addToQueue }) => {
-  const disabled = currentTrack ? currentTrack.id === song.id : false;
+  const isCurrentlyPlaying = currentTrack ? currentTrack.id === song.id : false;
   return (
     <div className="song-card">
       <div
@@ -22,19 +21,12 @@ const SongCard = ({ song, currentTrack, setCurrentTrack, addToQueue }) => {
         style={{ backgroundImage: `url(${song.imgSrc})` }}
       >
         <div className="buttons">
-          {disabled ? (
+          {isCurrentlyPlaying ? (
             <NowPlayingButton />
           ) : (
             <Fragment>
-              <PlayButton
-                isDisabled={disabled}
-                playTrack={() => setCurrentTrack(song)}
-              />
-              <AddToQueueButton
-                isDisabled={disabled}
-                addToQueue={addToQueue}
-                song={song}
-              />
+              <PlayButton playTrack={() => setCurrentTrack(song)} />
+              <AddToQueueButton addToQueue={addToQueue} song={song} />
             </Fragment>
           )}
         </div>

@@ -1,0 +1,22 @@
+.playlists-container {
+  width: 100%;
+  position: relative;
+  .title-container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .create-playlist-btn {
+      font-size: 1rem;
+      display: inline-block;
+      background-color: transparent;
+      border: none;
+      outline: none;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}

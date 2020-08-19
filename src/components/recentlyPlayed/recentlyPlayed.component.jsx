@@ -6,7 +6,7 @@ import "./recentlyPlayed.styles.scss";
 
 const RecentlyPlayed = ({ recentlyPlayed }) => (
   <div className="recentlyPlayed">
-    <h1>Recently Played</h1>
+    <h2 className="title">Recently Played</h2>
     {recentlyPlayed ? (
       recentlyPlayed.map((song) => <SongCard key={song.id} song={song} />)
     ) : (

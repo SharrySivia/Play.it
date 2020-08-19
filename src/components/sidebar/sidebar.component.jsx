@@ -24,7 +24,7 @@ const Sidebar = () => (
       >
         <li>Playlists</li>
       </NavLink>
-      <NavLink
+      {/* <NavLink
         to="/collections/artists"
         className="list-item"
         activeClassName="link-active"
@@ -37,7 +37,7 @@ const Sidebar = () => (
         activeClassName="link-active"
       >
         <li>Albums</li>
-      </NavLink>
+      </NavLink> */}
     </ul>
   </div>
 );
