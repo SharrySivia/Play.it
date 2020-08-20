@@ -1,5 +1,6 @@
 .dialog {
   width: 100%;
+  padding: 20px;
   position: absolute;
   top: 0;
   background-color: white;
@@ -11,13 +12,53 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 10px;
+
+    .title {
+      width: 50%;
+      margin: 0;
+      margin-bottom: 5px;
+    }
+
     .close-btn {
+      cursor: pointer;
       font-size: 16px;
       font-weight: bolder;
       background-color: transparent;
       border: none;
       outline: none;
+    }
+  }
+
+  .subtitle {
+    padding: 0;
+    margin: 0;
+    font-size: 14px;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgb(243, 243, 243);
+  }
+
+  .songs-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .submit-form {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    .btn {
+      cursor: pointer;
+      outline: none;
+      font-size: 13px;
+      border: none;
+      background-color: #0d0c12;
+      color: #fff;
+      padding: 10px 15px;
+      border-radius: 50px;
+      margin-left: 20px;
     }
   }
 }

@@ -1,0 +1,36 @@
+.song-preview-container {
+  width: 25%;
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+  cursor: pointer;
+  .image-container {
+    width: 70px;
+    height: 70px;
+    .image {
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    svg {
+      position: relative;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .details {
+    margin-left: 10px;
+    .song-name {
+      margin: 0;
+    }
+    .singer-name {
+      margin: 0;
+      padding: 0;
+    }
+  }
+}
