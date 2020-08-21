@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import { v4 as uuid } from "uuid";
 
 import FormInput from "../form-input/form-input.component";
 import SongPreview from "../song-preview/song-preview.component";
@@ -24,25 +25,42 @@ const CreatePlaylistDialog = ({ toggleDialog, addToPlaylists }) => {
     }
     let existingItem = selectedSongs.includes(songToAdd);
     if (existingItem) {
-      //remove the exixting song
-      let newSelectedSongs = selectedSongs.filter(
-        (song) => song.id !== songToAdd.id
-      );
+      const newSelectedSongs = removeFromSelectedSongs(songToAdd);
       setSelectedSongs(newSelectedSongs);
       return;
     }
     setSelectedSongs([...selectedSongs, songToAdd]);
   };
 
+  const removeFromSelectedSongs = (songToRemove) => {
+    //remove the existing song
+    let newSelectedSongs = selectedSongs.filter(
+      (song) => song.id !== songToRemove.id
+    );
+    return newSelectedSongs;
+  };
+
   const isAlreadySelected = (song) => {
-    return selectedSongs.includes(song);
+    return selectedSongs ? selectedSongs.includes(song) : false;
   };
 
   const handleSubmit = (evt) => {
-    evt.preventDefault();
-    addToPlaylists({ playlistName, songs: selectedSongs });
+    const id = uuid();
+    const date = new Date();
+    const timestamp = `${date.getDate()}-${
+      date.getMonth() + 1
+    }-${date.getFullYear()}`;
+    const playlist = {
+      id,
+      name: playlistName,
+      songs: selectedSongs,
+      timestamp,
+    };
+    addToPlaylists(playlist);
     toggleDialog();
   };
+
+  const isDisabled = !(playlistName && selectedSongs.length);
 
   return (
     <div className="dialog">
@@ -64,17 +82,22 @@ const CreatePlaylistDialog = ({ toggleDialog, addToPlaylists }) => {
           />
         ))}
       </div>
-      <form className="submit-form" onSubmit={handleSubmit}>
+      <div className="footer">
         <FormInput
           required
           value={playlistName}
           onChange={handleChange}
-          placeholder="Enter playlist name"
+          placeholder="Playlist name"
         />
-        <button type="submit" className="btn">
+        <button
+          type="button"
+          disabled={isDisabled}
+          className={`btn ${isDisabled ? "btn-disabled" : null}`}
+          onClick={handleSubmit}
+        >
           Done
         </button>
-      </form>
+      </div>
     </div>
   );
 };

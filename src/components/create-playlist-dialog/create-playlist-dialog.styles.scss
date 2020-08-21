@@ -3,6 +3,7 @@
   padding: 20px;
   position: absolute;
   top: 0;
+  left: 0;
   background-color: white;
   border-radius: 5px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
@@ -45,7 +46,7 @@
     flex-wrap: wrap;
   }
 
-  .submit-form {
+  .footer {
     position: absolute;
     bottom: 20px;
     right: 20px;
@@ -59,6 +60,14 @@
       padding: 10px 15px;
       border-radius: 50px;
       margin-left: 20px;
+    }
+
+    .btn-disabled {
+      background-color: #727080;
+
+      &:hover {
+        cursor: not-allowed;
+      }
     }
   }
 }

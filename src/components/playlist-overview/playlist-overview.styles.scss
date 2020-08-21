@@ -1,0 +1,29 @@
+.playlist-overview {
+  width: 47%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 10px;
+  border-radius: 50px 5px 5px 50px;
+  margin-bottom: 40px;
+  transition: box-shadow 0.15s ease;
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  }
+  .image {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+  }
+  .title {
+    margin: 0;
+    padding: 0;
+    margin-left: 10px;
+  }
+
+  .time {
+    margin-left: auto;
+  }
+}

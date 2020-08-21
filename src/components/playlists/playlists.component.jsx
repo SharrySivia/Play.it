@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
+import useToggle from "../../hooks/useToggle";
 
 import CreatePlaylistDialoge from "../create-playlist-dialog/create-playlist-dialog.component";
+import PlaylistOverview from "../playlist-overview/playlist-overview.container";
 
 import "./playlists.styles.scss";
 
 const Playlists = ({ playlists }) => {
-  const [isDialogHidden, toggleDialogHidden] = useState(true);
-  const toggleDialog = () => toggleDialogHidden(!isDialogHidden);
+  const [isCreateDialogHidden, toggleCreateDialogHidden] = useToggle(true);
 
   return (
     <div className="playlists-container">
@@ -16,20 +17,23 @@ const Playlists = ({ playlists }) => {
         <button
           type="button"
           className="create-playlist-btn"
-          onClick={toggleDialog}
+          onClick={toggleCreateDialogHidden}
         >
           + Create new playlist
         </button>
       </div>
-      {isDialogHidden ? null : (
-        <CreatePlaylistDialoge toggleDialog={toggleDialog} />
+      {isCreateDialogHidden ? null : (
+        <CreatePlaylistDialoge toggleDialog={toggleCreateDialogHidden} />
       )}
-
-      {playlists.length > 0 ? (
-        <h3>{playlists[0].playlistName}</h3>
-      ) : (
-        <p>Nothing to show here.Please create a playlist.</p>
-      )}
+      <div className="playlists-overview">
+        {playlists ? (
+          playlists.map((playlist) => (
+            <PlaylistOverview key={playlist.id} playlist={playlist} />
+          ))
+        ) : (
+          <p>Nothing to show here.Please create a playlist.</p>
+        )}
+      </div>
     </div>
   );
 };

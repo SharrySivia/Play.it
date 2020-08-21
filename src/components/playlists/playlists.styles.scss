@@ -1,5 +1,6 @@
 .playlists-container {
   width: 100%;
+  padding: 0 20px;
   position: relative;
   .title-container {
     width: 100%;
@@ -18,5 +19,12 @@
         cursor: pointer;
       }
     }
+  }
+  .playlists-overview {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 30px;
   }
 }

@@ -1,0 +1,58 @@
+.playlist-preview-dialog {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: white;
+  border-radius: 5px;
+  padding: 20px 30px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+
+  .title-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .title {
+      margin: 0;
+      padding: 0;
+    }
+    .close-btn {
+      cursor: pointer;
+    }
+  }
+
+  .playlist-details {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    .image-container {
+      width: 30%;
+      .image {
+        width: 300px;
+        height: 300px;
+        border-radius: 10px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    .songs-list {
+      width: 70%;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      .list-item {
+        width: 45%;
+        padding: 15px 20px;
+        border-radius: 50px;
+        display: flex;
+        justify-content: space-between;
+
+        .song-name {
+          font-size: 17px;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
