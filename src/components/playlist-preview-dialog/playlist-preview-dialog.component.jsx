@@ -16,7 +16,7 @@ const PlaylistPreviewDialog = ({ playlist, toggleHidden }) => (
       </div>
       <ul className="songs-list">
         {playlist.songs.map((song) => (
-          <li className="list-item">
+          <li key={song.id} className="list-item">
             <span className="song-name">{song.name}</span>
             <span className="singer-name">{song.singer}</span>
           </li>

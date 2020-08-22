@@ -8,11 +8,11 @@ import {
 } from "../player-buttons/player-buttons.component";
 
 import { setCurrentTrack } from "../../redux/player/player.actions";
-import { addToQueue } from "../../redux/queue/queue.actions";
+import { addTrackToQueue } from "../../redux/queue/queue.actions";
 
 import "./song-card.styles.scss";
 
-const SongCard = ({ song, currentTrack, setCurrentTrack, addToQueue }) => {
+const SongCard = ({ song, currentTrack, setCurrentTrack, addTrackToQueue }) => {
   const isCurrentlyPlaying = currentTrack ? currentTrack.id === song.id : false;
   return (
     <div className="song-card">
@@ -25,8 +25,8 @@ const SongCard = ({ song, currentTrack, setCurrentTrack, addToQueue }) => {
             <NowPlayingButton />
           ) : (
             <Fragment>
-              <PlayButton playTrack={() => setCurrentTrack(song)} />
-              <AddToQueueButton addToQueue={addToQueue} song={song} />
+              <PlayButton handleClick={() => setCurrentTrack(song)} />
+              <AddToQueueButton handleClick={() => addTrackToQueue(song)} />
             </Fragment>
           )}
         </div>
@@ -43,7 +43,7 @@ const mapStateToProps = ({ player: { currentTrack } }) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   setCurrentTrack: (track) => dispatch(setCurrentTrack(track)),
-  addToQueue: (track) => dispatch(addToQueue(track)),
+  addTrackToQueue: (track) => dispatch(addTrackToQueue(track)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SongCard);

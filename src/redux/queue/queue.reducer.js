@@ -15,6 +15,12 @@ const queueReducer = (state = INITIAL_STATE, action) => {
         ...state,
         queue: addToArray(state.queue, action.payload),
       };
+
+    case QUEUE_ACTION_TYPES.ADD_PLAYLIST_TO_QUEUE:
+      return {
+        ...state,
+        queue: [...action.payload.songs],
+      };
     case QUEUE_ACTION_TYPES.TOGGLE_QUEUE_HIDDEN:
       return {
         ...state,
@@ -24,6 +30,12 @@ const queueReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         queue: removeFromQueue(state.queue, action.payload),
+      };
+
+    case QUEUE_ACTION_TYPES.CLEAR_QUEUE:
+      return {
+        ...state,
+        queue: null,
       };
     default:
       return state;

@@ -24,7 +24,6 @@
       svg {
         cursor: pointer;
         transform: scale(0.5);
-        backdrop-filter: none;
         transition: opacity 0.2s ease, transform 0.3s ease;
       }
     }
@@ -42,6 +41,7 @@
   }
   .song-name {
     margin: 0;
+    margin-top: 5px;
     padding: 5px 0;
     font-size: 17px;
     font-weight: bold;

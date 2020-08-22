@@ -22,7 +22,7 @@
   }
 
   .playlist-details {
-    margin-top: 30px;
+    margin-top: 10px;
     display: flex;
     align-items: center;
     .image-container {
@@ -44,12 +44,13 @@
       .list-item {
         width: 45%;
         padding: 15px 20px;
-        border-radius: 50px;
+        border-radius: 10px;
+        margin-bottom: 20px;
         display: flex;
         justify-content: space-between;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 
         .song-name {
-          font-size: 17px;
           font-weight: bold;
         }
       }

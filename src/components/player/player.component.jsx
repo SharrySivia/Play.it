@@ -159,37 +159,40 @@ class Player extends React.Component {
           <div className="buttons-primary">
             <SkipPreviousButton
               isDisabled={isDisabled || !queue}
-              getPreviousTrack={() => this.getTrack("previous")}
+              handleClick={() => this.getTrack("previous")}
             />
             {isPaused ? (
-              <PlayButton isDisabled={isDisabled} playTrack={this.playTrack} />
+              <PlayButton
+                isDisabled={isDisabled}
+                handleClick={this.playTrack}
+              />
             ) : (
               <PauseButton
                 isDisabled={isDisabled}
-                pauseTrack={this.pauseTrack}
+                handleClick={this.pauseTrack}
               />
             )}
 
             <SkipNextButton
               isDisabled={isDisabled || !queue}
-              getNextTrack={() => this.getTrack("next")}
+              handleClick={() => this.getTrack("next")}
             />
           </div>
           <div className="buttons-secondary">
             <RepeatButton
               isDisabled={isDisabled}
               isRepeated={isRepeated}
-              toggleRepeatTrack={this.toggleRepeatTrack}
+              handleClick={this.toggleRepeatTrack}
             />
 
             {isQueueHidden ? null : <QueueDropup />}
 
-            <QueueButton toggleQueueHidden={toggleQueueHidden} />
+            <QueueButton handleClick={toggleQueueHidden} />
             <Fragment>
               {isMuted ? (
-                <MutedButton toggleMuteTrack={this.toggleMuteTrack} />
+                <MutedButton handleClick={this.toggleMuteTrack} />
               ) : (
-                <UnMutedButton toggleMuteTrack={this.toggleMuteTrack} />
+                <UnMutedButton handleClick={this.toggleMuteTrack} />
               )}
 
               <RangeSlider

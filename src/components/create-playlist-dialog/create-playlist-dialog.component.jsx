@@ -46,15 +46,11 @@ const CreatePlaylistDialog = ({ toggleDialog, addToPlaylists }) => {
 
   const handleSubmit = (evt) => {
     const id = uuid();
-    const date = new Date();
-    const timestamp = `${date.getDate()}-${
-      date.getMonth() + 1
-    }-${date.getFullYear()}`;
     const playlist = {
       id,
       name: playlistName,
       songs: selectedSongs,
-      timestamp,
+      isPlaying: false,
     };
     addToPlaylists(playlist);
     toggleDialog();
