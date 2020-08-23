@@ -5,7 +5,21 @@ export const addToPlaylists = (playlist) => ({
   payload: playlist,
 });
 
-export const removeFromPlaylists = (playlist) => ({
-  type: PLAYLISTS_ACTION_TYPES.REMOVE_FROM_PLAYLISTS,
+export const removePlaylistFromPlaylists = (playlist) => ({
+  type: PLAYLISTS_ACTION_TYPES.REMOVE_PLAYLIST_FROM_PLAYLISTS,
   payload: playlist,
+});
+
+export const removeTrackFromPlaylist = ({ playlistId, trackToRemove }) => ({
+  type: PLAYLISTS_ACTION_TYPES.REMOVE_TRACK_FROM_PLAYLIST,
+  payload: { playlistId, trackToRemove },
+});
+
+export const setIsPlaylistPlaying = (playlist) => ({
+  type: PLAYLISTS_ACTION_TYPES.SET_IS_PLAYLIST_PLAYING,
+  payload: playlist,
+});
+
+export const toggleIsPlaylistsPlaying = () => ({
+  type: PLAYLISTS_ACTION_TYPES.TOGGLE_IS_PLAYLISTS_PLAYING,
 });

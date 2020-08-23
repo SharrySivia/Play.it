@@ -15,7 +15,7 @@
   .image {
     width: 70px;
     height: 70px;
-    border-radius: 50%;
+    border-radius: 5px;
   }
 
   .btn {
@@ -25,7 +25,6 @@
     border: none;
     border-radius: 50px;
     padding: 5px 20px;
-    margin-left: auto;
     margin-right: 20px;
     cursor: pointer;
     box-shadow: none;
@@ -36,13 +35,19 @@
     }
   }
 
+  .disabled {
+    background-color: #c0bdcf;
+    color: rgb(161, 161, 161);
+  }
+
+  svg {
+    margin-right: 10px;
+  }
+
   .title {
     margin: 0;
     padding: 0;
     margin-left: 20px;
-  }
-
-  .time {
-    margin-left: auto;
+    margin-right: auto;
   }
 }

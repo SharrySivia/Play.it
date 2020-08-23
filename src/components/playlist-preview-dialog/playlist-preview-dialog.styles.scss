@@ -14,10 +14,28 @@
     align-items: center;
     .title {
       margin: 0;
+      margin-right: auto;
       padding: 0;
+    }
+    .btn {
+      outline: none;
+      background-color: #0d0c12;
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 5px 20px;
+      margin-right: 20px;
+      cursor: pointer;
+      box-shadow: none;
+      transition: box-shadow 0.2s ease;
+
+      &:hover {
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+      }
     }
     .close-btn {
       cursor: pointer;
+      margin-left: 20px;
     }
   }
 
@@ -42,6 +60,7 @@
       justify-content: space-between;
       flex-wrap: wrap;
       .list-item {
+        position: relative;
         width: 45%;
         padding: 15px 20px;
         border-radius: 10px;
@@ -53,6 +72,31 @@
         .song-name {
           font-weight: bold;
         }
+
+        .btn-container {
+          position: absolute;
+          top: 0;
+          right: 0;
+          background-color: white;
+          border-radius: 0 10px 0 10px;
+          padding: 3px;
+          cursor: pointer;
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+          opacity: 0;
+          transition: opacity 0.2s ease;
+          svg {
+            font-size: 19px;
+          }
+        }
+
+        &:hover .btn-container {
+          opacity: 1;
+        }
+      }
+
+      .active {
+        background-color: #0d0c12;
+        color: #fff;
       }
     }
   }

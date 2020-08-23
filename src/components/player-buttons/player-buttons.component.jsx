@@ -104,8 +104,11 @@ export const NowPlayingButton = memo(() => (
   </ToolTip>
 ));
 
-export const DeleteButton = memo(({ handleClick }) => (
+export const DeleteButton = memo(({ isDisabled, handleClick }) => (
   <ToolTip title="Delete" placement="top">
-    <DeleteRoundedIcon onClick={handleClick} />
+    <DeleteRoundedIcon
+      color={isDisabled ? "disabled" : "inherit"}
+      onClick={isDisabled ? null : handleClick}
+    />
   </ToolTip>
 ));
