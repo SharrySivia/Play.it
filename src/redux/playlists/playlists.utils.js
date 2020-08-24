@@ -13,7 +13,9 @@ export const removeTrackFromPlaylist = (
     if (playlist.id === playlistId) {
       return {
         ...playlist,
-        songs: playlist.songs.filter((track) => track.id !== trackToRemove.id),
+        tracks: playlist.tracks.filter(
+          (track) => track.id !== trackToRemove.id
+        ),
       };
     }
     return playlist;

@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import SongCard from "../song-card/song-card.component";
+import TrackCard from "../track-card/track-card.component";
 
 import "./recentlyPlayed.styles.scss";
 
@@ -8,9 +8,9 @@ const RecentlyPlayed = ({ recentlyPlayed }) => (
   <div className="recentlyPlayed">
     <h2 className="title">Recently Played</h2>
     {recentlyPlayed ? (
-      recentlyPlayed.map((song) => <SongCard key={song.id} song={song} />)
+      recentlyPlayed.map((track) => <TrackCard key={track.id} track={track} />)
     ) : (
-      <p>Nothing to show here please play a song.</p>
+      <p>Nothing to show here please play a track.</p>
     )}
   </div>
 );

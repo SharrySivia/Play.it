@@ -14,10 +14,10 @@ import {
   toggleIsPlaylistsPlaying,
 } from "../../redux/playlists/playlists.actions";
 
-import "./song-card.styles.scss";
+import "./track-card.styles.scss";
 
-const SongCard = ({
-  song,
+const TrackCard = ({
+  track,
   currentTrack,
   setCurrentTrack,
   addTrackToQueue,
@@ -26,7 +26,9 @@ const SongCard = ({
   toggleIsPlaylistsPlaying,
   clearQueue,
 }) => {
-  const isCurrentlyPlaying = currentTrack ? currentTrack.id === song.id : false;
+  const isCurrentlyPlaying = currentTrack
+    ? currentTrack.id === track.id
+    : false;
 
   const handlePlay = () => {
     if (isPlaylistsPlaying) {
@@ -34,20 +36,20 @@ const SongCard = ({
       setIsPlaylistPlaying();
       clearQueue();
     }
-    setCurrentTrack(song);
+    setCurrentTrack(track);
   };
 
   const handleAddToQueue = () => {
     if (!currentTrack) {
-      setCurrentTrack(song);
+      setCurrentTrack(track);
     }
-    addTrackToQueue(song);
+    addTrackToQueue(track);
   };
   return (
-    <div className="song-card">
+    <div className="track-card">
       <div
         className="art-display"
-        style={{ backgroundImage: `url(${song.imgSrc})` }}
+        style={{ backgroundImage: `url(${track.imgSrc})` }}
       >
         <div className="buttons">
           {isCurrentlyPlaying ? (
@@ -60,8 +62,8 @@ const SongCard = ({
           )}
         </div>
       </div>
-      <h3 className="song-name">{song.name}</h3>
-      <span className="artist-name">{song.singer}</span>
+      <h3 className="track-name">{track.name}</h3>
+      <span className="artist-name">{track.singer}</span>
     </div>
   );
 };
@@ -82,4 +84,4 @@ const mapDispatchToProps = (dispatch) => ({
   toggleIsPlaylistsPlaying: () => dispatch(toggleIsPlaylistsPlaying()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SongCard);
+export default connect(mapStateToProps, mapDispatchToProps)(TrackCard);

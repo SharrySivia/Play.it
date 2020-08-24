@@ -3,10 +3,7 @@ import { connect } from "react-redux";
 
 import useToggle from "../../hooks/useToggle";
 
-import {
-  addPlaylistToQueue,
-  clearQueue,
-} from "../../redux/queue/queue.actions";
+import { addPlaylistToQueue } from "../../redux/queue/queue.actions";
 
 import {
   removePlaylistFromPlaylists,
@@ -27,9 +24,7 @@ import "./playlist-overview.styles.scss";
 
 const PlaylistOverview = ({
   playlist,
-  queue,
   isPlaylistsPlaying,
-  clearQueue,
   setCurrentTrack,
   addPlaylistToQueue,
   removePlaylistFromPlaylists,
@@ -39,12 +34,9 @@ const PlaylistOverview = ({
   const [isPreviewDialogHidden, togglePreviewDialogHidden] = useToggle(true);
   const handlePlay = (evt) => {
     evt.stopPropagation();
-    if (queue) {
-      clearQueue();
-    }
     if (!isPlaylistsPlaying) toggleIsPlaylistsPlaying();
     addPlaylistToQueue(playlist);
-    setCurrentTrack(playlist.songs[0]);
+    setCurrentTrack(playlist.tracks[0]);
     setIsPlaylistPlaying(playlist);
   };
 
@@ -56,7 +48,7 @@ const PlaylistOverview = ({
   return (
     <Fragment>
       <div className="playlist-overview" onClick={togglePreviewDialogHidden}>
-        <img className="image" src={playlist.songs[0].imgSrc} alt="oops" />
+        <img className="image" src={playlist.tracks[0].imgSrc} alt="oops" />
         <h3 className="title">{playlist.name}</h3>
         {playlist.isPlaying ? (
           <NowPlayingButton />
@@ -80,16 +72,12 @@ const PlaylistOverview = ({
   );
 };
 
-const mapStateToProps = ({
-  queue: { queue },
-  playlists: { isPlaylistsPlaying },
-}) => ({
-  queue,
+const mapStateToProps = ({ playlists: { isPlaylistsPlaying } }) => ({
+  isPlaylistsPlaying,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   addPlaylistToQueue: (playlist) => dispatch(addPlaylistToQueue(playlist)),
-  clearQueue: () => dispatch(clearQueue()),
   setCurrentTrack: (track) => dispatch(setCurrentTrack(track)),
   removePlaylistFromPlaylists: (playlist) =>
     dispatch(removePlaylistFromPlaylists(playlist)),

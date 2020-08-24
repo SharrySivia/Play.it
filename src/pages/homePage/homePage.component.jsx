@@ -9,7 +9,7 @@ import RecentlyPlayed from "../../components/recentlyPlayed/recentlyPlayed.compo
 
 import "./homePage.styles.scss";
 
-const Songs = lazy(() => import("../../components/songs/songs.component"));
+const Tracks = lazy(() => import("../../components/tracks/tracks.component"));
 const Playlists = lazy(() =>
   import("../../components/playlists/playlists.component")
 );
@@ -33,7 +33,7 @@ const HomePage = ({ currentTrack, match }) => (
       {match.url === "/" ? <RecentlyPlayed /> : null}
       <Suspense fallback={<div>Loading.....</div>}>
         <Switch>
-          <Route exact path="/collections/songs" component={Songs} />
+          <Route exact path="/collections/tracks" component={Tracks} />
           <Route exact path="/collections/playlists" component={Playlists} />
           <Route exact path="/collections/artists" component={Artists} />
           <Route exact path="/collections/albums" component={Albums} />

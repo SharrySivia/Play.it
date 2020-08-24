@@ -19,7 +19,7 @@ const Header = ({ currentUser }) => {
       <FormInput
         type="text"
         name="search"
-        placeholder="Search for songs, artists etc..."
+        placeholder="Search for tracks, artists etc..."
         isSearchInput
       />
       {currentUser ? (

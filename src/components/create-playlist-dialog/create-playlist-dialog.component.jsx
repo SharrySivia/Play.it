@@ -3,45 +3,45 @@ import { connect } from "react-redux";
 import { v4 as uuid } from "uuid";
 
 import FormInput from "../form-input/form-input.component";
-import SongPreview from "../song-preview/song-preview.component";
+import TrackPreview from "../track-preview/track-preview.component";
 
 import { addToPlaylists } from "../../redux/playlists/playlists.actions";
-import { songs } from "../../collections";
+import { tracks } from "../../collections";
 
 import "./create-playlist-dialog.styles.scss";
 
 const CreatePlaylistDialog = ({ toggleDialog, addToPlaylists }) => {
   const [playlistName, setPlaylistName] = useState("");
-  const [selectedSongs, setSelectedSongs] = useState([]);
+  const [selectedTracks, setSelectedTracks] = useState([]);
 
   const handleChange = (evt) => {
     setPlaylistName(evt.target.value);
   };
 
-  const addToSelectedSongs = (songToAdd) => {
-    if (!selectedSongs) {
-      setSelectedSongs([songToAdd]);
+  const addToSelectedTracks = (trackToAdd) => {
+    if (!selectedTracks) {
+      setSelectedTracks([trackToAdd]);
       return;
     }
-    let existingItem = selectedSongs.includes(songToAdd);
-    if (existingItem) {
-      const newSelectedSongs = removeFromSelectedSongs(songToAdd);
-      setSelectedSongs(newSelectedSongs);
+    let existingTrack = selectedTracks.includes(trackToAdd);
+    if (existingTrack) {
+      const newSelectedTracks = removeFromSelectedTracks(trackToAdd);
+      setSelectedTracks(newSelectedTracks);
       return;
     }
-    setSelectedSongs([...selectedSongs, songToAdd]);
+    setSelectedTracks([...selectedTracks, trackToAdd]);
   };
 
-  const removeFromSelectedSongs = (songToRemove) => {
-    //remove the existing song
-    let newSelectedSongs = selectedSongs.filter(
-      (song) => song.id !== songToRemove.id
+  const removeFromSelectedTracks = (trackToRemove) => {
+    //remove the existing track
+    let newSelectedTracks = selectedTracks.filter(
+      (track) => track.id !== trackToRemove.id
     );
-    return newSelectedSongs;
+    return newSelectedTracks;
   };
 
-  const isAlreadySelected = (song) => {
-    return selectedSongs ? selectedSongs.includes(song) : false;
+  const isAlreadySelected = (track) => {
+    return selectedTracks ? selectedTracks.includes(track) : false;
   };
 
   const handleSubmit = (evt) => {
@@ -49,14 +49,14 @@ const CreatePlaylistDialog = ({ toggleDialog, addToPlaylists }) => {
     const playlist = {
       id,
       name: playlistName,
-      songs: selectedSongs,
+      tracks: selectedTracks,
       isPlaying: false,
     };
     addToPlaylists(playlist);
     toggleDialog();
   };
 
-  const isDisabled = !(playlistName && selectedSongs.length);
+  const isDisabled = !(playlistName && selectedTracks.length);
 
   return (
     <div className="dialog">
@@ -67,14 +67,14 @@ const CreatePlaylistDialog = ({ toggleDialog, addToPlaylists }) => {
           x
         </button>
       </div>
-      <p className="subtitle">Select songs to add them to playlist</p>
-      <div className="songs-container">
-        {songs.map((song) => (
-          <SongPreview
-            addToSelectedSongs={addToSelectedSongs}
-            key={song.id}
-            song={song}
-            isSelected={isAlreadySelected(song)}
+      <p className="subtitle">Select tracks to add them to playlist</p>
+      <div className="tracks-container">
+        {tracks.map((track) => (
+          <TrackPreview
+            addToSelectedTracks={addToSelectedTracks}
+            key={track.id}
+            track={track}
+            isSelected={isAlreadySelected(track)}
           />
         ))}
       </div>

@@ -11,11 +11,11 @@ const Sidebar = () => (
         <li>Home</li>
       </NavLink>
       <NavLink
-        to="/collections/songs"
+        to="/collections/tracks"
         className="list-item"
         activeClassName="link-active"
       >
-        <li>Songs</li>
+        <li>Tracks</li>
       </NavLink>
       <NavLink
         to="/collections/playlists"

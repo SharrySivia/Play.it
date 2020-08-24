@@ -19,7 +19,7 @@ const queueReducer = (state = INITIAL_STATE, action) => {
     case QUEUE_ACTION_TYPES.ADD_PLAYLIST_TO_QUEUE:
       return {
         ...state,
-        queue: [...action.payload.songs],
+        queue: [...action.payload.tracks],
       };
     case QUEUE_ACTION_TYPES.TOGGLE_QUEUE_HIDDEN:
       return {

@@ -2,12 +2,16 @@ import React from "react";
 
 import { connect } from "react-redux";
 
-import {
-  DeleteButton,
-  NowPlayingButton,
-} from "../player-buttons/player-buttons.component";
+import { NowPlayingButton } from "../player-buttons/player-buttons.component";
 
-import { removeTrackFromPlaylist } from "../../redux/playlists/playlists.actions";
+import {
+  toggleIsPlaylistsPlaying,
+  setIsPlaylistPlaying,
+} from "../../redux/playlists/playlists.actions";
+import { addPlaylistToQueue } from "../../redux/queue/queue.actions";
+import { setCurrentTrack } from "../../redux/player/player.actions";
+
+import PlaylistPreviewItem from "../playlist-preview-item/playlist-preview-item.component";
 
 import "./playlist-preview-dialog.styles.scss";
 
@@ -15,11 +19,24 @@ const PlaylistPreviewDialog = ({
   playlist,
   toggleHidden,
   handlePlay,
-  removeTrackFromPlaylist,
-  currentTrack,
+  isPlaylistsPlaying,
+  setIsPlaylistPlaying,
+  toggleIsPlaylistsPlaying,
+  addPlaylistToQueue,
+  setCurrentTrack,
 }) => {
-  let isDeleteable = playlist.songs.length > 1;
+  let isDeleteable = playlist.tracks.length > 1;
   const isPlaylistPlaying = playlist.isPlaying;
+
+  const handleTrackPlay = (track) => {
+    if (!isPlaylistPlaying) {
+      if (!isPlaylistsPlaying) toggleIsPlaylistsPlaying();
+      addPlaylistToQueue(playlist);
+      setIsPlaylistPlaying(playlist);
+    }
+    setCurrentTrack(track);
+  };
+
   return (
     <div className="playlist-preview-dialog">
       <div className="title-container">
@@ -37,29 +54,17 @@ const PlaylistPreviewDialog = ({
       </div>
       <div className="playlist-details">
         <div className="image-container">
-          <img className="image" src={playlist.songs[0].imgSrc} alt="oops" />
+          <img className="image" src={playlist.tracks[0].imgSrc} alt="oops" />
         </div>
-        <ul className="songs-list">
-          {playlist.songs.map((song) => (
-            <li
-              key={song.id}
-              className={`list-item ${
-                isPlaylistPlaying && currentTrack.id === song.id ? "active" : ""
-              }`}
-            >
-              <span className="song-name">{song.name}</span>
-              <span className="singer-name">{song.singer}</span>
-              {isPlaylistPlaying ? null : (
-                <div className="btn-container">
-                  <DeleteButton
-                    isDisabled={!isDeleteable}
-                    handleClick={() =>
-                      removeTrackFromPlaylist(playlist.id, song)
-                    }
-                  />
-                </div>
-              )}
-            </li>
+        <ul className="tracks-list">
+          {playlist.tracks.map((track) => (
+            <PlaylistPreviewItem
+              track={track}
+              isPlaylistPlaying={isPlaylistPlaying}
+              handleTrackPlay={() => handleTrackPlay(track)}
+              playlistId={playlist.id}
+              isDeleteable={isDeleteable}
+            />
           ))}
         </ul>
       </div>
@@ -67,13 +72,15 @@ const PlaylistPreviewDialog = ({
   );
 };
 
-const mapStateToProps = ({ player: { currentTrack } }) => ({
-  currentTrack,
+const mapStateToProps = ({ playlists: { isPlaylistsPlaying } }) => ({
+  isPlaylistsPlaying,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  removeTrackFromPlaylist: (playlistId, trackToRemove) =>
-    dispatch(removeTrackFromPlaylist({ playlistId, trackToRemove })),
+  toggleIsPlaylistsPlaying: () => dispatch(toggleIsPlaylistsPlaying()),
+  setIsPlaylistPlaying: (playlist) => dispatch(setIsPlaylistPlaying(playlist)),
+  addPlaylistToQueue: (playlist) => dispatch(addPlaylistToQueue(playlist)),
+  setCurrentTrack: (track) => dispatch(setCurrentTrack(track)),
 });
 
 export default connect(

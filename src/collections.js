@@ -20,7 +20,7 @@ import marziDeMalakImg from "./assets/marziDeMalak.jpg";
 import pegDiWashnaImg from "./assets/pegDiWashna.jpg";
 import shukarDatyaImg from "./assets/shukarDatya.jpg";
 
-export const songs = [
+export const tracks = [
   {
     id: 1,
     name: "Dont Worry",

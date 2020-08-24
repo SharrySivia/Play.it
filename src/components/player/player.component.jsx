@@ -15,7 +15,11 @@ import {
 import QueueDropup from "../queue-dropup/queue-dropup.component";
 
 import { formatTime, getNewTrack } from "./player.utils";
-import { removeFromQueue } from "../../redux/queue/queue.actions";
+import { clearQueue } from "../../redux/queue/queue.actions";
+import {
+  toggleIsPlaylistsPlaying,
+  setIsPlaylistPlaying,
+} from "../../redux/playlists/playlists.actions";
 import { addToRecents } from "../../redux/recents/recents.actions";
 
 import {
@@ -79,15 +83,26 @@ class Player extends React.Component {
     const { queue, currentTrack, setCurrentTrack } = this.props;
     const isTrack = getNewTrack(type, queue, setCurrentTrack, currentTrack);
     if (!isTrack) this.clearPlayer();
-    return isTrack;
   };
 
   clearPlayer = () => {
-    const { isPaused } = this.props;
+    const {
+      isPaused,
+      clearQueue,
+      setIsPlaylistPlaying,
+      toggleIsPlaylistsPlaying,
+      isPlaylistsPlaying,
+    } = this.props;
     if (!isPaused) {
       this.track.pause();
       this.props.toggleIsPaused();
       this.track.currentTime = 0;
+    }
+
+    if (isPlaylistsPlaying) {
+      toggleIsPlaylistsPlaying();
+      setIsPlaylistPlaying();
+      clearQueue();
     }
   };
 
@@ -214,6 +229,7 @@ class Player extends React.Component {
 const mapStateToProps = ({
   player: { currentTrack, isPaused, currTime, duration, isMuted, isRepeated },
   queue: { queue, isQueueHidden },
+  playlists: { isPlaylistsPlaying },
 }) => ({
   currentTrack,
   isPaused,
@@ -223,6 +239,7 @@ const mapStateToProps = ({
   isRepeated,
   queue,
   isQueueHidden,
+  isPlaylistsPlaying,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -233,8 +250,10 @@ const mapDispatchToProps = (dispatch) => ({
   toggleIsMuted: () => dispatch(toggleIsMuted()),
   toggleIsRepeated: () => dispatch(toggleIsRepeated()),
   toggleQueueHidden: () => dispatch(toggleQueueHidden()),
-  removeFromQueue: (track) => dispatch(removeFromQueue(track)),
   addToRecents: (track) => dispatch(addToRecents(track)),
+  toggleIsPlaylistsPlaying: () => dispatch(toggleIsPlaylistsPlaying()),
+  setIsPlaylistPlaying: () => dispatch(setIsPlaylistPlaying(null)),
+  clearQueue: () => dispatch(clearQueue()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player);

@@ -1,0 +1,40 @@
+.playlist-item {
+  position: relative;
+  width: 45%;
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+
+  .track-name {
+    font-weight: bold;
+  }
+
+  .btn-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: white;
+    border-radius: 0 10px 0 10px;
+    padding: 3px;
+    cursor: pointer;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    svg {
+      font-size: 19px;
+    }
+  }
+
+  &:hover .btn-container {
+    opacity: 1;
+  }
+}
+
+.active {
+  background-color: #0d0c12;
+  color: #fff;
+}
