@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import {
@@ -10,22 +10,25 @@ import FormInput from "../form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.component";
 import Spinner from "../loading-spinner/loading-spinner.component";
 
-class SignUp extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      displayName: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      isSigningUp: false,
-      signupErr: "",
-    };
-  }
+const SignUp = () => {
+  const [userCredentials, setUserCredentials] = useState({
+    displayName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    isSigningUp: false,
+    signupErr: "",
+  });
+  const {
+    displayName,
+    email,
+    password,
+    confirmPassword,
+    signupErr,
+    isSigningUp,
+  } = userCredentials;
 
-  signup = async () => {
-    const { displayName, email, password } = this.state;
-
+  const signup = async () => {
     try {
       const { user } = await auth.createUserWithEmailAndPassword(
         email,
@@ -33,8 +36,8 @@ class SignUp extends React.Component {
       );
 
       await createUserProfileDocument(user, { displayName });
-
-      this.setState({
+      setUserCredentials({
+        ...userCredentials,
         displayName: "",
         email: "",
         password: "",
@@ -44,12 +47,14 @@ class SignUp extends React.Component {
     } catch (err) {
       const errCode = err.code;
       if (errCode === "auth/email-already-in-use") {
-        this.setState({
+        setUserCredentials({
+          ...userCredentials,
           signupErr: "User already exists. Go to signin",
           isSigningUp: false,
         });
       } else {
-        this.setState({
+        setUserCredentials({
+          ...userCredentials,
           signupErr: err.message,
           isSigningUp: false,
         });
@@ -57,10 +62,8 @@ class SignUp extends React.Component {
     }
   };
 
-  handleSubmit = async (evt) => {
+  const handleSubmit = async (evt) => {
     evt.preventDefault();
-
-    const { password, confirmPassword } = this.state;
 
     if (password !== confirmPassword) {
       alert("Passwords don't match");
@@ -69,76 +72,71 @@ class SignUp extends React.Component {
       alert("Password length must be equal to or greater than 8");
       return;
     }
-    this.setState({ isSigningUp: true }, this.signup);
+    setUserCredentials({
+      ...userCredentials,
+      isSigningUp: true,
+    });
+
+    signup();
   };
 
-  handleChange = (evt) => {
+  const handleChange = (evt) => {
     const { name, value } = evt.target;
-    this.setState({ [name]: value });
+    setUserCredentials({ ...userCredentials, [name]: value });
   };
 
-  render() {
-    const {
-      displayName,
-      email,
-      password,
-      confirmPassword,
-      signupErr,
-      isSigningUp,
-    } = this.state;
-    return (
-      <div className="sign-up">
-        <h2 className="title">Signup</h2>
-        <span>Create a new account with email and password</span>
-        <form onSubmit={this.handleSubmit}>
-          <FormInput
-            type="text"
-            name="displayName"
-            value={displayName}
-            placeholder="Display Name"
-            onChange={this.handleChange}
-            required
-          />
-          <FormInput
-            type="email"
-            name="email"
-            value={email}
-            placeholder="Email"
-            onChange={this.handleChange}
-            required
-          />
-          <FormInput
-            type="password"
-            name="password"
-            value={password}
-            placeholder="Password"
-            onChange={this.handleChange}
-            required
-          />
-          <FormInput
-            type="password"
-            name="confirmPassword"
-            value={confirmPassword}
-            placeholder="Confirm Password"
-            onChange={this.handleChange}
-            required
-          />
-          <span className="error">{signupErr}</span>
+  return (
+    <div className="sign-up">
+      <h2 className="title">Signup</h2>
+      <span>Create a new account with email and password</span>
+      <form onSubmit={handleSubmit}>
+        <FormInput
+          type="text"
+          name="displayName"
+          value={displayName}
+          placeholder="Display Name"
+          onChange={handleChange}
+          required
+        />
+        <FormInput
+          type="email"
+          name="email"
+          value={email}
+          placeholder="Email"
+          onChange={handleChange}
+          required
+        />
+        <FormInput
+          type="password"
+          name="password"
+          value={password}
+          placeholder="Password"
+          onChange={handleChange}
+          required
+        />
+        <FormInput
+          type="password"
+          name="confirmPassword"
+          value={confirmPassword}
+          placeholder="Confirm Password"
+          onChange={handleChange}
+          required
+        />
+        <span className="error">{signupErr}</span>
 
-          <CustomButton type="submit" disabled={isSigningUp}>
-            {isSigningUp ? <Spinner /> : "Signup"}
-          </CustomButton>
-        </form>
-        <span>OR</span>
-        <CustomButton onClick={signInWithGoogle} disabled={isSigningUp}>
-          Continue with Google
+        <CustomButton type="submit" disabled={isSigningUp}>
+          {isSigningUp ? <Spinner /> : "Signup"}
         </CustomButton>
-        <span className="footer">
-          I already have an account? <Link to="/signin">Signin</Link>
-        </span>
-      </div>
-    );
-  }
-}
+      </form>
+      <span>OR</span>
+      <CustomButton onClick={signInWithGoogle} disabled={isSigningUp}>
+        Continue with Google
+      </CustomButton>
+      <span className="footer">
+        I already have an account? <Link to="/signin">Signin</Link>
+      </span>
+    </div>
+  );
+};
 
 export default SignUp;
