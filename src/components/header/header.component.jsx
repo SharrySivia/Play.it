@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 
-import { auth } from "../../firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
+import UserInfoDropdown from "../user-info-dropdown/user-info-dropdown.component";
 import "./header.styles.scss";
 
 const Header = ({ currentUser }) => {
+  const [isDropdownHidden, toggleDropdownHidden] = useState(true);
+
   let displayName;
   if (currentUser) {
     displayName = currentUser.displayName
@@ -14,19 +16,26 @@ const Header = ({ currentUser }) => {
       .join("")
       .toUpperCase();
   }
+
   return (
     <div className="header">
       <FormInput
         type="text"
         name="search"
-        placeholder="Search for tracks, artists etc..."
+        placeholder="Search for tracks.."
         isSearchInput
       />
       {currentUser ? (
-        <div className="user-info" onClick={() => auth.signOut()}>
+        <div
+          className="user-info"
+          onClick={() => toggleDropdownHidden(!isDropdownHidden)}
+        >
           {displayName}
         </div>
       ) : null}
+      {isDropdownHidden ? null : (
+        <UserInfoDropdown userName={currentUser.displayName} />
+      )}
     </div>
   );
 };

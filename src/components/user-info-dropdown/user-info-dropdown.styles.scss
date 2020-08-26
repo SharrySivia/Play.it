@@ -1,0 +1,23 @@
+.user-info-dropdown {
+  width: 130px;
+  position: absolute;
+  top: 80px;
+  right: 10px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  z-index: 10;
+  padding: 20px 0;
+
+  .user-name {
+    margin: 0;
+    margin-bottom: 20px;
+  }
+
+  .log-out-btn {
+    display: inline-block;
+    cursor: pointer;
+    color: rgb(255, 38, 0);
+  }
+}
