@@ -13,6 +13,11 @@ const recentsReducer = (state = INITIAL_STATE, action) => {
         ...state,
         recentlyPlayed: addToRecents(state.recentlyPlayed, action.payload),
       };
+    case RECENTS_ACTION_TYPES.SET_RECENTLY_PLAYED_FROM_FIREBASE:
+      return {
+        ...state,
+        recentlyPlayed: [...action.payload],
+      };
     default:
       return state;
   }

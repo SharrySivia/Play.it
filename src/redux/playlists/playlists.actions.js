@@ -23,3 +23,8 @@ export const setIsPlaylistPlaying = (playlist) => ({
 export const toggleIsPlaylistsPlaying = () => ({
   type: PLAYLISTS_ACTION_TYPES.TOGGLE_IS_PLAYLISTS_PLAYING,
 });
+
+export const setPlaylistsFromFirebase = (playlists) => ({
+  type: PLAYLISTS_ACTION_TYPES.SET_PLAYLISTS_FROM_FIREBASE,
+  payload: playlists,
+});

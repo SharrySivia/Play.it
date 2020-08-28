@@ -42,11 +42,34 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 };
 
-export const getUserRef = async (userId) => {
-  const userRef = firestore.doc(`users/${userId}`);
-  const snapshot = await userRef.get();
+export const getUserRecentlyPlayedRef = async (userId) => {
+  const recentlyPlayedRef = firestore
+    .collection("recentlyPlayed")
+    .where("userId", "==", userId);
 
-  console.log(snapshot);
+  const snapShot = await recentlyPlayedRef.get();
+  if (snapShot.empty) {
+    const recentlyPlayedDocRef = firestore.collection("recentlyPlayed").doc();
+    await recentlyPlayedDocRef.set({ userId, recentlyPlayed: [] });
+    return recentlyPlayedDocRef;
+  } else {
+    return snapShot.docs[0].ref;
+  }
+};
+
+export const getUserPlaylistsRef = async (userId) => {
+  const playlistsRef = firestore
+    .collection("playlists")
+    .where("userId", "==", userId);
+
+  const snapShot = await playlistsRef.get();
+  if (snapShot.empty) {
+    const playlistsDocRef = firestore.collection("playlists").doc();
+    await playlistsDocRef.set({ userId, playlists: [] });
+    return playlistsDocRef;
+  } else {
+    return snapShot.docs[0].ref;
+  }
 };
 
 export const getCurrentUser = () => {

@@ -51,6 +51,12 @@ const playlistsReducer = (state = INITIAL_STATE, action) => {
           action.payload
         ),
       };
+
+    case PLAYLISTS_ACTION_TYPES.SET_PLAYLISTS_FROM_FIREBASE:
+      return {
+        ...state,
+        userPlaylists: [...action.payload],
+      };
     default:
       return state;
   }
