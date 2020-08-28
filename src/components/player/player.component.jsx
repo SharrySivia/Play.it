@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
 
 import {
   PlayButton,
@@ -30,6 +31,22 @@ import {
   toggleIsMuted,
   toggleIsRepeated,
 } from "../../redux/player/player.actions";
+
+import {
+  selectCurrentTrack,
+  selectCurrentTime,
+  selectDuration,
+  selectMuted,
+  selectPaused,
+  selectRepeated,
+} from "../../redux/player/player.selector";
+import { selectCurrentUser } from "../../redux/user/user.selectors";
+import {
+  selectQueueItems,
+  selectQueueHidden,
+} from "../../redux/queue/queue.selector";
+import { selectPlaylistsPlaying } from "../../redux/playlists/playlists.selector";
+
 import { toggleQueueHidden } from "../../redux/queue/queue.actions";
 
 import RangeSlider from "../range-slider/range-slider.component";
@@ -45,10 +62,6 @@ class Player extends React.Component {
     );
     this.track.volume = 0.2;
     this.track.onended = () => this.getTrack("next");
-  }
-
-  componentWillUnmount() {
-    this.track.removeEventListener("timeupdate", null);
   }
 
   playTrack = () => {
@@ -80,8 +93,13 @@ class Player extends React.Component {
   };
 
   getTrack = (type) => {
-    const { queue, currentTrack, setCurrentTrack } = this.props;
-    const isTrack = getNewTrack(type, queue, setCurrentTrack, currentTrack);
+    const { queueItems, currentTrack, setCurrentTrack } = this.props;
+    const isTrack = getNewTrack(
+      type,
+      queueItems,
+      setCurrentTrack,
+      currentTrack
+    );
     if (!isTrack) this.clearPlayer();
   };
 
@@ -89,13 +107,14 @@ class Player extends React.Component {
     const {
       isPaused,
       clearQueue,
+      toggleIsPaused,
       setIsPlaylistPlaying,
       toggleIsPlaylistsPlaying,
       isPlaylistsPlaying,
     } = this.props;
     if (!isPaused) {
       this.track.pause();
-      this.props.toggleIsPaused();
+      toggleIsPaused();
       this.track.currentTime = 0;
     }
 
@@ -138,6 +157,13 @@ class Player extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    const { setCurrentTrack } = this.props;
+    this.track.removeEventListener("timeupdate", null);
+    this.clearPlayer();
+    setCurrentTrack(null);
+  }
+
   render() {
     const {
       currTime,
@@ -146,7 +172,7 @@ class Player extends React.Component {
       duration,
       isMuted,
       isRepeated,
-      queue,
+      queueItems,
       isQueueHidden,
       toggleQueueHidden,
     } = this.props;
@@ -173,7 +199,7 @@ class Player extends React.Component {
           </div>
           <div className="buttons-primary">
             <SkipPreviousButton
-              isDisabled={isDisabled || !queue}
+              isDisabled={isDisabled || !queueItems}
               handleClick={() => this.getTrack("previous")}
             />
             {isPaused ? (
@@ -189,7 +215,7 @@ class Player extends React.Component {
             )}
 
             <SkipNextButton
-              isDisabled={isDisabled || !queue}
+              isDisabled={isDisabled || !queueItems}
               handleClick={() => this.getTrack("next")}
             />
           </div>
@@ -226,20 +252,17 @@ class Player extends React.Component {
   }
 }
 
-const mapStateToProps = ({
-  player: { currentTrack, isPaused, currTime, duration, isMuted, isRepeated },
-  queue: { queue, isQueueHidden },
-  playlists: { isPlaylistsPlaying },
-}) => ({
-  currentTrack,
-  isPaused,
-  currTime,
-  duration,
-  isMuted,
-  isRepeated,
-  queue,
-  isQueueHidden,
-  isPlaylistsPlaying,
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
+  currentTrack: selectCurrentTrack,
+  isPaused: selectPaused,
+  currTime: selectCurrentTime,
+  duration: selectDuration,
+  isMuted: selectMuted,
+  isRepeated: selectRepeated,
+  queueItems: selectQueueItems,
+  isQueueHidden: selectQueueHidden,
+  isPlaylistsPlaying: selectPlaylistsPlaying,
 });
 
 const mapDispatchToProps = (dispatch) => ({

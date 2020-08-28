@@ -1,15 +1,33 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 
-import { auth } from "../../firebase/firebase.utils";
+import { signOutStart } from "../../redux/user/user.actions";
+
 import "./user-info-dropdown.styles.scss";
 
-const UserInfoDropdown = ({ userName }) => (
+const UserInfoDropdown = ({
+  userName,
+  toggleHidden,
+  history,
+  signOutStart,
+}) => (
   <div className="user-info-dropdown">
     <h4 className="user-name">{userName}</h4>
-    <span className="log-out-btn" onClick={() => auth.signOut()}>
+    <span
+      className="log-out-btn"
+      onClick={() => {
+        toggleHidden();
+        signOutStart(history);
+      }}
+    >
       Log out
     </span>
   </div>
 );
 
-export default UserInfoDropdown;
+const mapDispatchToProps = (dispatch) => ({
+  signOutStart: (history) => dispatch(signOutStart(history)),
+});
+
+export default connect(null, mapDispatchToProps)(withRouter(UserInfoDropdown));

@@ -1,16 +1,18 @@
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
 
+import { selectQueueItems } from "../../redux/queue/queue.selector";
 import QueueItem from "../queue-item/queue-item.component";
 
 import "./queue-dropup.styles.scss";
 
-const QueueDropUp = ({ queue }) => (
+const QueueDropUp = ({ queueItems }) => (
   <div className="queue-dropup">
-    {queue ? (
+    {queueItems ? (
       <Fragment>
         <h4 className="title">Playing Queue</h4>
-        {queue.map((track) => (
+        {queueItems.map((track) => (
           <QueueItem key={track.id} track={track} />
         ))}
       </Fragment>
@@ -20,8 +22,8 @@ const QueueDropUp = ({ queue }) => (
   </div>
 );
 
-const mapStateToProps = ({ queue: { queue } }) => ({
-  queue,
+const mapStateToProps = createStructuredSelector({
+  queueItems: selectQueueItems,
 });
 
 export default connect(mapStateToProps)(QueueDropUp);

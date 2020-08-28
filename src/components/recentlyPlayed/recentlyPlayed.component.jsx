@@ -1,6 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+
 import TrackCard from "../track-card/track-card.component";
+import { selectRecentlyPlayed } from "../../redux/recents/recents.selector";
 
 import "./recentlyPlayed.styles.scss";
 
@@ -15,8 +18,8 @@ const RecentlyPlayed = ({ recentlyPlayed }) => (
   </div>
 );
 
-const mapStateToProps = ({ recents: { recentlyPlayed } }) => ({
-  recentlyPlayed,
+const mapStateToProps = createStructuredSelector({
+  recentlyPlayed: selectRecentlyPlayed,
 });
 
 export default connect(mapStateToProps)(RecentlyPlayed);

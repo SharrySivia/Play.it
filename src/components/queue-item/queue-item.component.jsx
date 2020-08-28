@@ -1,10 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
 
 import Bars from "../bars/bars.component";
 import RemoveCircleIcon from "@material-ui/icons/RemoveCircleOutline";
 import { setCurrentTrack } from "../../redux/player/player.actions";
 import { removeFromQueue } from "../../redux/queue/queue.actions";
+import {
+  selectCurrentTrack,
+  selectPaused,
+} from "../../redux/player/player.selector";
 
 import "./queue-item.styles.scss";
 
@@ -40,9 +45,9 @@ const QueueItem = ({
   );
 };
 
-const mapStateToProps = ({ player: { currentTrack, isPaused } }) => ({
-  currentTrack,
-  isPaused,
+const mapStateToProps = createStructuredSelector({
+  currentTrack: selectCurrentTrack,
+  isPaused: selectPaused,
 });
 
 const mapDispatchToProps = (dispatch) => ({

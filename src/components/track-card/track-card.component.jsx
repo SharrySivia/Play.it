@@ -1,11 +1,15 @@
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
 
 import {
   PlayButton,
   AddToQueueButton,
   NowPlayingButton,
 } from "../player-buttons/player-buttons.component";
+
+import { selectCurrentTrack } from "../../redux/player/player.selector";
+import { selectPlaylistsPlaying } from "../../redux/playlists/playlists.selector";
 
 import { setCurrentTrack } from "../../redux/player/player.actions";
 import { addTrackToQueue, clearQueue } from "../../redux/queue/queue.actions";
@@ -68,12 +72,9 @@ const TrackCard = ({
   );
 };
 
-const mapStateToProps = ({
-  player: { currentTrack },
-  playlists: { isPlaylistsPlaying },
-}) => ({
-  currentTrack,
-  isPlaylistsPlaying,
+const mapStateToProps = createStructuredSelector({
+  currentTrack: selectCurrentTrack,
+  isPlaylistsPlaying: selectPlaylistsPlaying,
 });
 
 const mapDispatchToProps = (dispatch) => ({

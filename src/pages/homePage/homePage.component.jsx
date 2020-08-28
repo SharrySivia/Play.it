@@ -1,6 +1,9 @@
 import React, { lazy, Suspense } from "react";
 import { Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+
+import { selectCurrentTrack } from "../../redux/player/player.selector";
 
 import Sidebar from "../../components/sidebar/sidebar.component";
 import Header from "../../components/header/header.component";
@@ -44,8 +47,8 @@ const HomePage = ({ currentTrack, match }) => (
   </div>
 );
 
-const mapStateToProps = ({ player: { currentTrack } }) => ({
-  currentTrack,
+const mapStateToProps = createStructuredSelector({
+  currentTrack: selectCurrentTrack,
 });
 
 export default connect(mapStateToProps)(HomePage);

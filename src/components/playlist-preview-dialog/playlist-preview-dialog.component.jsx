@@ -1,9 +1,10 @@
 import React from "react";
-
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
 
 import { NowPlayingButton } from "../player-buttons/player-buttons.component";
 
+import { selectPlaylistsPlaying } from "../../redux/playlists/playlists.selector";
 import {
   toggleIsPlaylistsPlaying,
   setIsPlaylistPlaying,
@@ -72,8 +73,8 @@ const PlaylistPreviewDialog = ({
   );
 };
 
-const mapStateToProps = ({ playlists: { isPlaylistsPlaying } }) => ({
-  isPlaylistsPlaying,
+const mapStateToProps = createStructuredSelector({
+  isPlaylistsPlaying: selectPlaylistsPlaying,
 });
 
 const mapDispatchToProps = (dispatch) => ({

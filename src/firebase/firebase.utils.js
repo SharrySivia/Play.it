@@ -42,10 +42,25 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 };
 
-const provider = new fireBase.auth.GoogleAuthProvider();
+export const getUserRef = async (userId) => {
+  const userRef = firestore.doc(`users/${userId}`);
+  const snapshot = await userRef.get();
 
-provider.setCustomParameters({ prompt: "select_account" });
+  console.log(snapshot);
+};
 
-export const signInWithGoogle = () => auth.signInWithPopup(provider);
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = auth.onAuthStateChanged((userAuth) => {
+      unsubscribe();
+      resolve(userAuth);
+    }, reject);
+  });
+};
+
+export const googleProvider = new fireBase.auth.GoogleAuthProvider();
+googleProvider.setCustomParameters({ prompt: "select_account" });
+
+// export const signInWithGoogle = () => auth.signInWithPopup(googleProvider);
 
 export default fireBase;

@@ -1,6 +1,6 @@
 import { RECENTS_ACTION_TYPES } from "./recents.types";
 
-import { addToArray } from "../../utils/util.functions";
+import { addToRecents } from "./recents.utils";
 
 const INITIAL_STATE = {
   recentlyPlayed: null,
@@ -11,7 +11,7 @@ const recentsReducer = (state = INITIAL_STATE, action) => {
     case RECENTS_ACTION_TYPES.ADD_TO_RECENTS:
       return {
         ...state,
-        recentlyPlayed: addToArray(state.recentlyPlayed, action.payload),
+        recentlyPlayed: addToRecents(state.recentlyPlayed, action.payload),
       };
     default:
       return state;

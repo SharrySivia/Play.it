@@ -1,57 +1,39 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { createStructuredSelector } from "reselect";
 
 import Spinner from "../loading-spinner/loading-spinner.component";
 import FormInput from "../form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.component";
-import { auth, signInWithGoogle } from "../../firebase/firebase.utils";
+
+import {
+  selectIsSigningIn,
+  selectSignInError,
+} from "../../redux/user/user.selectors";
+
+import {
+  googleSignInStart,
+  emailSignInStart,
+} from "../../redux/user/user.actions";
 
 // import "./sign-in.styles.scss";
 
-const SignIn = () => {
+const SignIn = ({
+  googleSignInStart,
+  emailSignInStart,
+  isSigningIn,
+  signInError,
+}) => {
   const [userCredentials, setUserCredentials] = useState({
     email: "",
     password: "",
-    loginErr: "",
-    isSigningIn: false,
   });
-  const { email, password, loginErr, isSigningIn } = userCredentials;
-
-  const signin = async () => {
-    try {
-      await auth.signInWithEmailAndPassword(email, password);
-      setUserCredentials({
-        ...userCredentials,
-        email: "",
-        password: "",
-        isSigningIn: false,
-      });
-    } catch (err) {
-      const errCode = err.code;
-      console.log(err);
-      if (errCode === "auth/wrong-password") {
-        setUserCredentials({
-          ...userCredentials,
-          loginErr: "The password is wrong.",
-          password: "",
-          isSigningIn: false,
-        });
-      } else {
-        setUserCredentials({
-          ...userCredentials,
-          loginErr: "There is no user record. Go to SIGNUP",
-          email: "",
-          password: "",
-          isSigningIn: false,
-        });
-      }
-    }
-  };
+  const { email, password } = userCredentials;
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    setUserCredentials({ ...userCredentials, isSigningIn: true });
-    signin();
+    emailSignInStart(email, password);
   };
 
   const handleChange = (evt) => {
@@ -81,14 +63,14 @@ const SignIn = () => {
           handleChange={handleChange}
           placeholder="Enter password"
         />
-        <span className="error">{loginErr}</span>
+        <span className="error">{signInError}</span>
 
         <CustomButton type="submit" disabled={isSigningIn}>
           {isSigningIn ? <Spinner /> : "Sign in"}
         </CustomButton>
       </form>
       <span>OR</span>
-      <CustomButton onClick={signInWithGoogle} disabled={isSigningIn}>
+      <CustomButton onClick={googleSignInStart} disabled={isSigningIn}>
         Continue with Google
       </CustomButton>
       <span className="footer">
@@ -98,4 +80,15 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+const mapStateToProps = createStructuredSelector({
+  isSigningIn: selectIsSigningIn,
+  signInError: selectSignInError,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  googleSignInStart: () => dispatch(googleSignInStart()),
+  emailSignInStart: (email, password) =>
+    dispatch(emailSignInStart({ email, password })),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

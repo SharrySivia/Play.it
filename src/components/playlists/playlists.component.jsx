@@ -1,6 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+
 import useToggle from "../../hooks/useToggle";
+
+import { selectUserPlaylists } from "../../redux/playlists/playlists.selector";
 
 import CreatePlaylistDialoge from "../create-playlist-dialog/create-playlist-dialog.component";
 import PlaylistOverview from "../playlist-overview/playlist-overview.component";
@@ -37,8 +41,8 @@ const Playlists = ({ playlists }) => {
   );
 };
 
-const mapStateToProps = ({ playlists: { playlists } }) => ({
-  playlists,
+const mapStateToProps = createStructuredSelector({
+  playlists: selectUserPlaylists,
 });
 
 export default connect(mapStateToProps)(Playlists);

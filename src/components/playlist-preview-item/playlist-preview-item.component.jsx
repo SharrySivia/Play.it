@@ -1,7 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
 
 import { DeleteButton } from "../player-buttons/player-buttons.component";
+
+import { selectCurrentTrack } from "../../redux/player/player.selector";
 
 import { removeTrackFromPlaylist } from "../../redux/playlists/playlists.actions";
 import { removeFromQueue } from "../../redux/queue/queue.actions";
@@ -44,8 +47,8 @@ const PlaylistPreviewItem = ({
   );
 };
 
-const mapStateToProps = ({ player: { currentTrack } }) => ({
-  currentTrack,
+const mapStateToProps = createStructuredSelector({
+  currentTrack: selectCurrentTrack,
 });
 
 const mapDispatchToProps = (dispatch) => ({

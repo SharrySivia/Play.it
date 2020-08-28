@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import useToggle from "../../hooks/useToggle";
 
-import FormInput from "../form-input/form-input.component";
+import { selectCurrentUser } from "../../redux/user/user.selectors";
 import UserInfoDropdown from "../user-info-dropdown/user-info-dropdown.component";
 import "./header.styles.scss";
 
 const Header = ({ currentUser }) => {
-  const [isDropdownHidden, toggleDropdownHidden] = useState(true);
+  const [isDropdownHidden, toggleDropdownHidden] = useToggle(true);
 
   let displayName;
   if (currentUser) {
@@ -19,29 +21,23 @@ const Header = ({ currentUser }) => {
 
   return (
     <div className="header">
-      <FormInput
-        type="text"
-        name="search"
-        placeholder="Search for tracks.."
-        isSearchInput
-      />
       {currentUser ? (
-        <div
-          className="user-info"
-          onClick={() => toggleDropdownHidden(!isDropdownHidden)}
-        >
+        <div className="user-info" onClick={toggleDropdownHidden}>
           {displayName}
         </div>
       ) : null}
       {isDropdownHidden ? null : (
-        <UserInfoDropdown userName={currentUser.displayName} />
+        <UserInfoDropdown
+          toggleHidden={toggleDropdownHidden}
+          userName={currentUser.displayName}
+        />
       )}
     </div>
   );
 };
 
-const mapStateToProps = ({ user: { currentUser } }) => ({
-  currentUser,
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
 });
 
 export default connect(mapStateToProps)(Header);

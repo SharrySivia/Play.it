@@ -5,7 +5,7 @@ import { addToArray } from "../../utils/util.functions";
 
 const INITIAL_STATE = {
   isQueueHidden: true,
-  queue: null,
+  queueItems: null,
 };
 
 const queueReducer = (state = INITIAL_STATE, action) => {
@@ -13,13 +13,13 @@ const queueReducer = (state = INITIAL_STATE, action) => {
     case QUEUE_ACTION_TYPES.ADD_TO_QUEUE:
       return {
         ...state,
-        queue: addToArray(state.queue, action.payload),
+        queueItems: addToArray(state.queueItems, action.payload),
       };
 
     case QUEUE_ACTION_TYPES.ADD_PLAYLIST_TO_QUEUE:
       return {
         ...state,
-        queue: [...action.payload.tracks],
+        queueItems: [...action.payload.tracks],
       };
     case QUEUE_ACTION_TYPES.TOGGLE_QUEUE_HIDDEN:
       return {
@@ -29,13 +29,13 @@ const queueReducer = (state = INITIAL_STATE, action) => {
     case QUEUE_ACTION_TYPES.REMOVE_FROM_QUEUE:
       return {
         ...state,
-        queue: removeFromQueue(state.queue, action.payload),
+        queueItems: removeFromQueue(state.queueItems, action.payload),
       };
 
     case QUEUE_ACTION_TYPES.CLEAR_QUEUE:
       return {
         ...state,
-        queue: null,
+        queueItems: null,
       };
     default:
       return state;

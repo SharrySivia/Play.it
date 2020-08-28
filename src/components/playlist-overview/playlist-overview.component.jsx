@@ -1,7 +1,10 @@
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
 
 import useToggle from "../../hooks/useToggle";
+
+import { selectPlaylistsPlaying } from "../../redux/playlists/playlists.selector";
 
 import { addPlaylistToQueue } from "../../redux/queue/queue.actions";
 
@@ -72,8 +75,8 @@ const PlaylistOverview = ({
   );
 };
 
-const mapStateToProps = ({ playlists: { isPlaylistsPlaying } }) => ({
-  isPlaylistsPlaying,
+const mapStateToProps = createStructuredSelector({
+  isPlaylistsPlaying: selectPlaylistsPlaying,
 });
 
 const mapDispatchToProps = (dispatch) => ({

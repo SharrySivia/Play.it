@@ -1,66 +1,25 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { createStructuredSelector } from "reselect";
 
 import {
-  auth,
-  createUserProfileDocument,
-  signInWithGoogle,
-} from "../../firebase/firebase.utils";
+  selectIsSigningUp,
+  selectSignUpError,
+} from "../../redux/user/user.selectors";
+import { signUpStart } from "../../redux/user/user.actions";
 import FormInput from "../form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.component";
 import Spinner from "../loading-spinner/loading-spinner.component";
 
-const SignUp = () => {
+const SignUp = ({ signUpStart, isSigningUp, signUpError }) => {
   const [userCredentials, setUserCredentials] = useState({
     displayName: "",
     email: "",
     password: "",
     confirmPassword: "",
-    isSigningUp: false,
-    signupErr: "",
   });
-  const {
-    displayName,
-    email,
-    password,
-    confirmPassword,
-    signupErr,
-    isSigningUp,
-  } = userCredentials;
-
-  const signup = async () => {
-    try {
-      const { user } = await auth.createUserWithEmailAndPassword(
-        email,
-        password
-      );
-
-      await createUserProfileDocument(user, { displayName });
-      setUserCredentials({
-        ...userCredentials,
-        displayName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        isSigningUp: false,
-      });
-    } catch (err) {
-      const errCode = err.code;
-      if (errCode === "auth/email-already-in-use") {
-        setUserCredentials({
-          ...userCredentials,
-          signupErr: "User already exists. Go to signin",
-          isSigningUp: false,
-        });
-      } else {
-        setUserCredentials({
-          ...userCredentials,
-          signupErr: err.message,
-          isSigningUp: false,
-        });
-      }
-    }
-  };
+  const { displayName, email, password, confirmPassword } = userCredentials;
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
@@ -72,12 +31,8 @@ const SignUp = () => {
       alert("Password length must be equal to or greater than 8");
       return;
     }
-    setUserCredentials({
-      ...userCredentials,
-      isSigningUp: true,
-    });
 
-    signup();
+    signUpStart({ email, password, displayName });
   };
 
   const handleChange = (evt) => {
@@ -122,16 +77,13 @@ const SignUp = () => {
           onChange={handleChange}
           required
         />
-        <span className="error">{signupErr}</span>
+        <span className="error">{signUpError}</span>
 
         <CustomButton type="submit" disabled={isSigningUp}>
           {isSigningUp ? <Spinner /> : "Signup"}
         </CustomButton>
       </form>
-      <span>OR</span>
-      <CustomButton onClick={signInWithGoogle} disabled={isSigningUp}>
-        Continue with Google
-      </CustomButton>
+
       <span className="footer">
         I already have an account? <Link to="/signin">Signin</Link>
       </span>
@@ -139,4 +91,13 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+const mapStateToProps = createStructuredSelector({
+  isSigningUp: selectIsSigningUp,
+  signUpError: selectSignUpError,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  signUpStart: (userInfo) => dispatch(signUpStart(userInfo)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

@@ -1,54 +1,47 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useEffect } from "react";
 import { connect } from "react-redux";
-import { Route, Switch, withRouter } from "react-router-dom";
+import { Route, Switch, withRouter, Redirect } from "react-router-dom";
+import { createStructuredSelector } from "reselect";
 import "./App.css";
 
-import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
-import { setCurrentUser } from "./redux/user/user.actions";
+import { checkUserSession } from "./redux/user/user.actions";
+import { selectCurrentUser } from "./redux/user/user.selectors";
 const HomePage = lazy(() => import("./pages/homePage/homePage.component"));
 const SignInAndSignUpPage = lazy(() =>
   import("./pages/sign-in-sign-up/sign-in-sign-up.component")
 );
 
-class App extends React.Component {
-  // componentDidMount() {
-  //   const { history, setCurrentUser } = this.props;
-  //   auth.onAuthStateChanged(async (userAuth) => {
-  //     if (userAuth) {
-  //       history.push("/");
-  //       const userLibrary = {
-  //         songs: null,
-  //         playlists: null,
-  //         artists: null,
-  //         albums: null,
-  //       };
-  //       const userRef = await createUserProfileDocument(userAuth, userLibrary);
-  //       const userSnapshot = await userRef.get();
-  //       console.log(userSnapshot);
-  //       setCurrentUser({ id: userSnapshot.id, ...userSnapshot.data() });
-  //     } else {
-  //       history.replace("/signin");
-  //     }
-  //   });
-  // }
+const App = ({ checkUserSession, history, currentUser }) => {
+  useEffect(() => {
+    checkUserSession(history);
+  }, [checkUserSession, history]);
+  return (
+    <div className="App">
+      <Suspense fallback={<div>Loading.....</div>}>
+        <Switch>
+          <Route
+            path="/(signin|signup)"
+            render={(params) =>
+              currentUser ? (
+                <Redirect to="/" />
+              ) : (
+                <SignInAndSignUpPage {...params} />
+              )
+            }
+          />
+          <Route path="/*" component={HomePage} />
+        </Switch>
+      </Suspense>
+    </div>
+  );
+};
 
-  render() {
-    return (
-      <div className="App">
-        <Suspense fallback={<div>Loading.....</div>}>
-          <Switch>
-            {/* <Route path="/(signin|signup)" component={SignInAndSignUpPage} /> */}
-            <Route path="/*" component={HomePage} />
-          </Switch>
-        </Suspense>
-      </div>
-    );
-  }
-}
-
-const mapDispatchToProps = (dispatch) => ({
-  setCurrentUser: (userCredentials) =>
-    dispatch(setCurrentUser(userCredentials)),
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
 });
 
-export default connect(null, mapDispatchToProps)(withRouter(App));
+const mapDispatchToProps = (dispatch) => ({
+  checkUserSession: (history) => dispatch(checkUserSession(history)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(App));
