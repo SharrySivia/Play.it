@@ -26,3 +26,7 @@ export const toggleIsMuted = () => ({
 export const toggleIsRepeated = () => ({
   type: PLAYER_ACTION_TYPES.TOGGLE_IS_REPEATED,
 });
+
+export const clearPlayer = () => ({
+  type: PLAYER_ACTION_TYPES.CLEAR_PLAYER,
+});

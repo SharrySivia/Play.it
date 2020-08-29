@@ -28,3 +28,7 @@ export const setPlaylistsFromFirebase = (playlists) => ({
   type: PLAYLISTS_ACTION_TYPES.SET_PLAYLISTS_FROM_FIREBASE,
   payload: playlists,
 });
+
+export const clearPlaylists = () => ({
+  type: PLAYLISTS_ACTION_TYPES.CLEAR_PLAYLISTS,
+});

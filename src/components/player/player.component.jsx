@@ -148,20 +148,18 @@ class Player extends React.Component {
       } = this.props;
       const track = this.track;
       track.src = currentTrack.src;
-      addToRecents(currentTrack);
       if (!isQueueHidden) toggleQueueHidden();
       track.onloadedmetadata = () => {
         setDuration(track.duration);
         this.playTrack();
+        addToRecents(currentTrack);
       };
     }
   }
 
   componentWillUnmount() {
-    const { setCurrentTrack } = this.props;
     this.track.removeEventListener("timeupdate", null);
     this.clearPlayer();
-    setCurrentTrack(null);
   }
 
   render() {

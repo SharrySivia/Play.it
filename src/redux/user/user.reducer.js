@@ -6,6 +6,7 @@ const INITIAL_STATE = {
   signUpError: null,
   isSigningIn: false,
   isSigningUp: false,
+  isUserFetching: false,
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -28,6 +29,13 @@ const userReducer = (state = INITIAL_STATE, action) => {
         signUpError: null,
         isSigningIn: false,
         isSigningUp: false,
+        isUserFetching: false,
+      };
+
+    case UserActionTypes.CHECK_USER_SESSION:
+      return {
+        ...state,
+        isUserFetching: true,
       };
 
     case UserActionTypes.SIGN_IN_FAILURE:
@@ -35,6 +43,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         signInError: action.payload,
         isSigningIn: false,
+        isUserFetching: false,
       };
 
     case UserActionTypes.SIGN_UP_FAILURE:

@@ -57,6 +57,13 @@ const playlistsReducer = (state = INITIAL_STATE, action) => {
         ...state,
         userPlaylists: [...action.payload],
       };
+
+    case PLAYLISTS_ACTION_TYPES.CLEAR_PLAYLISTS:
+      return {
+        ...state,
+        userPlaylists: null,
+        isPlaylistsPlaying: false,
+      };
     default:
       return state;
   }

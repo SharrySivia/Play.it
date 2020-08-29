@@ -1,9 +1,14 @@
 import React, { lazy, Suspense } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 
 import { selectCurrentTrack } from "../../redux/player/player.selector";
+import { selectIsUserFetching } from "../../redux/user/user.selectors";
+import {
+  selectIsRecentsFetching,
+  selectRecentlyPlayed,
+} from "../../redux/recents/recents.selector";
 
 import Sidebar from "../../components/sidebar/sidebar.component";
 import Header from "../../components/header/header.component";
@@ -21,7 +26,12 @@ const Artists = lazy(() =>
 );
 const Albums = lazy(() => import("../../components/albums/albums.component"));
 
-const HomePage = ({ currentTrack, match }) => (
+const HomePage = ({
+  currentTrack,
+  recentlyPlayed,
+  isUserFetching,
+  isRecentsFetching,
+}) => (
   <div
     className="home-page"
     style={{
@@ -33,15 +43,29 @@ const HomePage = ({ currentTrack, match }) => (
     <Sidebar />
     <div className="page-content">
       <Header />
-      {match.url === "/" ? <RecentlyPlayed /> : null}
-      <Suspense fallback={<div>Loading.....</div>}>
-        <Switch>
-          <Route exact path="/collections/tracks" component={Tracks} />
-          <Route exact path="/collections/playlists" component={Playlists} />
-          <Route exact path="/collections/artists" component={Artists} />
-          <Route exact path="/collections/albums" component={Albums} />
-        </Switch>
-      </Suspense>
+      {isUserFetching || isRecentsFetching ? (
+        <h1>Loading...</h1>
+      ) : (
+        <Suspense fallback={<div>Loading.....</div>}>
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={() =>
+                recentlyPlayed ? (
+                  <RecentlyPlayed />
+                ) : (
+                  <Redirect to="/collections/tracks" />
+                )
+              }
+            />
+            <Route exact path="/collections/tracks" component={Tracks} />
+            <Route exact path="/collections/playlists" component={Playlists} />
+            <Route exact path="/collections/artists" component={Artists} />
+            <Route exact path="/collections/albums" component={Albums} />
+          </Switch>
+        </Suspense>
+      )}
     </div>
     <Player />
   </div>
@@ -49,6 +73,9 @@ const HomePage = ({ currentTrack, match }) => (
 
 const mapStateToProps = createStructuredSelector({
   currentTrack: selectCurrentTrack,
+  isUserFetching: selectIsUserFetching,
+  recentlyPlayed: selectRecentlyPlayed,
+  isRecentsFetching: selectIsRecentsFetching,
 });
 
 export default connect(mapStateToProps)(HomePage);

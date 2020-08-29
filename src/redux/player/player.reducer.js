@@ -41,6 +41,16 @@ const playerReducer = (state = INITIAL_STATE, action) => {
         ...state,
         isRepeated: !state.isRepeated,
       };
+    case PLAYER_ACTION_TYPES.CLEAR_PLAYER:
+      return {
+        ...state,
+        currentTrack: null,
+        currTime: 0,
+        duration: 0,
+        isPaused: true,
+        isMuted: false,
+        isRepeated: false,
+      };
     default:
       return state;
   }

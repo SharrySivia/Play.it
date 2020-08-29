@@ -6,6 +6,7 @@ import "./App.css";
 
 import { checkUserSession } from "./redux/user/user.actions";
 import { selectCurrentUser } from "./redux/user/user.selectors";
+
 const HomePage = lazy(() => import("./pages/homePage/homePage.component"));
 const SignInAndSignUpPage = lazy(() =>
   import("./pages/sign-in-sign-up/sign-in-sign-up.component")

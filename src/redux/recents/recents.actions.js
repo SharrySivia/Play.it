@@ -5,7 +5,15 @@ export const addToRecents = (track) => ({
   payload: track,
 });
 
+export const toggleIsRecentsFetching = () => ({
+  type: RECENTS_ACTION_TYPES.TOGGLE_IS_RECENTS_FETCHING,
+});
+
 export const setRecentlyPlayedFromFirebase = (tracks) => ({
   type: RECENTS_ACTION_TYPES.SET_RECENTLY_PLAYED_FROM_FIREBASE,
   payload: tracks,
+});
+
+export const clearRecentlyplayed = () => ({
+  type: RECENTS_ACTION_TYPES.CLEAR_RECENTLY_PLAYED,
 });

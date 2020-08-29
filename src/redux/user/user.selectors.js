@@ -26,3 +26,8 @@ export const selectSignUpError = createSelector(
   [selectUser],
   (user) => user.signUpError
 );
+
+export const selectIsUserFetching = createSelector(
+  [selectUser],
+  (user) => user.isUserFetching
+);

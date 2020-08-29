@@ -6,3 +6,8 @@ export const selectRecentlyPlayed = createSelector(
   [selectRecents],
   (recents) => recents.recentlyPlayed
 );
+
+export const selectIsRecentsFetching = createSelector(
+  [selectRecents],
+  (recents) => recents.isRecentsFetching
+);

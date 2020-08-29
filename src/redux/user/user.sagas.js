@@ -9,6 +9,8 @@ import {
   signOutSuccess,
 } from "./user.actions";
 
+import { toggleIsRecentsFetching } from "../recents/recents.actions";
+
 import { UserActionTypes } from "./user.types";
 
 import {
@@ -42,6 +44,7 @@ export function* getSnapshotFromUserAuth(userAuth, additionalData) {
     );
 
     const userSnapshot = yield userRef.get();
+    yield put(toggleIsRecentsFetching());
     yield put(
       signInSuccess({ userId: userSnapshot.id, ...userSnapshot.data() })
     );
@@ -86,11 +89,11 @@ export function* isUserAuthenticated({ payload: { history } }) {
     const userAuth = yield getCurrentUser();
     if (userAuth) {
       yield call(history.push, "/");
+      yield getSnapshotFromUserAuth(userAuth);
     } else {
       yield call(history.replace, "/signin");
       return;
     }
-    yield getSnapshotFromUserAuth(userAuth);
   } catch (error) {
     yield put(signInFailure(getErrMessage("signIn", error)));
   }

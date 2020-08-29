@@ -1,7 +1,11 @@
 import { takeLatest, call, put, all, select } from "redux-saga/effects";
 
 import { getUserRecentlyPlayedRef } from "../../firebase/firebase.utils";
-import { setRecentlyPlayedFromFirebase } from "./recents.actions";
+import {
+  setRecentlyPlayedFromFirebase,
+  toggleIsRecentsFetching,
+  clearRecentlyplayed,
+} from "./recents.actions";
 import { UserActionTypes } from "../user/user.types";
 import { RECENTS_ACTION_TYPES } from "./recents.types";
 import { selectCurrentUser } from "../user/user.selectors";
@@ -26,14 +30,20 @@ export function* checkRecentlyPlayedFromFirebase({ payload: { userId } }) {
   try {
     const recentlyPlayedRef = yield getUserRecentlyPlayedRef(userId);
     const recentlyPlayedSnapShot = yield recentlyPlayedRef.get();
-    yield put(
-      setRecentlyPlayedFromFirebase(
-        recentlyPlayedSnapShot.data().recentlyPlayed
-      )
-    );
+    const recentlyPlayed = recentlyPlayedSnapShot.data().recentlyPlayed;
+    if (recentlyPlayed.length) {
+      yield put(setRecentlyPlayedFromFirebase(recentlyPlayed));
+      yield put(toggleIsRecentsFetching());
+      return;
+    }
+    yield put(toggleIsRecentsFetching());
   } catch (error) {
     console.log(error);
   }
+}
+
+export function* clearRecents() {
+  yield put(clearRecentlyplayed());
 }
 
 export function* onUserSignIn() {
@@ -50,6 +60,14 @@ export function* onRecentlyPlayedUpdate() {
   );
 }
 
+export function* onUserSignOut() {
+  yield takeLatest(UserActionTypes.SIGN_OUT_SUCCESS, clearRecents);
+}
+
 export function* recentsSagas() {
-  yield all([call(onUserSignIn), call(onRecentlyPlayedUpdate)]);
+  yield all([
+    call(onUserSignIn),
+    call(onRecentlyPlayedUpdate),
+    call(onUserSignOut),
+  ]);
 }
