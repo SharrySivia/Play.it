@@ -1,16 +1,20 @@
 .home-page {
   width: 100vw;
   height: 100vh;
-  display: flex;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 
+  .title {
+    color: #2d3347;
+  }
+
   .page-content {
-    width: 85%;
+    width: 100%;
     height: 83vh;
+    background-color: rgba(256, 256, 256, 0.5);
     backdrop-filter: blur(80px);
     overflow: auto;
-    padding: 0 20px;
+    padding: 20px;
   }
 }

@@ -10,8 +10,7 @@ import {
   selectRecentlyPlayed,
 } from "../../redux/recents/recents.selector";
 
-import Sidebar from "../../components/sidebar/sidebar.component";
-import Header from "../../components/header/header.component";
+import Navbar from "../../components/navbar/navbar.component";
 import Player from "../../components/player/player.component";
 import RecentlyPlayed from "../../components/recentlyPlayed/recentlyPlayed.component";
 
@@ -40,9 +39,8 @@ const HomePage = ({
         : "transparent",
     }}
   >
-    <Sidebar />
+    <Navbar />
     <div className="page-content">
-      <Header />
       {isUserFetching || isRecentsFetching ? (
         <h1>Loading...</h1>
       ) : (

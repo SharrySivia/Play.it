@@ -10,9 +10,9 @@ import {
   selectIsUserFetching,
 } from "../../redux/user/user.selectors";
 import UserInfoDropdown from "../user-info-dropdown/user-info-dropdown.component";
-import "./header.styles.scss";
+import "./user-info.styles.scss";
 
-const Header = ({ currentUser, isUserFetching }) => {
+const UserInfo = ({ currentUser, isUserFetching }) => {
   const [isDropdownHidden, toggleDropdownHidden] = useToggle(true);
 
   let displayName;
@@ -25,8 +25,8 @@ const Header = ({ currentUser, isUserFetching }) => {
   }
 
   return (
-    <div className="header">
-      <div className="user-info" onClick={toggleDropdownHidden}>
+    <div className="user-info">
+      <div className="user-name" onClick={toggleDropdownHidden}>
         {isUserFetching ? (
           <CircularLoader className="loading-icon" color="inherit" />
         ) : (
@@ -48,4 +48,4 @@ const mapStateToProps = createStructuredSelector({
   isUserFetching: selectIsUserFetching,
 });
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps)(UserInfo);

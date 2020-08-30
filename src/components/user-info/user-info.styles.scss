@@ -1,14 +1,8 @@
-.header {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-
-  .user-info {
+.user-info {
+  .user-name {
     width: 45px;
     height: 45px;
-    background-color: #000;
+    background-color: #2d3347;
     color: #fff;
     border-radius: 50px;
     cursor: pointer;

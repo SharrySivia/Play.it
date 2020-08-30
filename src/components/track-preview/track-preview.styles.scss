@@ -5,11 +5,10 @@
   padding: 5px;
   margin: 0 10px 30px 10px;
   border-radius: 10px;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  // box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  &:hover {
-    background-color: rgb(253, 253, 253);
-  }
+  color: #2d3347;
+
   .image-container {
     width: 70px;
     height: 70px;

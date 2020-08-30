@@ -22,6 +22,7 @@ import {
   setIsPlaylistPlaying,
 } from "../../redux/playlists/playlists.actions";
 import { addToRecents } from "../../redux/recents/recents.actions";
+import { selectRecentlyPlayed } from "../../redux/recents/recents.selector";
 
 import {
   setCurrentTrack,
@@ -145,6 +146,7 @@ class Player extends React.Component {
         isQueueHidden,
         toggleQueueHidden,
         addToRecents,
+        recentlyPlayed,
       } = this.props;
       const track = this.track;
       track.src = currentTrack.src;
@@ -152,8 +154,13 @@ class Player extends React.Component {
       track.onloadedmetadata = () => {
         setDuration(track.duration);
         this.playTrack();
-        addToRecents(currentTrack);
       };
+      if (recentlyPlayed) {
+        const isTrackInRecents = recentlyPlayed.includes(currentTrack);
+        if (!isTrackInRecents) addToRecents(currentTrack);
+        return;
+      }
+      addToRecents(currentTrack);
     }
   }
 
@@ -237,7 +244,7 @@ class Player extends React.Component {
               <RangeSlider
                 min={0}
                 max={1}
-                step={0.05}
+                step={0.01}
                 defaultValue={0.2}
                 handleChange={this.setVolume}
                 disabled={isMuted}
@@ -261,6 +268,7 @@ const mapStateToProps = createStructuredSelector({
   queueItems: selectQueueItems,
   isQueueHidden: selectQueueHidden,
   isPlaylistsPlaying: selectPlaylistsPlaying,
+  recentlyPlayed: selectRecentlyPlayed,
 });
 
 const mapDispatchToProps = (dispatch) => ({

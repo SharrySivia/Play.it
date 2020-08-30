@@ -16,7 +16,7 @@ const Playlists = ({ playlists }) => {
   return (
     <div className="playlists-container">
       <div className="title-container">
-        <h2 className="title">User Playlists</h2>
+        <h2 className="title">Your Playlists</h2>
         <button
           type="button"
           className="create-playlist-btn"

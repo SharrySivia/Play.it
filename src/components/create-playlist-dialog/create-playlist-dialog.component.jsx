@@ -1,22 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
 import { v4 as uuid } from "uuid";
 
+import { tracks } from "../../collections";
 import FormInput from "../form-input/form-input.component";
 import TrackPreview from "../track-preview/track-preview.component";
 
 import { addToPlaylists } from "../../redux/playlists/playlists.actions";
-import { tracks } from "../../collections";
+import { selectUserPlaylists } from "../../redux/playlists/playlists.selector";
 
 import "./create-playlist-dialog.styles.scss";
 
-const CreatePlaylistDialog = ({ toggleDialog, addToPlaylists }) => {
+const CreatePlaylistDialog = ({ toggleDialog, addToPlaylists, playlists }) => {
   const [playlistName, setPlaylistName] = useState("");
   const [selectedTracks, setSelectedTracks] = useState([]);
+  const [playlistNameError, setPlaylistNameError] = useState("");
 
   const handleChange = (evt) => {
     setPlaylistName(evt.target.value);
   };
+
+  useEffect(() => {
+    function checkPlaylistName() {
+      if (playlists && playlistName) {
+        const isDuplicateNames = playlists.some((playlist) =>
+          playlist.name.toLowerCase().includes(playlistName.toLowerCase())
+        );
+        if (isDuplicateNames) {
+          setPlaylistNameError("Playlist already exists!");
+          return;
+        }
+        setPlaylistNameError("");
+      }
+    }
+    checkPlaylistName();
+  }, [playlistName, playlists]);
 
   const addToSelectedTracks = (trackToAdd) => {
     if (!selectedTracks) {
@@ -79,6 +98,7 @@ const CreatePlaylistDialog = ({ toggleDialog, addToPlaylists }) => {
         ))}
       </div>
       <div className="footer">
+        {playlistNameError ? <span>{playlistNameError}</span> : null}
         <FormInput
           required
           value={playlistName}
@@ -87,8 +107,10 @@ const CreatePlaylistDialog = ({ toggleDialog, addToPlaylists }) => {
         />
         <button
           type="button"
-          disabled={isDisabled}
-          className={`btn ${isDisabled ? "btn-disabled" : null}`}
+          disabled={isDisabled || playlistNameError}
+          className={`btn ${
+            isDisabled || playlistNameError ? "btn-disabled" : null
+          }`}
           onClick={handleSubmit}
         >
           Done
@@ -98,8 +120,15 @@ const CreatePlaylistDialog = ({ toggleDialog, addToPlaylists }) => {
   );
 };
 
+const mapStateToProps = createStructuredSelector({
+  playlists: selectUserPlaylists,
+});
+
 const mapDispatchToProps = (dispatch) => ({
   addToPlaylists: (playlist) => dispatch(addToPlaylists(playlist)),
 });
 
-export default connect(null, mapDispatchToProps)(CreatePlaylistDialog);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CreatePlaylistDialog);

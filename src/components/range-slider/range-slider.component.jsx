@@ -3,7 +3,7 @@ import Slider from "@material-ui/core/Slider";
 
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
-const primaryColor = "#0d0c12";
+const primaryColor = "#2d3347";
 const theme = createMuiTheme({
   overrides: {
     MuiSlider: {

@@ -12,6 +12,8 @@ import FormInput from "../form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.component";
 import Spinner from "../loading-spinner/loading-spinner.component";
 
+import "./sign-up.styles.scss";
+
 const SignUp = ({ signUpStart, isSigningUp, signUpError }) => {
   const [userCredentials, setUserCredentials] = useState({
     displayName: "",

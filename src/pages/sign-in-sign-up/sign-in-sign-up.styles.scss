@@ -4,64 +4,22 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
-  .sign-in,
-  .sign-up {
-    width: 400px;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    background-color: #0d0c12;
-    color: white;
-    text-align: center;
-    padding: 35px;
-    border-radius: 10px;
-
-    .title {
-      text-transform: uppercase;
-      margin-top: 0;
-      margin-bottom: 20px;
-    }
-
-    span {
-      display: block;
-    }
-
-    form {
-      margin-top: 10px;
-
-      button {
-        margin-top: 20px;
-      }
-    }
-    .error {
-      color: red;
-      font-size: 14px;
-    }
-
-    .footer {
-      margin-top: 10px;
-
-      a {
-        text-decoration: none;
-        color: white;
-        text-transform: uppercase;
-        font-weight: bold;
-      }
-    }
-  }
 }
 
 .card-enter {
   opacity: 0;
+  transform: scale(0.9);
 }
 .card-enter-active {
   opacity: 1;
-  transition: opacity 400ms 100ms;
+  transform: translateX(0);
+  transition: opacity 300ms, transform 300ms;
 }
 .card-exit {
   opacity: 1;
 }
 .card-exit-active {
   opacity: 0;
-  transition: opacity 400ms;
+  transform: scale(0.9);
+  transition: opacity 300ms, transform 300ms;
 }

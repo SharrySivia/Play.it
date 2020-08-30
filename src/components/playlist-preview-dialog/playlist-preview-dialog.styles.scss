@@ -1,8 +1,10 @@
 .playlist-preview-dialog {
-  width: 100%;
+  width: 90%;
   position: absolute;
-  top: 0;
+  top: 20px;
+  right: 0;
   left: 0;
+  margin: auto;
   background-color: white;
   border-radius: 5px;
   padding: 20px 30px;
@@ -19,7 +21,7 @@
     }
     .btn {
       outline: none;
-      background-color: #0d0c12;
+      background-color: #2d3347;
       color: #fff;
       border: none;
       border-radius: 50px;
@@ -43,6 +45,7 @@
     margin-top: 10px;
     display: flex;
     align-items: center;
+    color: #2d3347;
     .image-container {
       width: 30%;
       .image {

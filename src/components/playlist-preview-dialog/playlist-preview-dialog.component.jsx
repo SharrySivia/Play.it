@@ -60,6 +60,7 @@ const PlaylistPreviewDialog = ({
         <ul className="tracks-list">
           {playlist.tracks.map((track) => (
             <PlaylistPreviewItem
+              key={track.id}
               track={track}
               isPlaylistPlaying={isPlaylistPlaying}
               handleTrackPlay={() => handleTrackPlay(track)}
