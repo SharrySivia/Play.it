@@ -4,22 +4,96 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: rgb(250, 250, 250);
+
+  .wrapper {
+    width: 450px;
+    min-height: 450px;
+  }
+
+  .sign-in,
+  .sign-up {
+    position: absolute;
+    width: 450px;
+    background-color: #2d3347;
+    color: white;
+    text-align: center;
+    padding: 35px;
+    border-radius: 10px;
+
+    .title {
+      text-transform: uppercase;
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+
+    span {
+      display: block;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 25px;
+
+      button {
+        margin-top: 20px;
+      }
+    }
+    .google-btn {
+      width: 100%;
+      border: none;
+      background-color: transparent;
+      color: #fff;
+      padding: 12px 25px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 10px 0;
+      transition: transform 0.2s ease, background-color 0.2s ease;
+      outline: none;
+      font-size: 1rem;
+      font-weight: bold;
+      line-height: 20px;
+      border: 1px solid #fff;
+
+      &:hover {
+        background-color: #fff;
+        color: #333;
+      }
+    }
+    .error {
+      color: rgb(255, 51, 0);
+      font-size: 14px;
+    }
+
+    .footer {
+      margin-top: 10px;
+
+      a {
+        text-decoration: none;
+        color: white;
+        text-transform: uppercase;
+        font-weight: bold;
+      }
+    }
+  }
 }
 
-.card-enter {
+.fade-enter {
   opacity: 0;
   transform: scale(0.9);
 }
-.card-enter-active {
+.fade-enter-active {
   opacity: 1;
   transform: translateX(0);
-  transition: opacity 300ms, transform 300ms;
+  transition: opacity 300ms 100ms, transform 300ms 100ms;
 }
-.card-exit {
+.fade-exit {
   opacity: 1;
 }
-.card-exit-active {
+.fade-exit-active {
   opacity: 0;
   transform: scale(0.9);
-  transition: opacity 300ms, transform 300ms;
+  transition: opacity 200ms, transform 200ms;
 }

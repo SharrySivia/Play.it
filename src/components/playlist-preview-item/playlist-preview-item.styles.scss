@@ -8,6 +8,7 @@
   justify-content: space-between;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   cursor: pointer;
+  transition: background-color 0.2s ease;
 
   .track-name {
     font-weight: bold;

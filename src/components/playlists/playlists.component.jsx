@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 import useToggle from "../../hooks/useToggle";
 
@@ -25,9 +26,13 @@ const Playlists = ({ playlists }) => {
           + Create new playlist
         </button>
       </div>
-      {isCreateDialogHidden ? null : (
-        <CreatePlaylistDialoge toggleDialog={toggleCreateDialogHidden} />
-      )}
+      <TransitionGroup>
+        {isCreateDialogHidden ? null : (
+          <CSSTransition timeout={300} classNames="fade">
+            <CreatePlaylistDialoge toggleDialog={toggleCreateDialogHidden} />
+          </CSSTransition>
+        )}
+      </TransitionGroup>
       <div className="playlists-overview">
         {playlists ? (
           playlists.map((playlist) => (

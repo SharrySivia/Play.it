@@ -2,11 +2,11 @@
   width: 100%;
   border: none;
   background-color: #fff;
+  color: #333;
   padding: 12px 25px;
-  border-radius: 50px;
+  border-radius: 5px;
   cursor: pointer;
   margin: 10px 0;
-  box-shadow: 0 0.5rem 1rem black;
   transition: transform 0.2s ease;
   outline: none;
   font-size: 1rem;
@@ -14,11 +14,10 @@
   line-height: 20px;
 
   &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 0.8rem 1rem black;
+    transform: translateY(-2px);
   }
   &:active {
     outline: none;
-    transform: translateY(3px);
+    transform: translateY(0);
   }
 }

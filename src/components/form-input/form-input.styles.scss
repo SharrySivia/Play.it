@@ -1,25 +1,14 @@
 .form-input {
+  width: 100%;
   background: none;
-  background-color: rgb(248, 248, 248);
-  color: #333;
+  background-color: #4b505c;
+  color: #fff;
   border: none;
   border-bottom: 2px solid #333;
-  padding: 5px 0;
+  padding: 13px 10px;
   outline: none;
-  margin: 0;
+  margin-bottom: 20px;
   font-size: 14px;
   font-weight: bold;
-}
-
-.search-input {
-  width: 27%;
-  padding: 9px 15px;
-  margin: 15px 0;
-  background-color: rgb(223, 223, 223);
-  border: none;
-  border-radius: 50px;
-  transition: width 0.2s ease;
-  &:focus {
-    width: 33%;
-  }
+  border-radius: 5px;
 }

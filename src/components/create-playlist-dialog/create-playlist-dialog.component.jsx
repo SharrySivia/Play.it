@@ -25,7 +25,7 @@ const CreatePlaylistDialog = ({ toggleDialog, addToPlaylists, playlists }) => {
     function checkPlaylistName() {
       if (playlists && playlistName) {
         const isDuplicateNames = playlists.some((playlist) =>
-          playlist.name.toLowerCase().includes(playlistName.toLowerCase())
+          playlist.name.toLowerCase() === playlistName.toLowerCase()
         );
         if (isDuplicateNames) {
           setPlaylistNameError("Playlist already exists!");

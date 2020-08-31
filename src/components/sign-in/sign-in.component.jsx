@@ -17,8 +17,6 @@ import {
   emailSignInStart,
 } from "../../redux/user/user.actions";
 
-import "./sign-in.styles.scss";
-
 const SignIn = ({
   googleSignInStart,
   emailSignInStart,
@@ -70,9 +68,13 @@ const SignIn = ({
         </CustomButton>
       </form>
       <span>OR</span>
-      <CustomButton onClick={googleSignInStart} disabled={isSigningIn}>
+      <button
+        className="google-btn"
+        onClick={googleSignInStart}
+        disabled={isSigningIn}
+      >
         Continue with Google
-      </CustomButton>
+      </button>
       <span className="footer">
         I don't have an account? <Link to="/signup">Signup</Link>
       </span>
