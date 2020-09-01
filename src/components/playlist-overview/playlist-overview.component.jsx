@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 import useToggle from "../../hooks/useToggle";
 
@@ -51,7 +52,11 @@ const PlaylistOverview = ({
   return (
     <Fragment>
       <div className="playlist-overview" onClick={togglePreviewDialogHidden}>
-        <img className="image" src={playlist.tracks[0].imgSrc} alt="oops" />
+        <div
+          className="image"
+          style={{ backgroundImage: `url(${playlist.tracks[0].imgSrc})` }}
+          alt="oops"
+        />
         <h3 className="title">{playlist.name}</h3>
         {playlist.isPlaying ? (
           <NowPlayingButton />
@@ -64,13 +69,17 @@ const PlaylistOverview = ({
           </Fragment>
         )}
       </div>
-      {isPreviewDialogHidden ? null : (
-        <PlaylistPreviewDialog
-          playlist={playlist}
-          handlePlay={handlePlay}
-          toggleHidden={togglePreviewDialogHidden}
-        />
-      )}
+      <TransitionGroup>
+        {isPreviewDialogHidden ? null : (
+          <CSSTransition timeout={300} classNames="fade">
+            <PlaylistPreviewDialog
+              playlist={playlist}
+              handlePlay={handlePlay}
+              toggleHidden={togglePreviewDialogHidden}
+            />
+          </CSSTransition>
+        )}
+      </TransitionGroup>
     </Fragment>
   );
 };

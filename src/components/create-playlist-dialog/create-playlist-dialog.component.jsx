@@ -4,7 +4,6 @@ import { createStructuredSelector } from "reselect";
 import { v4 as uuid } from "uuid";
 
 import { tracks } from "../../collections";
-import FormInput from "../form-input/form-input.component";
 import TrackPreview from "../track-preview/track-preview.component";
 
 import { addToPlaylists } from "../../redux/playlists/playlists.actions";
@@ -24,8 +23,9 @@ const CreatePlaylistDialog = ({ toggleDialog, addToPlaylists, playlists }) => {
   useEffect(() => {
     function checkPlaylistName() {
       if (playlists && playlistName) {
-        const isDuplicateNames = playlists.some((playlist) =>
-          playlist.name.toLowerCase() === playlistName.toLowerCase()
+        const isDuplicateNames = playlists.some(
+          (playlist) =>
+            playlist.name.toLowerCase() === playlistName.toLowerCase()
         );
         if (isDuplicateNames) {
           setPlaylistNameError("Playlist already exists!");
@@ -81,10 +81,6 @@ const CreatePlaylistDialog = ({ toggleDialog, addToPlaylists, playlists }) => {
     <div className="dialog">
       <div className="title-container">
         <h3 className="title"> Create new playlist</h3>
-
-        <button type="button" className="close-btn" onClick={toggleDialog}>
-          x
-        </button>
       </div>
       <p className="subtitle">Select tracks to add them to playlist</p>
       <div className="tracks-container">
@@ -98,22 +94,34 @@ const CreatePlaylistDialog = ({ toggleDialog, addToPlaylists, playlists }) => {
         ))}
       </div>
       <div className="footer">
-        {playlistNameError ? <span>{playlistNameError}</span> : null}
-        <FormInput
+        {playlistNameError ? (
+          <span className="error">{playlistNameError}</span>
+        ) : null}
+        <input
+          type="text"
+          className="text-input"
           required
           value={playlistName}
           onChange={handleChange}
           placeholder="Playlist name"
+          style={{ borderColor: playlistNameError ? "rgb(255, 51, 0)" : "" }}
         />
         <button
           type="button"
           disabled={isDisabled || playlistNameError}
-          className={`btn ${
+          className={`btn btn-primary ${
             isDisabled || playlistNameError ? "btn-disabled" : null
           }`}
           onClick={handleSubmit}
         >
           Done
+        </button>
+        <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={toggleDialog}
+        >
+          Cancel
         </button>
       </div>
     </div>

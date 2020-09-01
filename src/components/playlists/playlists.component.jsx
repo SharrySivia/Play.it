@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
@@ -33,7 +33,7 @@ const Playlists = ({ playlists }) => {
           </CSSTransition>
         )}
       </TransitionGroup>
-      <div className="playlists-overview">
+      <div className="playlists-overview-container">
         {playlists ? (
           playlists.map((playlist) => (
             <PlaylistOverview key={playlist.id} playlist={playlist} />
@@ -50,4 +50,4 @@ const mapStateToProps = createStructuredSelector({
   playlists: selectUserPlaylists,
 });
 
-export default connect(mapStateToProps)(Playlists);
+export default connect(mapStateToProps)(memo(Playlists));

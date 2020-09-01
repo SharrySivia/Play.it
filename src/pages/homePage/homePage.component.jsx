@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 
 import { selectCurrentTrack } from "../../redux/player/player.selector";
-import { selectIsUserFetching } from "../../redux/user/user.selectors";
 import {
   selectIsRecentsFetching,
   selectRecentlyPlayed,
@@ -12,7 +11,10 @@ import {
 
 import Navbar from "../../components/navbar/navbar.component";
 import Player from "../../components/player/player.component";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
+
 import RecentlyPlayed from "../../components/recentlyPlayed/recentlyPlayed.component";
+import Spinner from "../../components/spinner/spinner.component";
 
 import "./homePage.styles.scss";
 
@@ -20,16 +22,12 @@ const Tracks = lazy(() => import("../../components/tracks/tracks.component"));
 const Playlists = lazy(() =>
   import("../../components/playlists/playlists.component")
 );
-const Artists = lazy(() =>
-  import("../../components/artists/artists.component")
-);
-const Albums = lazy(() => import("../../components/albums/albums.component"));
 
 const HomePage = ({
   currentTrack,
   recentlyPlayed,
-  isUserFetching,
   isRecentsFetching,
+  history,
 }) => (
   <div
     className="home-page"
@@ -41,29 +39,39 @@ const HomePage = ({
   >
     <Navbar />
     <div className="page-content">
-      {isUserFetching || isRecentsFetching ? (
-        <h1>Loading...</h1>
-      ) : (
-        <Suspense fallback={<div>Loading.....</div>}>
-          <Switch>
-            <Route
-              exact
-              path="/"
-              render={() =>
-                recentlyPlayed ? (
-                  <RecentlyPlayed />
-                ) : (
-                  <Redirect to="/collections/tracks" />
-                )
-              }
-            />
-            <Route exact path="/collections/tracks" component={Tracks} />
-            <Route exact path="/collections/playlists" component={Playlists} />
-            <Route exact path="/collections/artists" component={Artists} />
-            <Route exact path="/collections/albums" component={Albums} />
-          </Switch>
-        </Suspense>
-      )}
+      <TransitionGroup>
+        <CSSTransition
+          key={history.location.key}
+          timeout={400}
+          classNames="page"
+        >
+          {isRecentsFetching ? (
+            <Spinner />
+          ) : (
+            <Suspense fallback={<Spinner />}>
+              <Switch>
+                <Route
+                  exact
+                  path="/"
+                  render={() =>
+                    recentlyPlayed ? (
+                      <RecentlyPlayed />
+                    ) : (
+                      <Redirect to="/collections/tracks" />
+                    )
+                  }
+                />
+                <Route exact path="/collections/tracks" component={Tracks} />
+                <Route
+                  exact
+                  path="/collections/playlists"
+                  component={Playlists}
+                />
+              </Switch>
+            </Suspense>
+          )}
+        </CSSTransition>
+      </TransitionGroup>
     </div>
     <Player />
   </div>
@@ -71,7 +79,6 @@ const HomePage = ({
 
 const mapStateToProps = createStructuredSelector({
   currentTrack: selectCurrentTrack,
-  isUserFetching: selectIsUserFetching,
   recentlyPlayed: selectRecentlyPlayed,
   isRecentsFetching: selectIsRecentsFetching,
 });

@@ -1,18 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import CircularLoader from "@material-ui/core/CircularProgress";
 import { createStructuredSelector } from "reselect";
 import useToggle from "../../hooks/useToggle";
 
-import {
-  selectCurrentUser,
-  selectIsUserFetching,
-} from "../../redux/user/user.selectors";
+import { selectCurrentUser } from "../../redux/user/user.selectors";
 import UserInfoDropdown from "../user-info-dropdown/user-info-dropdown.component";
 import "./user-info.styles.scss";
 
-const UserInfo = ({ currentUser, isUserFetching }) => {
+const UserInfo = ({ currentUser }) => {
   const [isDropdownHidden, toggleDropdownHidden] = useToggle(true);
 
   let displayName;
@@ -27,11 +23,7 @@ const UserInfo = ({ currentUser, isUserFetching }) => {
   return (
     <div className="user-info">
       <div className="user-name" onClick={toggleDropdownHidden}>
-        {isUserFetching ? (
-          <CircularLoader className="loading-icon" color="inherit" />
-        ) : (
-          displayName
-        )}
+        {displayName}
       </div>
       {isDropdownHidden ? null : (
         <UserInfoDropdown
@@ -45,7 +37,6 @@ const UserInfo = ({ currentUser, isUserFetching }) => {
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
-  isUserFetching: selectIsUserFetching,
 });
 
 export default connect(mapStateToProps)(UserInfo);

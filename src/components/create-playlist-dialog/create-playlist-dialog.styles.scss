@@ -9,6 +9,7 @@
   background-color: white;
   border-radius: 5px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  color: #2d3347;
 
   .title-container {
     width: 100%;
@@ -20,15 +21,6 @@
       width: 50%;
       margin: 0;
       margin-bottom: 5px;
-    }
-
-    .close-btn {
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: bolder;
-      background-color: transparent;
-      border: none;
-      outline: none;
     }
   }
 
@@ -52,20 +44,54 @@
     position: absolute;
     bottom: 20px;
     right: 20px;
+
+    .text-input {
+      border: 2px solid transparent;
+      padding: 10px;
+      border-radius: 5px;
+      font-weight: bold;
+      background-color: rgb(243, 243, 243);
+      // box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+      outline: none;
+      transition: border-color 0.2s ease;
+
+      &:focus {
+        border-color: #2d3347;
+      }
+    }
+
+    .error {
+      color: rgb(255, 51, 0);
+      margin-right: 10px;
+    }
+
     .btn {
       cursor: pointer;
       outline: none;
       font-size: 13px;
       border: none;
-      background-color: #0d0c12;
-      color: #fff;
       padding: 10px 15px;
       border-radius: 50px;
       margin-left: 20px;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .btn-primary {
+      background-color: #2d3347;
+      color: #fff;
+    }
+    .btn-secondary {
+      background-color: #fff;
+      border: 1px solid #2d3347;
+
+      &:hover {
+        color: #fff;
+        background-color: #2d3347;
+      }
     }
 
     .btn-disabled {
-      background-color: #727080;
+      background-color: #d8d5eb;
 
       &:hover {
         cursor: not-allowed;

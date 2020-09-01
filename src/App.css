@@ -3,9 +3,6 @@
   box-sizing: border-box;
 }
 
-/* .App {
-} */
-
 body {
   margin: 0;
   padding: 0;
@@ -24,4 +21,22 @@ body {
 ::-webkit-scrollbar-thumb {
   background-color: #b3b3b3;
   border-radius: 10px;
+}
+
+.content-enter {
+  opacity: 0.01;
+}
+
+.content-enter.content-enter-active {
+  opacity: 1;
+  transition: opacity 200ms ease-in;
+}
+
+.content-exit {
+  opacity: 1;
+}
+
+.content-exit.content-exit-active {
+  opacity: 0.01;
+  transition: opacity 200ms ease-in;
 }

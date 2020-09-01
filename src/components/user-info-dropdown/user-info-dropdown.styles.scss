@@ -1,23 +1,29 @@
 .user-info-dropdown {
   width: 130px;
   position: absolute;
-  top: 80px;
+  top: 60px;
   right: 10px;
   background-color: white;
   border-radius: 5px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
   text-align: center;
   z-index: 10;
-  padding: 20px 0;
+  overflow: hidden;
 
-  .user-name {
+  .name {
     margin: 0;
-    margin-bottom: 20px;
+    padding: 15px 0;
   }
 
   .log-out-btn {
+    width: 100%;
+    padding: 15px 0;
     display: inline-block;
     cursor: pointer;
     color: rgb(255, 38, 0);
+    transition: background-color 0.2s ease;
+    &:hover {
+      background-color: rgba(248, 248, 248, 0.867);
+    }
   }
 }

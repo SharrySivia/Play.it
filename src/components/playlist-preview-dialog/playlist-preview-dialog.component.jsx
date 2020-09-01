@@ -55,7 +55,10 @@ const PlaylistPreviewDialog = ({
       </div>
       <div className="playlist-details">
         <div className="image-container">
-          <img className="image" src={playlist.tracks[0].imgSrc} alt="oops" />
+          <div
+            className="image"
+            style={{ backgroundImage: `url(${playlist.tracks[0].imgSrc})` }}
+          />
         </div>
         <ul className="tracks-list">
           {playlist.tracks.map((track) => (
