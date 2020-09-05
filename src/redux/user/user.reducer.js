@@ -38,6 +38,12 @@ const userReducer = (state = INITIAL_STATE, action) => {
         isUserFetching: true,
       };
 
+    case UserActionTypes.TOGGLE_IS_USER_FETCHING:
+      return {
+        ...state,
+        isUserFetching: !state.isUserFetching
+      }
+
     case UserActionTypes.SIGN_IN_FAILURE:
       return {
         ...state,

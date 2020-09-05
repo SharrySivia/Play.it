@@ -7,6 +7,7 @@ import {
   signUpSuccess,
   signUpFailure,
   signOutSuccess,
+  toggleIsUserFetching
 } from "./user.actions";
 
 import { toggleIsRecentsFetching } from "../recents/recents.actions";
@@ -92,6 +93,7 @@ export function* isUserAuthenticated({ payload: { history } }) {
       yield getSnapshotFromUserAuth(userAuth);
     } else {
       yield call(history.replace, "/signin");
+      yield call(toggleIsUserFetching())
       return;
     }
   } catch (error) {
