@@ -1,94 +1,72 @@
-import jattZimidar from "./assets/Jatt Zimidaar - Gurnam Bhullar (DjPunjab.Com).mp3";
-import marziDeMalak from "./assets/Marji De Malak Aate Di Chidi-(Mr-Jatt.com).mp3";
-import dontWorry from "./assets/Dont_Worry_Karan_Aujla.mp3";
-import follow from "./assets/Follow - Nawab.mp3";
-import dollar from "./assets/Dollar (Dakuaan Da Munda) - Sidhu Moose Wala (MzcPunjab.Com).mp3";
-import drive from "./assets/Drive - Diljit Dosanjh (DjPunjab.Com).mp3";
-import gWagon from "./assets/G Wagon - Sidhu Moose Wala (DjPunjab.Com).mp3";
-import kasootiDegree from "./assets/Kasooti_Degree_Sharry_Maan_60cd6b350f39a16e85012b25ab061b94_320.mp3";
-import pegDiWashna from "./assets/Peg Di Waashna Ft DJ Flow - Amrit Maan (DJJOhAL.Com).mp3";
-import shukarDatya from "./assets/Shukar Dateya - Prabh Gill (DjPunjab.Com).mp3";
-
-import dollarImg from "./assets/dollarsidhu.jpg";
-import dontWorryImg from "./assets/dontWorry.jpg";
-import driveImg from "./assets/drive.jpg";
-import followImg from "./assets/follow.jpg";
-import gWagonImg from "./assets/gWagon.jpg";
-import jattZimidaarImg from "./assets/jattZimidaar.jpg";
-import kasootiDegreeImg from "./assets/kasootiDegree.jpg";
-import marziDeMalakImg from "./assets/marziDeMalak.jpg";
-import pegDiWashnaImg from "./assets/pegDiWashna.jpg";
-import shukarDatyaImg from "./assets/shukarDatya.jpg";
-
 export const tracks = [
   {
     id: 1,
-    name: "Dont Worry",
-    singer: "Karan Aujla",
-    src: dontWorry,
-    imgSrc: dontWorryImg,
+    name: "CBPD",
+    singer: "Arulo",
+    src: require('./assets/cbpd.mp3'),
+    imgSrc: require('./assets/cbpd.jpg'),
   },
   {
     id: 2,
-    name: "Follow",
-    singer: "Nawab",
-    src: follow,
-    imgSrc: followImg,
+    name: "Dance with me",
+    singer: "Ahjay Stelino",
+    src: require('./assets/dance-with-me.mp3'),
+    imgSrc: require('./assets/dance-with-me.jpg'),
   },
   {
     id: 3,
-    name: "Jatt Zimidar",
-    singer: "Gurnam Bhullar",
-    src: jattZimidar,
-    imgSrc: jattZimidaarImg,
+    name: "Deep urban",
+    singer: "Eugenio Mininni",
+    src: require('./assets/deep-urban.mp3'),
+    imgSrc: require('./assets/deep-urban.jpg'),
   },
   {
     id: 4,
-    name: "Marzi de malak",
-    singer: "Amrit Mann",
-    src: marziDeMalak,
-    imgSrc: marziDeMalakImg,
+    name: "Driving ambition",
+    singer: "Ahjay Stelino",
+    src: require('./assets/driving-ambition.mp3'),
+    imgSrc: require('./assets/driving-ambition.jpg'),
   },
   {
     id: 5,
-    name: "Dollar",
-    singer: "Sidhu Moose Wala",
-    src: dollar,
-    imgSrc: dollarImg,
+    name: "Hazy after hours",
+    singer: "Alejandro Magana",
+    src: require('./assets/hazy-after-hours.mp3'),
+    imgSrc: require('./assets/hazy-after-hours.jpg'),
   },
   {
     id: 6,
-    name: "Drive",
-    singer: "Diljit Dosanjh",
-    src: drive,
-    imgSrc: driveImg,
+    name: "Hip Hop",
+    singer: "Lily J",
+    src: require('./assets/hip-hop.mp3'),
+    imgSrc: require('./assets/hip-hop.jpg'),
   },
   {
     id: 7,
-    name: "G Wagon",
-    singer: "Sidhu Moose Wala",
-    src: gWagon,
-    imgSrc: gWagonImg,
+    name: "Life is a dream",
+    singer: "Michael Ramir C",
+    src: require('./assets/life-is-a-dream.mp3'),
+    imgSrc: require('./assets/life-is-a-dream.jpg'),
   },
   {
     id: 8,
-    name: "Kasooti Degree",
-    singer: "Sharry Mann",
-    src: kasootiDegree,
-    imgSrc: kasootiDegreeImg,
+    name: "Raising me higher",
+    singer: "Ahjay Stelino",
+    src: require('./assets/raising-me-higher.mp3'),
+    imgSrc: require('./assets/raising-me-higher.jpg'),
   },
   {
     id: 9,
-    name: "Peg Di Washna",
-    singer: "Amrit Mann",
-    src: pegDiWashna,
-    imgSrc: pegDiWashnaImg,
+    name: "Tech house vibes",
+    singer: "Alejandro Magana",
+    src: require('./assets/tech-house-vibes.mp3'),
+    imgSrc: require('./assets/tech-house-vibes.jpg'),
   },
   {
     id: 10,
-    name: "Shukar Datya",
-    singer: "Prabh Gill",
-    src: shukarDatya,
-    imgSrc: shukarDatyaImg,
-  },
+    name: "Complicated",
+    singer: "Arulo",
+    src: require('./assets/complicated.mp3'),
+    imgSrc: require('./assets/complicated.jpg')
+  }
 ];

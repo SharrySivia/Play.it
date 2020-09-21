@@ -26,8 +26,9 @@ function getErrMessage(type, err) {
   if (type === "signIn") {
     if (errCode === "auth/wrong-password") {
       return "The password is wrong.";
+    } else if (errCode === 'auth/user-not-found') {
+      return "There is no user record. Go to SIGNUP";
     }
-    return "There is no user record. Go to SIGNUP";
   } else {
     if (errCode === "auth/email-already-in-use") {
       return "User already exists. Go to signin";
@@ -66,6 +67,7 @@ export function* signInWithGoogle() {
 export function* signInWithEmailAndPassword({ payload: { email, password } }) {
   try {
     const { user } = yield auth.signInWithEmailAndPassword(email, password);
+    yield console.log(user)
     yield getSnapshotFromUserAuth(user);
   } catch (error) {
     yield yield put(signInFailure(getErrMessage("signIn", error)));
