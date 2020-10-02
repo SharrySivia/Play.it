@@ -53,6 +53,7 @@ import { toggleQueueHidden } from "../../redux/queue/queue.actions";
 import RangeSlider from "../range-slider/range-slider.component";
 
 import "./player.styles.scss";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 class Player extends React.Component {
   componentDidMount() {
@@ -213,11 +214,11 @@ class Player extends React.Component {
                 handleClick={this.playTrack}
               />
             ) : (
-              <PauseButton
-                isDisabled={isDisabled}
-                handleClick={this.pauseTrack}
-              />
-            )}
+                <PauseButton
+                  isDisabled={isDisabled}
+                  handleClick={this.pauseTrack}
+                />
+              )}
 
             <SkipNextButton
               isDisabled={isDisabled || !queueItems}
@@ -230,16 +231,17 @@ class Player extends React.Component {
               isRepeated={isRepeated}
               handleClick={this.toggleRepeatTrack}
             />
-
-            {isQueueHidden ? null : <QueueDropup />}
+            <TransitionGroup>
+              {isQueueHidden ? null : <CSSTransition classNames='scale-up' timeout={300}><QueueDropup /></CSSTransition>}
+            </TransitionGroup>
 
             <QueueButton handleClick={toggleQueueHidden} />
             <Fragment>
               {isMuted ? (
                 <MutedButton handleClick={this.toggleMuteTrack} />
               ) : (
-                <UnMutedButton handleClick={this.toggleMuteTrack} />
-              )}
+                  <UnMutedButton handleClick={this.toggleMuteTrack} />
+                )}
 
               <RangeSlider
                 min={0}

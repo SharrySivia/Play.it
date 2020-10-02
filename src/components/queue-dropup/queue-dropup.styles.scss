@@ -20,3 +20,24 @@
     text-align: center;
   }
 }
+
+.scale-up-enter {
+  opacity: 0;
+  bottom: 0;
+  transform: scale(0.1);
+}
+.scale-up-enter-active {
+  opacity: 1;
+  bottom: 60px;
+  transform: scale(1);
+  transition: opacity 200ms, transform 200ms, bottom 200ms;
+}
+.scale-up-exit {
+  opacity: 1;
+}
+.scale-up-exit-active {
+  opacity: 0;
+  bottom: 0;
+  transform: scale(0.3);
+  transition: opacity 100ms, transform 200ms, bottom 200ms;
+}

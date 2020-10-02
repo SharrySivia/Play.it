@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 import { createStructuredSelector } from "reselect";
 import useToggle from "../../hooks/useToggle";
@@ -25,12 +26,16 @@ const UserInfo = ({ currentUser }) => {
       <div className="user-name" onClick={toggleDropdownHidden}>
         {displayName}
       </div>
-      {isDropdownHidden ? null : (
-        <UserInfoDropdown
-          toggleHidden={toggleDropdownHidden}
-          userName={currentUser.displayName}
-        />
-      )}
+      <TransitionGroup>
+        {isDropdownHidden ? null : (
+          <CSSTransition classNames='scale' timeout={300}>
+            <UserInfoDropdown
+              toggleHidden={toggleDropdownHidden}
+              userName={currentUser.displayName}
+            />
+          </CSSTransition>
+        )}
+      </TransitionGroup>
     </div>
   );
 };

@@ -30,14 +30,16 @@ $primary-color: #0d0c12;
   }
 
   .controles {
-    display: flex;
-    justify-content: space-between;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     align-items: center;
 
     svg {
       cursor: pointer;
     }
     .currently-playing {
+      justify-self: baseline;
       h3 {
         margin: 0;
         padding: 0;
@@ -47,8 +49,14 @@ $primary-color: #0d0c12;
       }
     }
 
+    .buttons-primary{
+      justify-self: center;
+    }
+
     .buttons-secondary {
-      width: 15%;
+      width: 40%;
+      justify-self: end;
+      // width: 15%;
       display: flex;
       align-items: center;
 

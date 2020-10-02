@@ -79,6 +79,7 @@
     .btn-primary {
       background-color: #2d3347;
       color: #fff;
+      border: 1px solid #2d3347;
     }
     .btn-secondary {
       background-color: #fff;
@@ -92,6 +93,7 @@
 
     .btn-disabled {
       background-color: #d8d5eb;
+      border-color: #d8d5eb;
 
       &:hover {
         cursor: not-allowed;

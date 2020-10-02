@@ -1,4 +1,6 @@
 .user-info {
+  position: relative;
+  z-index: 10;
   .user-name {
     width: 45px;
     height: 45px;
