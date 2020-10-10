@@ -68,7 +68,7 @@
     .btn {
       cursor: pointer;
       outline: none;
-      font-size: 13px;
+      font-size: 14px;
       border: none;
       padding: 10px 15px;
       border-radius: 50px;
@@ -98,4 +98,16 @@
       }
     }
   }
+
+  label {
+    cursor: pointer;
+    font-size: 14px ;
+    padding-left: 5px;
+  }
+
+  .MuiSvgIcon-root {
+    font-size: 1.2rem;
+    margin-bottom: 1px;
+  }
+
 }

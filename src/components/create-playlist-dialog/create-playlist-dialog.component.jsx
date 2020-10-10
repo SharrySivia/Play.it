@@ -8,6 +8,8 @@ import TrackPreview from "../track-preview/track-preview.component";
 
 import { addToPlaylists } from "../../redux/playlists/playlists.actions";
 import { selectUserPlaylists } from "../../redux/playlists/playlists.selector";
+import Checkbox from '@material-ui/core/Checkbox';
+import { withStyles } from '@material-ui/core/styles';
 
 import "./create-playlist-dialog.styles.scss";
 
@@ -15,6 +17,8 @@ const CreatePlaylistDialog = ({ toggleDialog, addToPlaylists, playlists }) => {
   const [playlistName, setPlaylistName] = useState("");
   const [selectedTracks, setSelectedTracks] = useState([]);
   const [playlistNameError, setPlaylistNameError] = useState("");
+  const [checked, setChecked] = useState(false);
+
 
   const handleChange = (evt) => {
     setPlaylistName(evt.target.value);
@@ -62,6 +66,17 @@ const CreatePlaylistDialog = ({ toggleDialog, addToPlaylists, playlists }) => {
   const isAlreadySelected = (track) => {
     return selectedTracks ? selectedTracks.includes(track) : false;
   };
+  
+  const toggleCheckbox = () =>  {
+    if (!checked) {
+      setChecked(true);
+      setSelectedTracks(tracks);
+    } else {
+      setChecked(false);
+      setSelectedTracks([]);
+    }
+    return;
+  };
 
   const handleSubmit = (evt) => {
     const id = uuid();
@@ -77,10 +92,31 @@ const CreatePlaylistDialog = ({ toggleDialog, addToPlaylists, playlists }) => {
 
   const isDisabled = !(playlistName && selectedTracks.length);
 
+  const BlackCheckbox = withStyles({
+    root: {
+      color: '#2d3347',
+      padding: '0px',
+      '&$checked': {
+        color: '#2d3347',
+      },
+      '&:hover': {
+        backgroundColor: 'transparent',
+      },
+    },
+    icon: {
+      fontSize: '1rem',
+    },
+    checked: {},
+  })((props) => <Checkbox color="default" {...props} />);
+
   return (
     <div className="dialog">
       <div className="title-container">
         <h3 className="title"> Create new playlist</h3>
+        <span className="checkbox">
+        <BlackCheckbox checked={checked} onChange={toggleCheckbox} id="allTracks" name="SelectAll" value="allTracks" />
+          <label htmlFor="allTracks">Select All</label>
+        </span>
       </div>
       <p className="subtitle">Select tracks to add them to playlist</p>
       <div className="tracks-container">
