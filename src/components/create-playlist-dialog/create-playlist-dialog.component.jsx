@@ -103,9 +103,6 @@ const CreatePlaylistDialog = ({ toggleDialog, addToPlaylists, playlists }) => {
         backgroundColor: 'transparent',
       },
     },
-    icon: {
-      fontSize: '1rem',
-    },
     checked: {},
   })((props) => <Checkbox color="default" {...props} />);
 
