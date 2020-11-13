@@ -42,7 +42,7 @@ const SignUp = ({ signUpStart, isSigningUp, signUpError }) => {
 
   return (
     <div className="sign-up">
-      <h2 className="title">Signup</h2>
+      <h2 className="title">Sign up</h2>
       <span>Create a new account with email and password</span>
       <form onSubmit={handleSubmit}>
         <FormInput

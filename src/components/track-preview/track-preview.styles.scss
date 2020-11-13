@@ -1,17 +1,29 @@
+@import '../../responsive.scss';
+
 .track-preview-container {
-  width: 23%;
+  // width: 23%;
   display: flex;
   align-items: center;
   padding: 5px;
-  margin: 0 10px 30px 10px;
-  border-radius: 10px;
+  // margin: 0 10px 30px 10px;
+  // border-radius: 10px;
   // box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   color: #2d3347;
+  @include responsive(mobile-small){
+    justify-content: center;
+    flex-direction: column;
+    margin: 0;
+  }
 
   .image-container {
     width: 70px;
     height: 70px;
+
+    @include responsive(mobile-small){
+      width: 65px;
+      height: 65px;
+    }
     .image {
       position: absolute;
       width: 70px;
@@ -19,6 +31,11 @@
       border-radius: 50%;
       overflow: hidden;
       transition: filter 0.15s ease;
+
+      @include responsive(mobile-small){
+        width: 65px;
+        height: 65px;
+      }
     }
 
     svg {
@@ -30,13 +47,27 @@
   }
 
   .details {
+    text-align: center;
     margin-left: 10px;
+
+    @include responsive(mobile-small){
+      margin-top: 5px;
+      margin-left: 0;
+    }
     .track-name {
       margin: 0;
+
+      @include responsive(mobile-small){
+        font-size: 14px;
+      }
     }
     .singer-name {
       margin: 0;
       padding: 0;
+
+      @include responsive(mobile-small){
+        font-size: 12px;
+      }
     }
   }
 }

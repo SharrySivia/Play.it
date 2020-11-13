@@ -1,7 +1,11 @@
+@import '../../responsive.scss';
+
 .track-card {
   text-align: center;
-  display: inline-block;
-  margin: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  // margin: 15px;
   color: #2d3347;
 
   .art-display {
@@ -13,6 +17,11 @@
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+
+    @include responsive(mobile-small){
+      width: 100px;
+      height: 100px;
+    }
 
     .buttons {
       opacity: 0;
@@ -47,8 +56,15 @@
     padding: 5px 0;
     font-size: 17px;
     font-weight: bold;
+
+    @include responsive(mobile-small){
+      font-size: 14px;
+    }
   }
   .artist-name {
     font-size: 14px;
+    @include responsive(mobile-small){
+      font-size: 12px;
+    }
   }
 }

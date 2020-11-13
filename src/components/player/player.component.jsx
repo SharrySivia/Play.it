@@ -150,12 +150,12 @@ class Player extends React.Component {
         recentlyPlayed,
       } = this.props;
       const track = this.track;
-      track.src = currentTrack.src;
-      if (!isQueueHidden) toggleQueueHidden();
-      track.onloadedmetadata = () => {
-        setDuration(track.duration);
+      track.onloadstart = () => {
         this.playTrack();
       };
+      track.src = require(`../../assets/${currentTrack.src}`);
+      if (!isQueueHidden) toggleQueueHidden();
+      track.onloadedmetadata = () => setDuration(track.duration);
       if (recentlyPlayed) {
         const isTrackInRecents = recentlyPlayed.includes(currentTrack);
         if (!isTrackInRecents) addToRecents(currentTrack);

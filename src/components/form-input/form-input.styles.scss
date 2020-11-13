@@ -11,4 +11,10 @@
   font-size: 14px;
   font-weight: bold;
   border-radius: 5px;
+  border: 2px solid transparent;
+  transition: border-color 0.2s ease;
+
+  &:focus {
+    border: 2px solid #fff;
+  }
 }

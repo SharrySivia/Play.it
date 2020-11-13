@@ -1,13 +1,26 @@
+@import '../../responsive.scss';
+
 .playlists-container {
   width: 100%;
   padding: 0 20px;
   position: relative;
+
+  @include responsive(mobile-small){
+    padding: 0;
+  }
+
   .title-container {
     width: 100%;
     height: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    .title{
+      @include responsive(mobile-small){
+        font-size: 17px;
+      }
+    }
 
     .create-playlist-btn {
       font-size: 16px;
@@ -19,6 +32,16 @@
       &:hover {
         cursor: pointer;
       }
+
+      @include responsive(mobile-small){
+        font-size: 14px;
+      }
+    }
+  }
+
+  .empty-msg {
+    @include responsive(mobile-small){
+      font-size: 14px;
     }
   }
   .playlists-overview-container {
@@ -27,6 +50,11 @@
     align-items: center;
     flex-wrap: wrap;
     margin-top: 30px;
+
+    @include responsive(mobile-small){
+      margin-top: 20px;
+      flex-direction: column;
+    }
   }
 }
 .fade-enter {

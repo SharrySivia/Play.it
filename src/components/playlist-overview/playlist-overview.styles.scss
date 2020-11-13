@@ -1,3 +1,5 @@
+@import '../../responsive.scss';
+
 .playlist-overview {
   width: 385px;
   display: flex;
@@ -10,6 +12,11 @@
   margin-bottom: 40px;
   margin-right: 40px;
   cursor: pointer;
+
+  @include responsive(mobile-small){
+    width: 100%;
+   margin-bottom: 20px;   
+  }
   .title {
     text-transform: capitalize;
   }
@@ -20,6 +27,11 @@
     background-repeat: no-repeat;
     border-radius: 5px;
     transition: background-image 0.2s ease;
+
+    @include responsive(mobile-small){
+      width: 65px;
+      height: 65px;
+    }
   }
 
   .btn {

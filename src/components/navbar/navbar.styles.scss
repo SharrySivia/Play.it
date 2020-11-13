@@ -1,5 +1,7 @@
+@import '../../responsive.scss';
+
 .navbar {
-  width: 100%;
+  width: 100vw;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -10,6 +12,11 @@
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   z-index: 10;
 
+  @include responsive(mobile-small){
+    padding: 10px 20px;
+  }
+
+
   .logo {
     color: #2d3347;
     font-size: 35px;
@@ -17,10 +24,14 @@
     padding: 0;
     font-weight: normal;
     font-family: "Permanent Marker", cursive;
+    
+    @include responsive(mobile-small){
+      font-size: 20px;
+    }
   }
 
   .lists-container {
-    width: 25%;
+    // width: 25%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -32,8 +43,10 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-
+      
       .list-item {
+        margin: 0 5px;
+        text-align: center;
         padding: 10px;
         text-decoration: none;
         color: #2d3347;
@@ -46,6 +59,11 @@
           color: #fff;
           background-color: #2d3347;
           box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @include responsive(mobile-small){
+          padding: 8px;
+          font-size: 11px;
         }
       }
 

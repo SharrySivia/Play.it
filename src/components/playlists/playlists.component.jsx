@@ -39,8 +39,8 @@ const Playlists = ({ playlists }) => {
             <PlaylistOverview key={playlist.id} playlist={playlist} />
           ))
         ) : (
-          <p>Nothing to show here.Please create a playlist.</p>
-        )}
+            <p className='empty-msg'>Nothing to show here.Please create a playlist.</p>
+          )}
       </div>
     </div>
   );

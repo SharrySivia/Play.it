@@ -13,19 +13,21 @@ const RecentlyPlayed = ({ recentlyPlayed }) => (
     <h2 className="title">Recently Played</h2>
     <TransitionGroup>
       {recentlyPlayed ? (
-        recentlyPlayed.map((track) => (
-          <CSSTransition
-            key={track.id}
-            timeout={600}
-            appear={true}
-            classNames="fade"
-          >
-            <TrackCard key={track.id} track={track} />
-          </CSSTransition>
-        ))
+        <div className='recentlyPlayed-container'>{
+          recentlyPlayed.map((track) => (
+            <CSSTransition
+              key={track.id}
+              timeout={600}
+              appear={true}
+              classNames="fade"
+            >
+              <TrackCard key={track.id} track={track} />
+            </CSSTransition>
+          ))
+        }</div>
       ) : (
-        <p>Nothing to show here please play a track.</p>
-      )}
+          <p>Nothing to show here please play a track.</p>
+        )}
     </TransitionGroup>
   </div>
 );

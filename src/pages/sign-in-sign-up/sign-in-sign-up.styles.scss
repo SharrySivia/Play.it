@@ -1,3 +1,5 @@
+@import "../../responsive.scss";
+
 .sign-in-sign-up-page {
   width: 100vw;
   height: 100vh;
@@ -9,6 +11,10 @@
   .wrapper {
     width: 450px;
     min-height: 450px;
+    @include responsive(mobile-small) {
+      width: 100%;
+      min-height: 100%;
+    }
   }
 
   .sign-in,
@@ -20,6 +26,12 @@
     text-align: center;
     padding: 35px;
     border-radius: 10px;
+
+    @include responsive(mobile-small) {
+      width: 100%;
+      height: 100%;
+      border-radius: 0;
+    }
 
     .title {
       text-transform: uppercase;

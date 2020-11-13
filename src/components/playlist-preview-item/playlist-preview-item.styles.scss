@@ -1,3 +1,5 @@
+@import '../../responsive.scss';
+
 .playlist-item {
   position: relative;
   width: 45%;
@@ -10,9 +12,27 @@
   cursor: pointer;
   transition: background-color 0.2s ease;
 
+  @include responsive(mobile-small){
+    flex-direction: column;
+      padding: 10px 40px 10px 15px;
+      width: 100%;
+  }
+
   .track-name {
     font-weight: bold;
+
+    @include responsive(mobile-small){
+      font-size: 14px;
+      margin-bottom: 5px;  
+    }
   }
+
+  .singer-name{
+    @include responsive(mobile-small){
+     font-size: 12px; 
+    }
+  }
+
 
   .btn-container {
     position: absolute;
@@ -27,6 +47,10 @@
     transition: opacity 0.2s ease;
     svg {
       font-size: 19px;
+    }
+
+    @include responsive(mobile-small){
+     opacity: 1; 
     }
   }
 

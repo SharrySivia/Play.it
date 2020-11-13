@@ -8,6 +8,35 @@ export const formatTime = (fullSeconds) => {
     .join(":");
 };
 
+
+// const fetchTrack = (src, audio, ctx) => {
+//   console.log(src)
+
+// }
+
+// function playback(audio, ctx){
+
+// }
+
+// export const fetchAndPlay = (src, ctx) => {
+//   let audio;
+//   console.log(src)
+//   fetch(require(`../../assets/${src}`))
+//     .then(data => data.arrayBuffer())
+//     .then(ab => ctx.decodeAudioData(ab))
+//     .then(decodedAudio => {
+//       audio = decodedAudio;
+//       const playSound = ctx.createBufferSource();
+//       playSound.buffer = audio;
+//       playSound.connect(ctx.destination);
+//       playSound.start(ctx.currentTime);
+//     });
+
+// }
+
+
+
+
 export const getNewTrack = (type, queue, setCurrentTrack, currentTrack) => {
   if (queue) {
     const currentTrackIdx = queue.findIndex(

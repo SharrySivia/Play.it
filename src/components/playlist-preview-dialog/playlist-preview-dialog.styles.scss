@@ -1,3 +1,5 @@
+@import '../../responsive.scss';
+
 .playlist-preview-dialog {
   width: 90%;
   position: absolute;
@@ -9,6 +11,11 @@
   border-radius: 5px;
   padding: 20px 30px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+
+  @include responsive(mobile-small){
+      width: 100%;
+      padding: 20px;
+  }
 
   .title-container {
     display: flex;
@@ -30,6 +37,10 @@
       margin-right: 20px;
       cursor: pointer;
       box-shadow: none;
+
+      @include responsive(mobile-small){
+      margin-right: 5px;
+      }
     }
     .close-btn {
       cursor: pointer;
@@ -42,6 +53,11 @@
     display: flex;
     align-items: center;
     color: #2d3347;
+
+    @include responsive(mobile-small){
+      flex-direction: column;
+      margin-top: 20px;
+    }
     .image-container {
       width: 30%;
       .image {
@@ -52,6 +68,14 @@
         border-radius: 10px;
         box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
         transition: background-image 0.2s ease;
+
+      @include responsive(mobile-small){
+        width: 150px;
+        height: 150px;
+        }
+      }
+      @include responsive(mobile-small){
+        width: auto;
       }
     }
 
@@ -61,6 +85,13 @@
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
+
+      @include responsive(mobile-small){
+        padding: 0;
+        width: 100%;
+        flex-direction: column;
+        width: auto;
+      }
     }
   }
 }
