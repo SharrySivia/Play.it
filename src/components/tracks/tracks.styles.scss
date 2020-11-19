@@ -2,15 +2,12 @@
 
 .tracks-container{
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat( auto-fill, minmax(170px,1fr));
     justify-items: center;
     gap: 15px;
-    // display: flex;
-    // justify-content: space-between;
-    // align-content: flex-start;
-    // flex-wrap: wrap;
 
     @include responsive(mobile-small){
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(1, 1fr);
+        justify-items: normal;
     }
 }

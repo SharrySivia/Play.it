@@ -29,53 +29,55 @@ const HomePage = ({
   isRecentsFetching,
   history,
 }) => (
-  <div
-    className="home-page"
-    style={{
-      backgroundImage: currentTrack
-        ? `url(${currentTrack.imgSrc})`
-        : "transparent",
-    }}
-  >
-    <Navbar />
-    <div className="page-content">
-      <TransitionGroup>
-        <CSSTransition
-          key={history.location.key}
-          timeout={400}
-          classNames="page"
-        >
-          {isRecentsFetching ? (
-            <Spinner />
-          ) : (
+    <div
+      className="home-page"
+      style={{
+        backgroundImage: currentTrack
+          ? `url(${currentTrack.imgSrc})`
+          : "transparent",
+      }}
+    >
+      <Navbar />
+      <div className="page-content">
+
+        {isRecentsFetching ? (
+          <Spinner />
+        ) : (
             <Suspense fallback={<Spinner />}>
-              <Switch>
-                <Route
-                  exact
-                  path="/"
-                  render={() =>
-                    recentlyPlayed ? (
-                      <RecentlyPlayed />
-                    ) : (
-                      <Redirect to="/collections/tracks" />
-                    )
-                  }
-                />
-                <Route exact path="/collections/tracks" component={Tracks} />
-                <Route
-                  exact
-                  path="/collections/playlists"
-                  component={Playlists}
-                />
-              </Switch>
+              <TransitionGroup>
+                <CSSTransition
+                  key={history.location.key}
+                  timeout={400}
+                  classNames="page"
+                >
+                  <Switch>
+                    <Route
+                      exact
+                      path="/"
+                      render={() =>
+                        recentlyPlayed ? (
+                          <RecentlyPlayed />
+                        ) : (
+                            <Redirect to="/collections/tracks" />
+                          )
+                      }
+                    />
+                    <Route exact path="/collections/tracks" component={Tracks} />
+                    <Route
+                      exact
+                      path="/collections/playlists"
+                      component={Playlists}
+                    />
+                  </Switch>
+                </CSSTransition>
+              </TransitionGroup>
             </Suspense>
           )}
-        </CSSTransition>
-      </TransitionGroup>
+
+      </div>
+      <Player />
     </div>
-    <Player />
-  </div>
-);
+  );
 
 const mapStateToProps = createStructuredSelector({
   currentTrack: selectCurrentTrack,

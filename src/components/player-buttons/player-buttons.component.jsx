@@ -10,6 +10,7 @@ import VolumeOffRoundedIcon from "@material-ui/icons/VolumeOffRounded";
 import AddToQueueRoundedIcon from "@material-ui/icons/AddToQueueRounded";
 import ContactlessRounded from "@material-ui/icons/ContactlessRounded";
 import DeleteRoundedIcon from "@material-ui/icons/DeleteRounded";
+import DoneRoundedIcon from '@material-ui/icons/DoneRounded';
 
 import ToolTip from "@material-ui/core/Tooltip";
 
@@ -112,3 +113,9 @@ export const DeleteButton = memo(({ isDisabled, handleClick }) => (
     />
   </ToolTip>
 ));
+
+export const AddedToQueue = () => (
+  <ToolTip title="Added to queue" placement="top">
+    <DoneRoundedIcon />
+  </ToolTip>
+)
